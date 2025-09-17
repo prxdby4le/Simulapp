@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Simulapp"
 include(":app")
- 
+
