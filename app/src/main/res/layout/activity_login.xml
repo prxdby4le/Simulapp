@@ -16,7 +16,6 @@
         android:paddingRight="24dp"
         android:paddingBottom="32dp">
 
-        <!-- Logo/Título SimuLapp -->
         <TextView
             android:id="@+id/tvAppTitle"
             android:layout_width="wrap_content"
@@ -31,7 +30,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="48dp" />
 
-        <!-- Card de Login Centralizado -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardLogin"
             android:layout_width="match_parent"
@@ -61,7 +59,6 @@
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <!-- Campo de Código -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCodigo"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -86,7 +83,6 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Botão Entrar -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEntrar"
                     android:layout_width="match_parent"

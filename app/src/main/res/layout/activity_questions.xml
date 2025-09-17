@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@android:color/white">
 
-    <!-- Header/Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         app:titleTextColor="@android:color/white"
         app:title="SimuLapp" />
 
-    <!-- Container principal -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,7 +26,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Seção Matéria -->
             <TextView
                 android:id="@+id/tvMateriaHeader"
                 android:layout_width="wrap_content"
@@ -39,7 +36,6 @@
                 android:textColor="#2E3A59"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Lista de questões -->
             <TextView
                 android:id="@+id/tvListaQuestoes"
                 android:layout_width="wrap_content"
@@ -49,14 +45,12 @@
                 android:textColor="#666666"
                 android:layout_marginBottom="24dp" />
 
-            <!-- Container das questões -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="16dp">
 
-                <!-- Questão 1 -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -132,7 +126,6 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- Questão 2 -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -208,7 +201,6 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- Questão 3 -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -284,7 +276,6 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <!-- Questão 4 -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
