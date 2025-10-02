@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@android:color/white"
-    tools:context=".MainActivity">
+    tools:context=".MenuInicialActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -17,7 +17,6 @@
         android:paddingRight="24dp"
         android:paddingBottom="32dp">
 
-        <!-- Logo/Título SimuLapp -->
         <TextView
             android:id="@+id/tvAppTitle"
             android:layout_width="wrap_content"
@@ -32,7 +31,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="48dp" />
 
-        <!-- Subtítulo -->
         <TextView
             android:id="@+id/tvSubtitle"
             android:layout_width="wrap_content"
@@ -45,12 +43,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
-        <!-- Botões de Matérias -->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMateria1"
+            android:id="@+id/btnGerarProva"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="Matemática"
+            android:text="Gerar Prova"
             android:textSize="18sp"
             android:textAllCaps="false"
             android:backgroundTint="#2E3A59"
@@ -62,36 +59,20 @@
             android:layout_marginTop="48dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMateria2"
+            android:id="@+id/btnRedacao"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="Português"
+            android:text="Redação"
             android:textSize="18sp"
             android:textAllCaps="false"
             android:backgroundTint="#2E3A59"
             app:cornerRadius="12dp"
             android:textColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@id/btnMateria1"
+            app:layout_constraintTop_toBottomOf="@id/btnGerarProva"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMateria3"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="História"
-            android:textSize="18sp"
-            android:textAllCaps="false"
-            android:backgroundTint="#2E3A59"
-            app:cornerRadius="12dp"
-            android:textColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@id/btnMateria2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
-
-        <!-- Link para Login -->
         <TextView
             android:id="@+id/tvLoginLink"
             android:layout_width="wrap_content"
@@ -102,13 +83,10 @@
             android:textStyle="bold"
             android:background="?android:attr/selectableItemBackground"
             android:padding="16dp"
-            app:layout_constraintTop_toBottomOf="@id/btnMateria3"
+            app:layout_constraintTop_toBottomOf="@id/btnRedacao"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="32dp" />
-
-        <!-- Decoração inferior -->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

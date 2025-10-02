@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Simulapp</string>
+    <string name="title_linguagens">LINGUAGENS, CÓDIGOS E SUAS TECNOLOGIAS</string>
+    <string name="title_humanas">CIÊNCIAS HUMANAS E SUAS TECNOLOGIAS</string>
+    <string name="title_natureza">CIÊNCIAS DA NATUREZA E SUAS TECNOLOGIAS</string>
+    <string name="title_matematica">MATEMÁTICA E SUAS TECNOLOGIAS</string>
+    <string name="decrement">-</string>
+    <string name="increment">+</string>
+    <string name="cd_decrementar">Diminuir quantidade</string>
+    <string name="cd_incrementar">Aumentar quantidade</string>
+    <string name="hint_zero">0</string>
 </resources>

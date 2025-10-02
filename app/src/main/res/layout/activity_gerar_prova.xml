@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#2E3A59"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@android:color/white"
+        app:title="Gerar Prova"
+        app:titleTextColor="@android:color/white" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvTituloLinguagens"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/title_linguagens"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llControlsLinguagens"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTituloLinguagens"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDecrementarLinguagens"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2E3A59"
+                    android:contentDescription="@string/cd_decrementar"
+                    android:text="@string/decrement"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp" />
+
+                <EditText
+                    android:id="@+id/etQuantidadeLinguagens"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="2"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:gravity="center"
+                    android:hint="@string/hint_zero"
+                    android:textSize="18sp"
+                    android:importantForAutofill="no"
+                    android:background="@android:color/white"
+                    android:layout_marginHorizontal="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIncrementarLinguagens"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2E3A59"
+                    android:contentDescription="@string/cd_incrementar"
+                    android:text="@string/increment"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTituloHumanas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/title_humanas"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/llControlsLinguagens"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llControlsHumanas"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTituloHumanas"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDecrementarHumanas"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2E3A59"
+                    android:contentDescription="@string/cd_decrementar"
+                    android:text="@string/decrement"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp" />
+
+                <EditText
+                    android:id="@+id/etQuantidadeHumanas"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="2"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:gravity="center"
+                    android:hint="@string/hint_zero"
+                    android:textSize="18sp"
+                    android:importantForAutofill="no"
+                    android:background="@android:color/white"
+                    android:layout_marginHorizontal="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIncrementarHumanas"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2E3A59"
+                    android:contentDescription="@string/cd_incrementar"
+                    android:text="@string/increment"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTituloNatureza"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/title_natureza"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/llControlsHumanas"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llControlsNatureza"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTituloNatureza"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDecrementarNatureza"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2E3A59"
+                    android:contentDescription="@string/cd_decrementar"
+                    android:text="@string/decrement"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp" />
+
+                <EditText
+                    android:id="@+id/etQuantidadeNatureza"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="2"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:gravity="center"
+                    android:hint="@string/hint_zero"
+                    android:textSize="18sp"
+                    android:importantForAutofill="no"
+                    android:background="@android:color/white"
+                    android:layout_marginHorizontal="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIncrementarNatureza"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2E3A59"
+                    android:contentDescription="@string/cd_incrementar"
+                    android:text="@string/increment"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTituloMatematica"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/title_matematica"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@id/llControlsNatureza"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llControlsMatematica"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTituloMatematica"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDecrementarMatematica"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2E3A59"
+                    android:contentDescription="@string/cd_decrementar"
+                    android:text="@string/decrement"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp" />
+
+                <EditText
+                    android:id="@+id/etQuantidadeMatematica"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="2"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:gravity="center"
+                    android:hint="@string/hint_zero"
+                    android:textSize="18sp"
+                    android:importantForAutofill="no"
+                    android:background="@android:color/white"
+                    android:layout_marginHorizontal="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIncrementarMatematica"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2E3A59"
+                    android:contentDescription="@string/cd_incrementar"
+                    android:text="@string/increment"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:cornerRadius="12dp" />
+
+            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGerarProva"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:backgroundTint="#2E3A59"
+                android:text="Gerar Prova"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@id/llControlsMatematica"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
