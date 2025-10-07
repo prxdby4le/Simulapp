@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
-        android:paddingTop="32dp"
+        android:paddingTop="92dp"
         android:paddingRight="24dp"
         android:paddingBottom="32dp">
 
