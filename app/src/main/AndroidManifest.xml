@@ -28,6 +28,12 @@
         <activity
             android:name=".RedacaoActivity"
             android:exported="false" />
+        <activity
+            android:name=".SimuladoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ResultadoSimuladoActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

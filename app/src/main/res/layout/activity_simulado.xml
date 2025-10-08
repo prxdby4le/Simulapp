@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#2E3A59"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@android:color/white"
+        app:title="Simulado"
+        app:titleTextColor="@android:color/white" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvNumeroQuestao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Questão 1 de 10"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/tvTextoApoio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Texto de apoio"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:background="#F5F5F5"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/layoutImagens"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:id="@+id/tvFonte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fonte:"
+                android:textSize="11sp"
+                android:textColor="#888888"
+                android:textStyle="italic"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvEnunciado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enunciado da questão"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="20dp" />
+
+            <RadioGroup
+                android:id="@+id/rgAlternativas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rbAlternativaA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="A) Alternativa A"
+                    android:textSize="15sp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/border_text" />
+
+                <RadioButton
+                    android:id="@+id/rbAlternativaB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="B) Alternativa B"
+                    android:textSize="15sp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/border_text" />
+
+                <RadioButton
+                    android:id="@+id/rbAlternativaC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="C) Alternativa C"
+                    android:textSize="15sp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/border_text" />
+
+                <RadioButton
+                    android:id="@+id/rbAlternativaD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="D) Alternativa D"
+                    android:textSize="15sp"
+                    android:padding="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/border_text" />
+
+                <RadioButton
+                    android:id="@+id/rbAlternativaE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="E) Alternativa E"
+                    android:textSize="15sp"
+                    android:padding="12dp"
+                    android:background="@drawable/border_text" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:background="@android:color/white"
+        android:elevation="8dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnProxima"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Próxima"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            app:backgroundTint="#2E3A59"
+            app:cornerRadius="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFinalizar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Finalizar Simulado"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            app:backgroundTint="#4CAF50"
+            app:cornerRadius="12dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>
