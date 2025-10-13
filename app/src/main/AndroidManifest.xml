@@ -34,6 +34,9 @@
         <activity
             android:name=".ResultadoSimuladoActivity"
             android:exported="false" />
+        <activity
+            android:name=".AnalisarTentativaActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

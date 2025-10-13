@@ -14,7 +14,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "simulapp.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3; // Incrementada para incluir novos campos
 
     private static final String TABLE_QUESTOES = "questoes";
     private static final String COLUMN_ID = "id";
@@ -25,6 +25,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_IMAGEM = "imagem";
     private static final String COLUMN_TEXTO_APOIO = "texto_apoio";
     private static final String COLUMN_FONTE = "fonte";
+    // Novos campos para múltiplos textos de apoio
+    private static final String COLUMN_TEXTO_APOIO_1 = "texto_apoio_1";
+    private static final String COLUMN_TEXTO_APOIO_2 = "texto_apoio_2";
+    private static final String COLUMN_TEXTO_APOIO_3 = "texto_apoio_3";
+    private static final String COLUMN_TEXTO_APOIO_4 = "texto_apoio_4";
+    private static final String COLUMN_REFERENCIA_TEXTO_1 = "referencia_texto_1";
+    private static final String COLUMN_REFERENCIA_TEXTO_2 = "referencia_texto_2";
+    private static final String COLUMN_REFERENCIA_TEXTO_3 = "referencia_texto_3";
+    private static final String COLUMN_REFERENCIA_TEXTO_4 = "referencia_texto_4";
     private static final String COLUMN_ALTERNATIVA_A = "alternativa_a";
     private static final String COLUMN_ALTERNATIVA_B = "alternativa_b";
     private static final String COLUMN_ALTERNATIVA_C = "alternativa_c";
@@ -52,6 +61,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_IMAGEM + " TEXT, "
                 + COLUMN_TEXTO_APOIO + " TEXT, "
                 + COLUMN_FONTE + " TEXT, "
+                + COLUMN_TEXTO_APOIO_1 + " TEXT, "
+                + COLUMN_TEXTO_APOIO_2 + " TEXT, "
+                + COLUMN_TEXTO_APOIO_3 + " TEXT, "
+                + COLUMN_TEXTO_APOIO_4 + " TEXT, "
+                + COLUMN_REFERENCIA_TEXTO_1 + " TEXT, "
+                + COLUMN_REFERENCIA_TEXTO_2 + " TEXT, "
+                + COLUMN_REFERENCIA_TEXTO_3 + " TEXT, "
+                + COLUMN_REFERENCIA_TEXTO_4 + " TEXT, "
                 + COLUMN_ALTERNATIVA_A + " TEXT NOT NULL, "
                 + COLUMN_ALTERNATIVA_B + " TEXT NOT NULL, "
                 + COLUMN_ALTERNATIVA_C + " TEXT NOT NULL, "
@@ -96,6 +113,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_IMAGEM, questao.getImagem());
         values.put(COLUMN_TEXTO_APOIO, questao.getTextoApoio());
         values.put(COLUMN_FONTE, questao.getFonte());
+        values.put(COLUMN_TEXTO_APOIO_1, questao.getTextoApoio1());
+        values.put(COLUMN_TEXTO_APOIO_2, questao.getTextoApoio2());
+        values.put(COLUMN_TEXTO_APOIO_3, questao.getTextoApoio3());
+        values.put(COLUMN_TEXTO_APOIO_4, questao.getTextoApoio4());
+        values.put(COLUMN_REFERENCIA_TEXTO_1, questao.getReferenciaTexto1());
+        values.put(COLUMN_REFERENCIA_TEXTO_2, questao.getReferenciaTexto2());
+        values.put(COLUMN_REFERENCIA_TEXTO_3, questao.getReferenciaTexto3());
+        values.put(COLUMN_REFERENCIA_TEXTO_4, questao.getReferenciaTexto4());
         values.put(COLUMN_ALTERNATIVA_A, questao.getAlternativaA());
         values.put(COLUMN_ALTERNATIVA_B, questao.getAlternativaB());
         values.put(COLUMN_ALTERNATIVA_C, questao.getAlternativaC());
@@ -129,6 +154,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 questao.setImagem(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGEM)));
                 questao.setTextoApoio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO)));
                 questao.setFonte(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FONTE)));
+                questao.setTextoApoio1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_1)));
+                questao.setTextoApoio2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_2)));
+                questao.setTextoApoio3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_3)));
+                questao.setTextoApoio4(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_4)));
+                questao.setReferenciaTexto1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_1)));
+                questao.setReferenciaTexto2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_2)));
+                questao.setReferenciaTexto3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_3)));
+                questao.setReferenciaTexto4(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_4)));
                 questao.setAlternativaA(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_A)));
                 questao.setAlternativaB(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_B)));
                 questao.setAlternativaC(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_C)));
@@ -160,6 +193,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (qtdMatematica > 0) {
             todasQuestoes.addAll(getQuestoesPorArea(AREA_MATEMATICA, qtdMatematica));
         }
+
+        // Embaralhar as questões para misturar todas as áreas
+        java.util.Collections.shuffle(todasQuestoes);
 
         return todasQuestoes;
     }

@@ -1,14 +1,12 @@
 package com.example.simulapp;
 
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +19,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimuladoActivity extends AppCompatActivity {
+public class AnalisarTentativaActivity extends AppCompatActivity {
 
     private List<Questao> questoes;
     private int questaoAtualIndex = 0;
@@ -30,19 +28,18 @@ public class SimuladoActivity extends AppCompatActivity {
     private TextView tvEnunciado;
     private LinearLayout layoutTextosApoio;
     private LinearLayout layoutImagens;
-    private RadioGroup rgAlternativas;
-    private RadioButton rbAlternativaA;
-    private RadioButton rbAlternativaB;
-    private RadioButton rbAlternativaC;
-    private RadioButton rbAlternativaD;
-    private RadioButton rbAlternativaE;
+    private TextView tvAlternativaA;
+    private TextView tvAlternativaB;
+    private TextView tvAlternativaC;
+    private TextView tvAlternativaD;
+    private TextView tvAlternativaE;
+    private Button btnAnterior;
     private Button btnProxima;
-    private Button btnFinalizar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simulado);
+        setContentView(R.layout.activity_analisar_tentativa);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,16 +53,15 @@ public class SimuladoActivity extends AppCompatActivity {
         tvEnunciado = findViewById(R.id.tvEnunciado);
         layoutTextosApoio = findViewById(R.id.layoutTextosApoio);
         layoutImagens = findViewById(R.id.layoutImagens);
-        rgAlternativas = findViewById(R.id.rgAlternativas);
-        rbAlternativaA = findViewById(R.id.rbAlternativaA);
-        rbAlternativaB = findViewById(R.id.rbAlternativaB);
-        rbAlternativaC = findViewById(R.id.rbAlternativaC);
-        rbAlternativaD = findViewById(R.id.rbAlternativaD);
-        rbAlternativaE = findViewById(R.id.rbAlternativaE);
+        tvAlternativaA = findViewById(R.id.tvAlternativaA);
+        tvAlternativaB = findViewById(R.id.tvAlternativaB);
+        tvAlternativaC = findViewById(R.id.tvAlternativaC);
+        tvAlternativaD = findViewById(R.id.tvAlternativaD);
+        tvAlternativaE = findViewById(R.id.tvAlternativaE);
+        btnAnterior = findViewById(R.id.btnAnterior);
         btnProxima = findViewById(R.id.btnProxima);
-        btnFinalizar = findViewById(R.id.btnFinalizar);
 
-        questoes = (List<Questao>) getIntent().getSerializableExtra("questoes");
+        questoes = (ArrayList<Questao>) getIntent().getSerializableExtra("questoes");
 
         if (questoes == null || questoes.isEmpty()) {
             Toast.makeText(this, "Nenhuma questão disponível", Toast.LENGTH_SHORT).show();
@@ -75,8 +71,11 @@ public class SimuladoActivity extends AppCompatActivity {
 
         exibirQuestao();
 
-        rgAlternativas.setOnCheckedChangeListener((group, checkedId) -> {
-            salvarResposta();
+        btnAnterior.setOnClickListener(v -> {
+            if (questaoAtualIndex > 0) {
+                questaoAtualIndex--;
+                exibirQuestao();
+            }
         });
 
         btnProxima.setOnClickListener(v -> {
@@ -85,17 +84,13 @@ public class SimuladoActivity extends AppCompatActivity {
                 exibirQuestao();
             }
         });
-
-        btnFinalizar.setOnClickListener(v -> {
-            finalizarSimulado();
-        });
     }
 
     private void exibirQuestao() {
         Questao questao = questoes.get(questaoAtualIndex);
 
         tvNumeroQuestao.setText("Questão " + (questaoAtualIndex + 1) + " de " + questoes.size() +
-                               " - " + questao.getArea() + " (" + questao.getAno() + ")");
+                " - " + questao.getArea() + " (" + questao.getAno() + ")");
         tvEnunciado.setText(questao.getEnunciado());
 
         // Exibir múltiplos textos de apoio
@@ -110,26 +105,25 @@ public class SimuladoActivity extends AppCompatActivity {
                 tvTexto.setText(texto);
                 tvTexto.setTextSize(14);
 
-                // Alternar entre texto de apoio (escuro) e referência (cinza/itálico/direita)
                 if (texto.startsWith("Fonte:") || texto.contains("Disponível em:") || texto.contains("Acesso em:")) {
                     tvTexto.setTextColor(getResources().getColor(R.color.colorTextoFonte));
                     tvTexto.setTypeface(null, android.graphics.Typeface.ITALIC);
                     tvTexto.setTextSize(11);
-                    tvTexto.setGravity(android.view.Gravity.END); // Alinhar à direita
+                    tvTexto.setGravity(android.view.Gravity.END);
                 } else {
                     tvTexto.setTextColor(getResources().getColor(R.color.colorTextoApoio));
                     tvTexto.setBackground(getResources().getDrawable(R.drawable.border_text));
                     tvTexto.setPadding(
-                        (int) (12 * getResources().getDisplayMetrics().density),
-                        (int) (12 * getResources().getDisplayMetrics().density),
-                        (int) (12 * getResources().getDisplayMetrics().density),
-                        (int) (12 * getResources().getDisplayMetrics().density)
+                            (int) (12 * getResources().getDisplayMetrics().density),
+                            (int) (12 * getResources().getDisplayMetrics().density),
+                            (int) (12 * getResources().getDisplayMetrics().density),
+                            (int) (12 * getResources().getDisplayMetrics().density)
                     );
                 }
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
                 );
                 params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
                 tvTexto.setLayoutParams(params);
@@ -170,60 +164,70 @@ public class SimuladoActivity extends AppCompatActivity {
             layoutImagens.setVisibility(View.GONE);
         }
 
-        rbAlternativaA.setText("A) " + questao.getAlternativaA());
-        rbAlternativaB.setText("B) " + questao.getAlternativaB());
-        rbAlternativaC.setText("C) " + questao.getAlternativaC());
-        rbAlternativaD.setText("D) " + questao.getAlternativaD());
-        rbAlternativaE.setText("E) " + questao.getAlternativaE());
+        // Exibir alternativas com indicação visual
+        tvAlternativaA.setText("A) " + questao.getAlternativaA());
+        tvAlternativaB.setText("B) " + questao.getAlternativaB());
+        tvAlternativaC.setText("C) " + questao.getAlternativaC());
+        tvAlternativaD.setText("D) " + questao.getAlternativaD());
+        tvAlternativaE.setText("E) " + questao.getAlternativaE());
 
-        if (questao.isRespondida()) {
-            switch (questao.getRespostaUsuario().toUpperCase()) {
-                case "A": rgAlternativas.check(R.id.rbAlternativaA); break;
-                case "B": rgAlternativas.check(R.id.rbAlternativaB); break;
-                case "C": rgAlternativas.check(R.id.rbAlternativaC); break;
-                case "D": rgAlternativas.check(R.id.rbAlternativaD); break;
-                case "E": rgAlternativas.check(R.id.rbAlternativaE); break;
-            }
-        } else {
-            rgAlternativas.clearCheck();
+        // Resetar estilos
+        resetarAlternativa(tvAlternativaA);
+        resetarAlternativa(tvAlternativaB);
+        resetarAlternativa(tvAlternativaC);
+        resetarAlternativa(tvAlternativaD);
+        resetarAlternativa(tvAlternativaE);
+
+        // Aplicar estilos de acordo com resposta
+        String respostaCorreta = questao.getRespostaCorreta().toUpperCase();
+        String respostaUsuario = questao.getRespostaUsuario() != null ? questao.getRespostaUsuario().toUpperCase() : "";
+
+        // Marcar a resposta correta com borda verde e ✓
+        marcarAlternativaCorreta(getTextViewPorLetra(respostaCorreta), respostaCorreta);
+
+        // Se o usuário errou, marcar a resposta dele com borda vermelha e traço
+        if (!respostaUsuario.isEmpty() && !respostaUsuario.equals(respostaCorreta)) {
+            marcarAlternativaErrada(getTextViewPorLetra(respostaUsuario), respostaUsuario);
         }
 
-        if (questaoAtualIndex == questoes.size() - 1) {
-            btnProxima.setVisibility(View.GONE);
-            btnFinalizar.setVisibility(View.VISIBLE);
-        } else {
-            btnProxima.setVisibility(View.VISIBLE);
-            btnFinalizar.setVisibility(View.GONE);
+        // Controle de navegação
+        btnAnterior.setEnabled(questaoAtualIndex > 0);
+        btnProxima.setEnabled(questaoAtualIndex < questoes.size() - 1);
+    }
+
+    private TextView getTextViewPorLetra(String letra) {
+        switch (letra) {
+            case "A": return tvAlternativaA;
+            case "B": return tvAlternativaB;
+            case "C": return tvAlternativaC;
+            case "D": return tvAlternativaD;
+            case "E": return tvAlternativaE;
+            default: return null;
         }
     }
 
-    private void salvarResposta() {
-        int selectedId = rgAlternativas.getCheckedRadioButtonId();
-        if (selectedId == -1) return;
-
-        String resposta = "";
-        if (selectedId == R.id.rbAlternativaA) resposta = "A";
-        else if (selectedId == R.id.rbAlternativaB) resposta = "B";
-        else if (selectedId == R.id.rbAlternativaC) resposta = "C";
-        else if (selectedId == R.id.rbAlternativaD) resposta = "D";
-        else if (selectedId == R.id.rbAlternativaE) resposta = "E";
-
-        questoes.get(questaoAtualIndex).setRespostaUsuario(resposta);
+    private void resetarAlternativa(TextView tv) {
+        tv.setBackground(getResources().getDrawable(R.drawable.border_text));
+        tv.setPaintFlags(tv.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        tv.setTextColor(Color.BLACK);
     }
 
-    private void finalizarSimulado() {
-        int acertos = 0;
-        for (Questao questao : questoes) {
-            if (questao.isCorreta()) {
-                acertos++;
-            }
+    private void marcarAlternativaCorreta(TextView tv, String letra) {
+        if (tv != null) {
+            tv.setBackground(getResources().getDrawable(R.drawable.border_correct));
+            tv.setTextColor(Color.parseColor("#2E7D32"));
+            // Adicionar ✓ antes da letra
+            String textoOriginal = tv.getText().toString();
+            tv.setText("✓ " + textoOriginal);
         }
+    }
 
-        Intent intent = new Intent(this, ResultadoSimuladoActivity.class);
-        intent.putExtra("questoes", (ArrayList<Questao>) questoes);
-        intent.putExtra("acertos", acertos);
-        intent.putExtra("total", questoes.size());
-        startActivity(intent);
-        finish();
+    private void marcarAlternativaErrada(TextView tv, String letra) {
+        if (tv != null) {
+            tv.setBackground(getResources().getDrawable(R.drawable.border_wrong));
+            tv.setTextColor(Color.parseColor("#C62828"));
+            // Adicionar traço no texto
+            tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
     }
 }

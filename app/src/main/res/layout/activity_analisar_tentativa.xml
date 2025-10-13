@@ -15,7 +15,7 @@
         android:elevation="4dp"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:navigationIconTint="@android:color/white"
-        app:title="Simulado"
+        app:title="Análise da Tentativa"
         app:titleTextColor="@android:color/white" />
 
     <androidx.core.widget.NestedScrollView
@@ -67,14 +67,14 @@
                 android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="20dp" />
 
-            <RadioGroup
-                android:id="@+id/rgAlternativas"
+            <LinearLayout
+                android:id="@+id/layoutAlternativas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/rbAlternativaA"
+                <TextView
+                    android:id="@+id/tvAlternativaA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="A) Alternativa A"
@@ -83,8 +83,8 @@
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/border_text" />
 
-                <RadioButton
-                    android:id="@+id/rbAlternativaB"
+                <TextView
+                    android:id="@+id/tvAlternativaB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="B) Alternativa B"
@@ -93,8 +93,8 @@
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/border_text" />
 
-                <RadioButton
-                    android:id="@+id/rbAlternativaC"
+                <TextView
+                    android:id="@+id/tvAlternativaC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="C) Alternativa C"
@@ -103,8 +103,8 @@
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/border_text" />
 
-                <RadioButton
-                    android:id="@+id/rbAlternativaD"
+                <TextView
+                    android:id="@+id/tvAlternativaD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="D) Alternativa D"
@@ -113,8 +113,8 @@
                     android:layout_marginBottom="8dp"
                     android:background="@drawable/border_text" />
 
-                <RadioButton
-                    android:id="@+id/rbAlternativaE"
+                <TextView
+                    android:id="@+id/tvAlternativaE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="E) Alternativa E"
@@ -122,7 +122,7 @@
                     android:padding="12dp"
                     android:background="@drawable/border_text" />
 
-            </RadioGroup>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -137,28 +137,32 @@
         android:elevation="8dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnProxima"
-            android:layout_width="match_parent"
+            android:id="@+id/btnAnterior"
+            android:layout_width="0dp"
             android:layout_height="56dp"
-            android:text="Próxima"
+            android:layout_weight="1"
+            android:text="Anterior"
             android:textAllCaps="false"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@android:color/white"
             app:backgroundTint="#2E3A59"
-            app:cornerRadius="12dp" />
+            app:cornerRadius="12dp"
+            android:layout_marginEnd="8dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnFinalizar"
-            android:layout_width="match_parent"
+            android:id="@+id/btnProxima"
+            android:layout_width="0dp"
             android:layout_height="56dp"
-            android:text="Finalizar Simulado"
+            android:layout_weight="1"
+            android:text="Próxima"
             android:textAllCaps="false"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@android:color/white"
-            app:backgroundTint="#4CAF50"
+            app:backgroundTint="#2E3A59"
             app:cornerRadius="12dp"
-            android:visibility="gone" />
+            android:layout_marginStart="8dp" />
 
     </LinearLayout>
 
 </LinearLayout>
+

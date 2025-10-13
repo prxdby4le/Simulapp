@@ -55,6 +55,18 @@
             android:layout_marginBottom="48dp" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAnalisarTentativa"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Analisar Tentativa"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            app:backgroundTint="#4CAF50"
+            app:cornerRadius="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnVoltar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -68,4 +80,3 @@
     </LinearLayout>
 
 </LinearLayout>
-
