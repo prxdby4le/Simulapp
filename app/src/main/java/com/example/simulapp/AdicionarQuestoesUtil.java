@@ -240,34 +240,165 @@ public class AdicionarQuestoesUtil {
         databaseHelper.inserirQuestao(q13);
 
         // Questão 14 -
-
+        Questao q14 = new Questao();
+        q14.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q14.setAno(2024);
+        q14.setNumero(6);
+        q14.setTextoApoio("Expressões e termos utilizados no Amazonas são retratados em livro e em camisetas “Na linguagem, podemos nos ver da forma mais verdadeira: nossas crenças, nossos valores, nosso lugar no mundo”, afirmou o doutor em linguística e professor da Ufam em seu livro Amazonês: expressões e termos usados no Amazonas. Portanto, o amazonense, com todas as suas “cunhantãs” e “curumins”, acaba por encontrar um lugar no mundo e formar uma unidade linguística, informalmente denominada de português “caboco”, que muito se diferencia do português “mineiro”, “gaúcho”, “carioca” e de tantos outros espalhados pelo Brasil. O livro, que conta com cerca de 1100 expressões e termos típicos do falar amazonense, levou dez anos para ser construído. Para o autor, o principal objetivo da obra é registrar a linguagem. Um designer amazonense também acha o amazonês “xibata”, tanto é que criou uma série de camisetas estampadas com o nome de Caboquês Ilustrado, que mistura o bom humor com as expressões típicas da região. A coleção conta com sete modelos já lançados, entre eles: Leseira Baré, Xibata no Balde e Até o Tucupi, e 43 ainda na fila de espera. Para o criador, as camisas têm como objetivo “resgatar o orgulho do povo manauara, do povo do Norte”.");
+        q14.setFonte("Disponível em: https://g1.globo.com. Acesso em: 15 jan. 2024 (adaptado).");
+        q14.setEnunciado("A reportagem apresenta duas iniciativas: o livro Amazonês e as camisetas do Caboquês Ilustrado. Com temática em comum, essas iniciativas");
+        q14.setAlternativaA("recomendam produtos feitos por empreendedores da região Norte.");
+        q14.setAlternativaB("ressaltam diferenças entre o falar manauara e outros falares.");
+        q14.setAlternativaC("reverenciam o trabalho feito por pesquisadores brasileiros.");
+        q14.setAlternativaD("destacam a descontração no jeito de ser do amazonense.");
+        q14.setAlternativaE("valorizam o repertório linguístico do povo do Amazonas.");
+        q14.setRespostaCorreta("E");
+        databaseHelper.inserirQuestao(q14);
 
         // Questão 15 -
-
+        Questao q15 = new Questao();
+        q15.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q15.setAno(2024);
+        q15.setNumero(7);
+        q15.setTextoApoio("Conheça histórias de atletas paralímpicas que trocaram de modalidade durante a carreira esportiva Jane Karla: a goiana de 45 anos teve poliomielite aos três anos, o que prejudicou seus movimentos das pernas. Em 2003, iniciou no tênis de mesa e conseguiu conquistar títulos nacionais e internacionais. Mas conheceu o tiro com arco e, em 2015, optou por se dedicar somente à nova modalidade. Em seu ano de estreia no tiro, já faturou a medalha de ouro nos Jogos Parapan-Americanos de Toronto 2015. Elizabeth Gomes: a santista de 55 anos era jogadora de vôlei quando foi diagnosticada com esclerose múltipla em 1993. Ingressou no Movimento Paralímpico pelo basquete em cadeira de rodas até experimentar o atletismo. Chegou a praticar as duas modalidades simultaneamente até optar pelas provas de campo em 2010. No Campeonato Mundial de Atletismo, realizado em Dubai, em 2019, Beth se sagrou campeã do lançamento de disco e estabeleceu um novo recorde mundial da classe F52. Silvana Fernandes: a paraibana de 21 anos é natural de São Bento e nasceu com malformação no braço direito. Aos 15 anos, começou a praticar atletismo no lançamento de dardo. Em 2018, enquanto competia na regional Norte-Nordeste, foi convidada para conhecer o paratae kwon do. No ano seguinte, migrou para a modalidade e já faturou o ouro na categoria até 58 kg nos Jogos Parapan-Americanos de Lima 2019.");
+        q15.setFonte("Disponível em: https://cpb.org.br. Acesso em: 15 jan. 2024 (adaptado).");
+        q15.setEnunciado("Esse conjunto de minibiografias tem como propósito");
+        q15.setAlternativaA("descrever as rotinas de treinamento das atletas.");
+        q15.setAlternativaB("comparar os desempenhos de atletas de alto rendimento.");
+        q15.setAlternativaC("destacar a trajetória profissional de atletas paralímpicas brasileiras.");
+        q15.setAlternativaD("indicar as categorias mais adequadas a adaptações paralímpicas.");
+        q15.setAlternativaE("estimular a participação de mulheres em campeonatos internacionais.");
+        q15.setRespostaCorreta("C");
+        databaseHelper.inserirQuestao(q15);
 
         // Questão 16 -
-
+        Questao q16 = new Questao();
+        q16.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q16.setAno(2024);
+        q16.setNumero(8);
+        q16.setTextoApoio("É fundamentalmente no Minho, norte de Portugal, que o cavaquinho aparece como instrumento tipicamente popular, ligado às formas essenciais da música característica dessa província. O cavaquinho minhoto tem escala rasa com o tampo, o que facilita a prática do “rasqueado”. O cavaquinho chega ao Brasil diretamente de Portugal, e o modelo brasileiro é maior do que a sua versão portuguesa, com uma caixa de ressonância mais funda. Semelhante ao cavaquinho minhoto, o machete, ou machetinho madeirense, é um pequeno cordófono de corda dedilhada, que faz parte da grande e diversificada família das violas de mão portuguesas. O ukulele tem a sua origem no século XIX, tendo como ancestrais o braguinha (ou machete) e o rajão, instrumentos levados pelos madeirenses quando eles emigraram para o Havaí.");
+        q16.setFonte("OLIVEIRA, E. V. Cavaquinhos e família. Disponível em: https://casadaguitarra.pt. Acesso em: 18 nov. 2021 (adaptado).");
+        q16.setEnunciado("O conjunto dessas práticas musicais demonstra que os instrumentos mencionados no texto");
+        q16.setAlternativaA("refletem a dependência da utilização de matéria-prima europeia.");
+        q16.setAlternativaB("adaptam suas características a cada cultura, assumindo nova identidade.");
+        q16.setAlternativaC("comprovam a hegemonia portuguesa na invenção de cordófonos dedilhados.");
+        q16.setAlternativaD("ilustram processos de dominação cultural, evidenciando situações de choque cultural.");
+        q16.setAlternativaE("mantêm nomenclatura própria para garantir a fidelidade às formas originais de confecção.");
+        q16.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q16);
 
         // Questão 17 -
-
+        Questao q17 = new Questao();
+        q17.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q17.setAno(2024);
+        q17.setNumero(9);
+        q17.setTextoApoio("Pressão, depressão, estresse e crise de ansiedade. Os males da sociedade contemporânea também estão no esporte. A tenista Naomi Osaka, do Japão, jogadora mais bem paga do mundo e que já ocupou o número 2 do ranking, retirou-se do torneio de Roland Garros de 2021 porque não estava conseguindo administrar as crises de ansiedade provocadas pelos grandes eventos, por ser uma estrela aos 23 anos, e pelo peso de parte da imprensa. O tenista australiano Nick Kyrgios, de 25 anos, revelou sua “situação triste e solitária” enquanto lutava contra a depressão causada pelo ritmo avassalador do Circuito Mundial de Tênis. O jogador de basquete americano Kevin Love também tornou público seu quadro de ansiedade e depressão. O mundo do atleta é solitário e distante da família. O que vemos numa partida não reflete a rotina desgastante. A imprensa denomina atletas como heróis, como se aquele corpo fosse indestrutível, mas a mente é o ponto fraco da história.");
+        q17.setFonte("Disponível em: www.uol.com.br. Acesso em: 31 out. 2021 (adaptado).");
+        q17.setEnunciado("As causas do desequilíbrio na saúde mental apontadas no texto estão relacionadas às");
+        q17.setAlternativaA("nacionalidades diversificadas dos praticantes.");
+        q17.setAlternativaB("modalidades esportivas distintas.");
+        q17.setAlternativaC("faixas etárias aproximadas.");
+        q17.setAlternativaD("representações heroicas dos atletas.");
+        q17.setAlternativaE("pressões constantes dos eventos e da mídia.");
+        q17.setRespostaCorreta("E");
+        databaseHelper.inserirQuestao(q17);
 
         // Questão 18 -
-
+        Questao q18 = new Questao();
+        q18.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q18.setAno(2024);
+        q18.setNumero(10);
+        q18.setTextoApoio("Já ouvi gente falando que o podcast é o renascimento do rádio. O rádio é genial, uma mídia imorredoura, mas podcast não tem nada a ver com ele. O formato está mais próximo do ensaio literário do que de um programa de ondas curtas, médias ou longas. \n" + "Podcasts são antípodas das redes sociais. Enquanto elas são dispersivas, levam à evasão e à desinformação, os podcasts são uma possibilidade de imersão, concentração, aprendizado. Depois que eles surgiram, lavar a louça e me locomover pela cidade viraram um programaço. Um pós-almoço de domingo e aprendo tudo sobre bonobos e gorilas. Um táxi pro aeroporto e chego ao embarque PhD em reforma tributária.");
+        q18.setFonte("PRATA, A. Disponível em: www1.folha.uol.com.br. Acesso em: 7 jan. 2024 (adaptado).");
+        q18.setEnunciado("Segundo a argumentação construída nesse texto, o podcast");
+        q18.setAlternativaA("provoca dispersão da atenção em seu público.");
+        q18.setAlternativaB("funciona por meio de uma frequência de ondas curtas.");
+        q18.setAlternativaC("propicia divulgação de conhecimento para seus usuários.");
+        q18.setAlternativaD("tem um formato de interação semelhante ao das redes sociais.");
+        q18.setAlternativaE("constitui uma evolução na transmissão de informações via rádio.");
+        q18.setRespostaCorreta("C");
+        databaseHelper.inserirQuestao(q18);
 
         // Questão 19 -
-
+        Questao q19 = new Questao();
+        q19.setArea(DatabaseHelper.AREA_HUMANAS);
+        q19.setAno(2024);
+        q19.setNumero(51);
+        q19.setTextoApoio("A valsa vienense é a mais antiga das danças de salão tradicional. É dançada desde a Idade Média, quando os pares davam voltas pelo salão realizando giros em torno de si mesmos em postura fechada. Pelo fato de ser dançada aos pares em contato íntimo, a valsa encantava a sociedade medieval, como também sofria proibições por infringir os “bons costumes”. Originária das danças campestres e folclóricas, no século XVI, a aristocracia francesa abandonou a valsa por sua estreita relação com a cultura plebeia, retomando-a posteriormente.");
+        q19.setFonte("FRANCO, N.; FERREIRA, N. Evolução da dança no contexto histórico: aproximações iniciais com o tema. R");
+        q19.setEnunciado("A expressão cultural descrita no texto foi rejeitada no início da Idade Moderna por congregar\n");
+        q19.setAlternativaA("traços advindos da feitiçaria nórdica.");
+        q19.setAlternativaB("práticas inspiradas em rituais pagãos.");
+        q19.setAlternativaC("regras decorrentes do período renascentista.");
+        q19.setAlternativaD("compassos produzidos em territórios colonizados.\n");
+        q19.setAlternativaE("elementos provenientes de segmentos populares.\n");
+        q19.setRespostaCorreta("E");
+        databaseHelper.inserirQuestao(q19);
 
         // Questão 20 -
-
+        Questao q20 = new Questao();
+        q20.setArea(DatabaseHelper.AREA_HUMANAS);
+        q20.setAno(2024);
+        q20.setNumero(52);
+        q20.setTextoApoio("O Black Lives Matter vai para além do nacionalismo estreito que pode prevalecer no seio das comunidades negras, que se limita a apelar aos negros a amar os negros, viver como os negros e comprar produtos dos negros, e mantém à frente do movimento homens negros heterossexuais. Black Lives Matter estima as vidas dos negros e negras homossexuais e transexuais, pessoas incapacitadas, negros sem documentos ou com antecedentes criminais, mulheres e as vidas de todos os negros de todo o espectro de gêneros.");
+        q20.setFonte("LA BOTZ, D. O movimento Black Lives Matter organiza-se e procura definir-se politicamente. Disponível em: www.ufes.br. Acesso em: 4 out. 2021 (adaptado).");
+        q20.setEnunciado("A reivindicação do movimento norte-americano apresentada no texto consiste na necessidade de");
+        q20.setAlternativaA("manter a conquista de direitos sociais.");
+        q20.setAlternativaB("integrar a diversidade do grupo identitário.");
+        q20.setAlternativaC("priorizar a preservação de culturas africanas.");
+        q20.setAlternativaD("defender a adoção de valores supremacistas.");
+        q20.setAlternativaE("permitir a permanência do modelo androcêntrico.");
+        q20.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q20);
 
         // Questão 21 -
-
+        Questao q21 = new Questao();
+        q21.setArea(DatabaseHelper.AREA_HUMANAS);
+        q21.setAno(2024);
+        q21.setNumero(53);
+        q21.setTextoApoio("Diferenças entre inundação gradual e brusca");
+        q21.setImagens("questao53_img1_humanas_2024.png");
+        q21.setFonte("TOMINAGA, L. K.; SANTORO, J.; AMARAL, R. Desastres naturais: conhecer para prevenir. São Paulo: Instituto Geológico, 2009 (adaptado)");
+        q21.setEnunciado("A desproporção de velocidade e tempo de duração nos tipos de inundação destacados é condicionada pela");
+        q21.setAlternativaA("variabilidade solar anual.");
+        q21.setAlternativaB("temperatura média mensal.");
+        q21.setAlternativaC("declividade do relevo local.");
+        q21.setAlternativaD("dinâmica tectônica regional.");
+        q21.setAlternativaE("gradação da turbidez fluvial.");
+        q21.setRespostaCorreta("C");
+        databaseHelper.inserirQuestao(q21);
 
         // Questão 22 -
-
+        Questao q22 = new Questao();
+        q22.setArea(DatabaseHelper.AREA_HUMANAS);
+        q22.setAno(2024);
+        q22.setNumero(54);
+        q22.setTextoApoio("Os grupos dominantes são beneficiados em termos de credibilidade e podem, com isso, controlar falas de membros de outros grupos, descredibilizando seus testemunhos com base em concepções compartilhadas de preconceito de identidade (gênero e raça). Algumas formas de preconceito tornam as declarações das pessoas menos importantes devido ao seu pertencimento a determinado grupo social. Assim, um falante recebe menos credibilidade devido ao preconceito do ouvinte.");
+        q22.setFonte("KUHNEN, T. Resenha de The Power and Ethics of Knowing, de Miranda Fricker. Revista Princípios, n. 33, 2013.");
+        q22.setEnunciado("Com base na reflexão suscitada no texto, o preconceito de identidade é responsável por um tipo de injustiça");
+        q22.setAlternativaA("estética, que normatiza os padrões corporais.");
+        q22.setAlternativaB("sensorial, que privilegia as habilidades visuais.");
+        q22.setAlternativaC("afetiva, que impede as expressões emocionais.");
+        q22.setAlternativaD("epistêmica, que prejudica as trocas informacionais.");
+        q22.setAlternativaE("econômica, que perpetua as desigualdades materiais.");
+        q22.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q22);
 
         // Questão 23 -
-
+        Questao q23 = new Questao();
+        q23.setArea(DatabaseHelper.AREA_HUMANAS);
+        q23.setAno(2024);
+        q23.setNumero(55);
+        q23.setTextoApoio("A alma funciona no meu corpo de maneira maravilhosa. Nele se aloja, certamente, mas sabe bem dele escapar: escapa para ver as coisas através da janela dos meus olhos, escapa para sonhar quando durmo, para sobreviver quando morro. Minha alma durará muito tempo e mais que muito tempo, quando meu corpo vier a apodrecer. Viva minha alma! É meu corpo luminoso, purificado, virtuoso, ágil, móvel, tépido, viçoso; é meu corpo liso, castrado, arredondado como uma bolha de sabão.");
+        q23.setFonte("FOUCAULT, M. O corpo utópico, as heterotopias. São Paulo: Edições N-1, 2013.");
+        q23.setEnunciado("Esse texto reforça uma concepção metafísica clássica que remete a um(a)");
+        q23.setAlternativaA("pressuposto lógico.");
+        q23.setAlternativaB("pensamento dicotômico.");
+        q23.setAlternativaC("contemplação da natureza.");
+        q23.setAlternativaD("raciocínio argumentativo.");
+        q23.setAlternativaE("crítica à individualidade");
+        q23.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q23);
 
         // Questão 24 -
 
