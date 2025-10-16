@@ -401,46 +401,244 @@ public class AdicionarQuestoesUtil {
         databaseHelper.inserirQuestao(q23);
 
         // Questão 24 -
-
+        Questao q24 = new Questao();
+        q24.setArea(DatabaseHelper.AREA_NATUREZA);
+        q24.setAno(2024);
+        q24.setNumero(94);
+        q24.setTextoApoio("A nimesulida é um fármaco pouco solúvel em água, utilizado como anti-inflamatório, analgésico e antitérmico. Essa substância pode ser convertida em uma espécie eletricamente carregada, de maior solubilidade em água, mediante o tratamento com uma base de Brönsted-Lowry, isto é, uma espécie química capaz de capturar um próton (H+). Na figura são apresentados os grupamentos presentes na estrutura química da nimesulida.");
+        q24.setImagens("questao94_img1_natureza_2024.png");
+        q24.setFonte("GONÇALVES, A. A. et al. Contextualizando reações ácido-base de acordo com a teoria protônica de Brönsted-Lowry usando comprimidos de propranolol e nimesulida. Química Nova, n. 3, 2013 (adaptado).");
+        q24.setEnunciado("Na estrutura desse fármaco, o grupamento capaz de reagir com a base de Brönsted-Lowry é o grupo");
+        q24.setAlternativaA("sulfonamida.");
+        q24.setAlternativaB("metila.");
+        q24.setAlternativaC("fenila.");
+        q24.setAlternativaD("nitro.");
+        q24.setAlternativaE("éter.");
+        q24.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q24);
 
         // Questão 25 -
-
+        Questao q25 = new Questao();
+        q25.setArea(DatabaseHelper.AREA_NATUREZA);
+        q25.setAno(2024);
+        q25.setNumero(95);
+        q25.setTextoApoio("O desenvolvimento da biotecnologia e da clonagem gênica em procariotos fez com que a produção de proteínas se tornasse mais intensa, rápida e econômica. Para a produção de hormônios, enzimas e proteínas de resistência a drogas, uma variação da técnica de reação em cadeia pela polimerase (PCR, na sigla em inglês) utiliza a enzima transcriptase reversa (RT-PCR), que sintetiza moléculas de DNA complementares a partir de fitas de RNA.");
+        q25.setEnunciado("Nesse contexto, essa técnica é importante para detectar genes");
+        q25.setAlternativaA("expressos.");
+        q25.setAlternativaB("plasmidiais.");
+        q25.setAlternativaC("bacterianos.\n");
+        q25.setAlternativaD("dominantes.");
+        q25.setAlternativaE("autossômicos.");
+        q25.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q25);
 
         // Questão 26 -
-
+        Questao q26 = new Questao();
+        q26.setArea(DatabaseHelper.AREA_NATUREZA);
+        q26.setAno(2024);
+        q26.setNumero(96);
+        q26.setTextoApoio("Nos automóveis, é importante garantir que o centro de massa (CM) de cada conjunto roda/pneu coincida com o seu centro geométrico. Esse processo é realizado em uma máquina de balanceamento, na qual o conjunto roda e pneu é colocado para girar a uma velocidade de valor constante. Com base nas oscilações medidas, a máquina indica a posição do centro de massa do conjunto, e pequenas peças de chumbo são fixadas em lugares específicos da roda até que as vibrações diminuam. Durante o treinamento de sua equipe, a fim de corrigir a posição do centro de massa indicada pela máquina, um mecânico apresenta o esquema a seguir, com cinco possíveis pontos da roda para posicionar uma peça de chumbo.");
+        q26.setImagens("questao96_im1_natureza_2024.png");
+        q26.setEnunciado("Em qual ponto deve ser fixada a peça de chumbo para corrigir a posição do centro de massa desse conjunto roda/pneu?");
+        q26.setAlternativaA("1");
+        q26.setAlternativaB("2");
+        q26.setAlternativaC("3");
+        q26.setAlternativaD("4");
+        q26.setAlternativaE("5");
+        q26.setRespostaCorreta("C");
+        databaseHelper.inserirQuestao(q26);
 
         // Questão 27 -
-
+        Questao q27 = new Questao();
+        q27.setArea(DatabaseHelper.AREA_NATUREZA);
+        q27.setAno(2024);
+        q27.setNumero(97);
+        q27.setTextoApoio1("O soro caseiro serve para combater a desidratação por meio da reposição da água e sais minerais perdidos, por exemplo, por diarreia. Uma receita simples para a sua preparação consiste em utilizar duas colheres grandes (de sopa) de açúcar e duas colheres pequenas (de café) de sal de cozinha, dissolvidos em 2 L de água fervida, obtendo-se uma solução com concentração de íon sódio de 1,4 mg/mL.");
+        q27.setTextoApoio2("Considere as massas molares: NaCl = 58,5 g/mol; Na = 23 g/mol.");
+        q27.setEnunciado("Qual é o valor mais próximo da massa, em grama, de cloreto de sódio presente em uma única colher pequena?");
+        q27.setAlternativaA("0,7 g");
+        q27.setAlternativaB("1,8 g");
+        q27.setAlternativaC("2,8 g");
+        q27.setAlternativaD("3,6 g");
+        q27.setAlternativaE("7,0 g");
+        q27.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q27);
 
         // Questão 28 -
-
+        Questao q28 = new Questao();
+        q28.setArea(DatabaseHelper.AREA_NATUREZA);
+        q28.setAno(2024);
+        q28.setNumero(7);
+        q28.setTextoApoio("Apesar de os animais representados no cladograma compartilharem um mesmo ancestral, eles se caracterizam por distintos padrões de reprodução ou de nutrição dos embriões e descendentes.");
+        q28.setImagens("questao98_img1_natureza_2024.png");
+        q28.setFonte("DIXSON, A. F. Mammalian Sexuality: The Act of Mating and the Evolution of Reproduction. Disponível em: www.cambridge.org. Acesso em: 2 jul. 2024 (adaptado).");
+        q28.setEnunciado("Ao longo do processo evolutivo, percebem-se, entre esses animais, perdas e ganhos nos padrões citados que envolvem o(a)");
+        q28.setAlternativaA("aumento no número de descendentes por ninhada.");
+        q28.setAlternativaB("mudança no tipo de fecundação de externa para interna.");
+        q28.setAlternativaC("redução da versatilidade de reprodução, que se torna unicamente sexuada.");
+        q28.setAlternativaD("desenvolvimento embrionário, que passa do meio aquático para o terrestre.");
+        q28.setAlternativaE("diminuição da vesícula vitelínica, associada ao desenvolvimento da lactação.");
+        q28.setRespostaCorreta("E");
+        databaseHelper.inserirQuestao(q28);
 
         // Questão 29 -
-
+        Questao q29 = new Questao();
+        q29.setArea(DatabaseHelper.AREA_NATUREZA);
+        q29.setAno(2024);
+        q29.setNumero(99);
+        q29.setTextoApoio("Uma ambulância em alta velocidade com a sirene ligada desloca-se em direção a um radar operado por uma pessoa. O radar emite ondas de rádio com frequência f 0 que são refletidas pela dianteira da ambulância, retornando para o detector com frequência f r . A percepção do operador do radar, em relação ao som emitido pela sirene, é de que este se altera à medida que a ambulância se aproxima ou se afasta.");
+        q29.setEnunciado("Durante a aproximação, como o operador percebe o som da sirene e qual é a relação entre as frequências f r e f 0 medidas pelo radar?");
+        q29.setAlternativaA("Mais grave do que o som emitido e f r < f 0.");
+        q29.setAlternativaB("Mais agudo do que o som emitido e f r < f 0.");
+        q29.setAlternativaC("Mais agudo do que o som emitido e f r = f 0.");
+        q29.setAlternativaD("Mais agudo do que o som emitido e f r > f 0.");
+        q29.setAlternativaE("Mais grave do que o som emitido e f r > f 0.");
+        q29.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q29);
 
         // Questão 30 -
-
+        Questao q30 = new Questao();
+        q30.setArea(DatabaseHelper.AREA_NATUREZA);
+        q30.setAno(2024);
+        q30.setNumero(100);
+        q30.setTextoApoio("Mirascópio 3D: produtor de ilusão instantânea O equipamento ilustrado na figura, de dimensões apresentadas no esquema, é composto por dois espelhos côncavos E1 e E2, apoiados um sobre o outro por suas bordas, de tal forma que o vértice de E1 coincide com o foco de E2 e vice-versa. Na abertura circular de E2, é formada uma imagem tridimensional de um objeto posicionado sobre o vértice de E1. Essa imagem é formada a partir dos raios procedentes do objeto, refletidos por E2 e E1, respectivamente, conforme o esquema. Os observadores julgam visualizar o objeto quando estão, de fato, visualizando sua imagem. O efeito só é possível porque as superfícies de ambos os espelhos são de extrema qualidade.");
+        q30.setImagens("questao100_img1_natureza_2024.png");
+        q30.setFonte("SALZMANN, W. Disponível em: https://wissenstexte.de. Acesso em: 27 jun. 2024 (adaptado).");
+        q30.setEnunciado("A natureza da imagem formada e a distância vertical entre cada ponto objeto e seu correspondente ponto imagem são");
+        q30.setAlternativaA("real e 5 cm.");
+        q30.setAlternativaB("real e 3,8 cm.");
+        q30.setAlternativaC("real e 7,6 cm.");
+        q30.setAlternativaD("virtual e 7,6 cm.");
+        q30.setAlternativaE("virtual e 3,8 cm.");
+        q30.setRespostaCorreta("C");
+        databaseHelper.inserirQuestao(q30);
 
         // Questão 31 -
-
+        Questao q31 = new Questao();
+        q31.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q31.setAno(2024);
+        q31.setNumero(136);
+        q31.setTextoApoio1("O tamanho mínimo que a visão humana é capaz de visualizar sem o uso de equipamento auxiliar é equivalente a 100 micrômetros (1 micrômetro = 10-3 milímetros). Uma estudante pretende visualizar e analisar hemácias do sangue humano, que medem 0,007 mm de diâmetro. Ela adquiriu um microscópio óptico que tem uma lente ocular que amplia em 10 vezes a imagem do objeto em observação, e um conjunto de lentes objetivas com estas capacidades de ampliação:");
+        q31.setTextoApoio2("• lente I: 2 vezes;\n" +
+                "• lente II: 10 vezes;\n" +
+                "• lente III: 15 vezes;\n" +
+                "• lente IV: 1,1 vez;\n" +
+                "• lente V: 1,4 vez.");
+        q31.setTextoApoio3("O funcionamento desse microscópio permite o uso da lente ocular sozinha ou a combinação dela com uma de suas lentes objetivas, proporcionando, nesse caso, um aumento de sua capacidade de ampliação final, que é dada pelo produto entre as capacidades de ampliação da ocular e da objetiva.");
+        q31.setTextoApoio4("Essa estudante pretende selecionar a lente objetiva de menor capacidade de ampliação que permita, na combinação com a ocular, visualizar hemácias do sangue humano.");
+        q31.setImagens("questao136_img1_matematica_2024.png");
+        q31.setEnunciado("A lente objetiva a ser selecionada pela estudante é a");
+        q31.setAlternativaA("I.");
+        q31.setAlternativaB("II.");
+        q31.setAlternativaC("III.");
+        q31.setAlternativaD("IV");
+        q31.setAlternativaE("V.");
+        q31.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q31);
 
         // Questão 32 -
-
+        Questao q32 = new Questao();
+        q32.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q32.setAno(2024);
+        q32.setNumero(137);
+        q32.setTextoApoio("Ao calcular a média de suas notas em 4 provas, um estudante dividiu, por engano, a soma das notas por 5. Com isso, a média obtida foi 1 unidade menor do que deveria ser, caso fosse calculada corretamente.");
+        q32.setEnunciado("O valor correto da média das notas desse estudante é");
+        q32.setAlternativaA("4.");
+        q32.setAlternativaB("5.");
+        q32.setAlternativaC("6.");
+        q32.setAlternativaD("19.");
+        q32.setAlternativaE("21.");
+        q32.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q32);
 
         // Questão 33 -
-
+        Questao q33 = new Questao();
+        q33.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q33.setAno(2024);
+        q33.setNumero(138);
+        q33.setTextoApoio("Para abrir a porta de uma empresa, cada funcionário deve cadastrar uma senha utilizando um teclado alfanumérico como o representado na figura.");
+        q33.setImagem("questao138_img1_matematica_2024.png");
+        q33.setTextoApoio1("Por exemplo: a tecla que contém o número 2 traz as letras correlacionadas A, B e C. Cada toque nessa tecla mostra, sequencialmente, os seguintes caracteres: 2, A, B e C. Para os próximos toques, essa sequência se repete. As demais teclas funcionam da mesma maneira.");
+        q33.setTextoApoio2("As senhas a serem cadastradas pelos funcionários devem conter 5 caracteres, sendo 2 algarismos distintos seguidos de 3 letras diferentes, nessa ordem. Um funcionário irá cadastrar a sua primeira senha, podendo escolher entre as teclas que apresentam os números 1, 2, 5, 7 e 0 e as respectivas letras correlacionadas, quando houver.")
+        q33.setEnunciado("O número de possibilidades diferentes que esse funcionário tem para cadastrar sua senha é");
+        q33.setAlternativaA("11520.");
+        q33.setAlternativaB("14400.");
+        q33.setAlternativaC("18000.");
+        q33.setAlternativaD("312000.");
+        q33.setAlternativaE("390000");
+        q33.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q33);
 
         // Questão 34 -
-
+        Questao q34 = new Questao();
+        q34.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q34.setAno(2024);
+        q34.setNumero(139);
+        q34.setTextoApoio("Um artesão utiliza dois tipos de componentes, X e Y, nos enfeites que produz. Ele sempre compra todos os componentes em uma mesma loja. O quadro apresenta os preços dos dois tipos de componentes nas lojas I e II.");
+        q34.setImagem("questao139_img1_matematica_2024.png");
+        q34.setTextoApoio1("Ele confeccionará enfeites formados por duas unidades do componente X e uma unidade do componente Y e efetuará a compra na loja que oferecer o menor valor total para a confecção de um enfeite.");
+        q34.setEnunciado("O artesão efetuará a compra na loja");
+        q34.setAlternativaA("I, pois o valor é R$ 7,00.");
+        q34.setAlternativaB("I, pois o valor é R$ 4,00.");
+        q34.setAlternativaC("II, pois o valor é R$ 6,00.");
+        q34.setAlternativaD("I, pois anuncia o componente com o menor preço.");
+        q34.setAlternativaE("II, pois o componente X, que é o mais utilizado, tem menor preço.");
+        q34.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q34);
 
         // Questão 35 -
-
+        Questao q35 = new Questao();
+        q35.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q35.setAno(2024);
+        q35.setNumero(140);
+        q35.setTextoApoio("João e Felipe participaram, na escola, de uma maratona de matemática na qual, durante uma semana, resolveram 200 questões cada. Nessa maratona, a porcentagem P de acertos de cada participante é convertida em um conceito:");
+        q35.setTextoApoio1("• insatisfatório: se 0 ≤ P < 50;\n" +
+                "• regular: se 50 ≤ P < 60;\n" +
+                "• bom: se 60 ≤ P < 75;\n" +
+                "• muito bom: se 75 ≤ P < 90;\n" +
+                "• excelente: se 90 ≤ P ≤ 100.");
+        q35.setTextoApoio2("João acertou 75% das questões da maratona e Felipe acertou 30% a menos que a quantidade de questões que João acertou.");
+        q35.setEnunciado("Os conceitos de João e Felipe foram, respectivamente,");
+        q35.setAlternativaA("muito bom e bom.");
+        q35.setAlternativaB("muito bom e regular.");
+        q35.setAlternativaC("muito bom e insatisfatório.");
+        q35.setAlternativaD("bom e regular.");
+        q35.setAlternativaE("bom e insatisfatório.");
+        q35.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q35);
 
         // Questão 36 -
-
+        Questao q36 = new Questao();
+        q36.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q36.setAno(2024);
+        q36.setNumero(141);
+        q36.setTextoApoio("Três grandezas (I, II e III) se relacionam entre si. Os gráficos a seguir, formados por segmentos de reta, descrevem as relações de dependência existentes entre as grandezas I e II, e entre as grandezas II e III.");
+        q36.setImagens("questao141_img1_matematica_2024.png", "questao141_img1_matematica_2024.png");
+        q36.setEnunciado("O valor máximo assumido pela grandeza III, quando a grandeza I varia de 1 a 3, é");
+        q36.setAlternativaA("1,0.");
+        q36.setAlternativaB("2,5.");
+        q36.setAlternativaC("3,0.");
+        q36.setAlternativaD("3,5.");
+        q36.setAlternativaE("4,0.");
+        q36.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q36);
 
         // Questão 37 -
-
+        /*Questao q37 = new Questao();
+        q37.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q37.setAno(2024);
+        q37.setNumero(142);
+        q37.setTextoApoio("Uma criança, utilizando um aplicativo, escreveu uma mensagem para enviar a um amigo. Essa mensagem foi escrita seguindo estas etapas:");
+        q37.setImagens("questao142_img1_matematica_2024.png");
+        q37.setTextoApoio1("A criança seguiu copiando e colando, em cada etapa, o que tinha no visor na etapa imediatamente anterior, até concluir a 20ª etapa. Em seguida, enviou a mensagem.");
+        q37.setEnunciado("Qual foi o total de figuras contidas na mensagem enviada?");
+        q37.setAlternativaA("3 × 219");
+        q37.setAlternativaB("3 × 220");
+        q37.setAlternativaC("3 × 221");
+        q37.setAlternativaD("3 × 220 − 1");
+        q37.setAlternativaE("3 × 220 − 3");
+        q37.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q37); */
 
         // Questão 38 -
 
