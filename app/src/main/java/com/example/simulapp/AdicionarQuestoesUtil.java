@@ -357,7 +357,7 @@ public class AdicionarQuestoesUtil {
         q21.setAno(2024);
         q21.setNumero(53);
         q21.setTextoApoio("Diferenças entre inundação gradual e brusca");
-        q21.setImagens("questao53_img1_humanas_2024.png");
+        q21.setImagens("questao53_img1_humanas_2024");
         q21.setFonte("TOMINAGA, L. K.; SANTORO, J.; AMARAL, R. Desastres naturais: conhecer para prevenir. São Paulo: Instituto Geológico, 2009 (adaptado)");
         q21.setEnunciado("A desproporção de velocidade e tempo de duração nos tipos de inundação destacados é condicionada pela");
         q21.setAlternativaA("variabilidade solar anual.");
@@ -406,7 +406,7 @@ public class AdicionarQuestoesUtil {
         q24.setAno(2024);
         q24.setNumero(94);
         q24.setTextoApoio("A nimesulida é um fármaco pouco solúvel em água, utilizado como anti-inflamatório, analgésico e antitérmico. Essa substância pode ser convertida em uma espécie eletricamente carregada, de maior solubilidade em água, mediante o tratamento com uma base de Brönsted-Lowry, isto é, uma espécie química capaz de capturar um próton (H+). Na figura são apresentados os grupamentos presentes na estrutura química da nimesulida.");
-        q24.setImagens("questao94_img1_natureza_2024.png");
+        q24.setImagens("questao94_img1_natureza_2024");
         q24.setFonte("GONÇALVES, A. A. et al. Contextualizando reações ácido-base de acordo com a teoria protônica de Brönsted-Lowry usando comprimidos de propranolol e nimesulida. Química Nova, n. 3, 2013 (adaptado).");
         q24.setEnunciado("Na estrutura desse fármaco, o grupamento capaz de reagir com a base de Brönsted-Lowry é o grupo");
         q24.setAlternativaA("sulfonamida.");
@@ -426,7 +426,7 @@ public class AdicionarQuestoesUtil {
         q25.setEnunciado("Nesse contexto, essa técnica é importante para detectar genes");
         q25.setAlternativaA("expressos.");
         q25.setAlternativaB("plasmidiais.");
-        q25.setAlternativaC("bacterianos.\n");
+        q25.setAlternativaC("bacterianos.");
         q25.setAlternativaD("dominantes.");
         q25.setAlternativaE("autossômicos.");
         q25.setRespostaCorreta("A");
@@ -438,7 +438,7 @@ public class AdicionarQuestoesUtil {
         q26.setAno(2024);
         q26.setNumero(96);
         q26.setTextoApoio("Nos automóveis, é importante garantir que o centro de massa (CM) de cada conjunto roda/pneu coincida com o seu centro geométrico. Esse processo é realizado em uma máquina de balanceamento, na qual o conjunto roda e pneu é colocado para girar a uma velocidade de valor constante. Com base nas oscilações medidas, a máquina indica a posição do centro de massa do conjunto, e pequenas peças de chumbo são fixadas em lugares específicos da roda até que as vibrações diminuam. Durante o treinamento de sua equipe, a fim de corrigir a posição do centro de massa indicada pela máquina, um mecânico apresenta o esquema a seguir, com cinco possíveis pontos da roda para posicionar uma peça de chumbo.");
-        q26.setImagens("questao96_im1_natureza_2024.png");
+        q26.setImagens("questao96_im1_natureza_2024");
         q26.setEnunciado("Em qual ponto deve ser fixada a peça de chumbo para corrigir a posição do centro de massa desse conjunto roda/pneu?");
         q26.setAlternativaA("1");
         q26.setAlternativaB("2");
@@ -470,7 +470,7 @@ public class AdicionarQuestoesUtil {
         q28.setAno(2024);
         q28.setNumero(7);
         q28.setTextoApoio("Apesar de os animais representados no cladograma compartilharem um mesmo ancestral, eles se caracterizam por distintos padrões de reprodução ou de nutrição dos embriões e descendentes.");
-        q28.setImagens("questao98_img1_natureza_2024.png");
+        q28.setImagens("questao98_img1_natureza_2024");
         q28.setFonte("DIXSON, A. F. Mammalian Sexuality: The Act of Mating and the Evolution of Reproduction. Disponível em: www.cambridge.org. Acesso em: 2 jul. 2024 (adaptado).");
         q28.setEnunciado("Ao longo do processo evolutivo, percebem-se, entre esses animais, perdas e ganhos nos padrões citados que envolvem o(a)");
         q28.setAlternativaA("aumento no número de descendentes por ninhada.");
@@ -502,7 +502,7 @@ public class AdicionarQuestoesUtil {
         q30.setAno(2024);
         q30.setNumero(100);
         q30.setTextoApoio("Mirascópio 3D: produtor de ilusão instantânea O equipamento ilustrado na figura, de dimensões apresentadas no esquema, é composto por dois espelhos côncavos E1 e E2, apoiados um sobre o outro por suas bordas, de tal forma que o vértice de E1 coincide com o foco de E2 e vice-versa. Na abertura circular de E2, é formada uma imagem tridimensional de um objeto posicionado sobre o vértice de E1. Essa imagem é formada a partir dos raios procedentes do objeto, refletidos por E2 e E1, respectivamente, conforme o esquema. Os observadores julgam visualizar o objeto quando estão, de fato, visualizando sua imagem. O efeito só é possível porque as superfícies de ambos os espelhos são de extrema qualidade.");
-        q30.setImagens("questao100_img1_natureza_2024.png");
+        q30.setImagens("questao100_img1_natureza_2024");
         q30.setFonte("SALZMANN, W. Disponível em: https://wissenstexte.de. Acesso em: 27 jun. 2024 (adaptado).");
         q30.setEnunciado("A natureza da imagem formada e a distância vertical entre cada ponto objeto e seu correspondente ponto imagem são");
         q30.setAlternativaA("real e 5 cm.");
@@ -526,7 +526,7 @@ public class AdicionarQuestoesUtil {
                 "• lente V: 1,4 vez.");
         q31.setTextoApoio3("O funcionamento desse microscópio permite o uso da lente ocular sozinha ou a combinação dela com uma de suas lentes objetivas, proporcionando, nesse caso, um aumento de sua capacidade de ampliação final, que é dada pelo produto entre as capacidades de ampliação da ocular e da objetiva.");
         q31.setTextoApoio4("Essa estudante pretende selecionar a lente objetiva de menor capacidade de ampliação que permita, na combinação com a ocular, visualizar hemácias do sangue humano.");
-        q31.setImagens("questao136_img1_matematica_2024.png");
+        q31.setImagens("questao136_img1_matematica_2024");
         q31.setEnunciado("A lente objetiva a ser selecionada pela estudante é a");
         q31.setAlternativaA("I.");
         q31.setAlternativaB("II.");
@@ -557,7 +557,7 @@ public class AdicionarQuestoesUtil {
         q33.setAno(2024);
         q33.setNumero(138);
         q33.setTextoApoio("Para abrir a porta de uma empresa, cada funcionário deve cadastrar uma senha utilizando um teclado alfanumérico como o representado na figura.");
-        q33.setImagem("questao138_img1_matematica_2024.png");
+        q33.setImagem("questao138_img1_matematica_2024");
         q33.setTextoApoio1("Por exemplo: a tecla que contém o número 2 traz as letras correlacionadas A, B e C. Cada toque nessa tecla mostra, sequencialmente, os seguintes caracteres: 2, A, B e C. Para os próximos toques, essa sequência se repete. As demais teclas funcionam da mesma maneira.");
         q33.setTextoApoio2("As senhas a serem cadastradas pelos funcionários devem conter 5 caracteres, sendo 2 algarismos distintos seguidos de 3 letras diferentes, nessa ordem. Um funcionário irá cadastrar a sua primeira senha, podendo escolher entre as teclas que apresentam os números 1, 2, 5, 7 e 0 e as respectivas letras correlacionadas, quando houver.");
         q33.setEnunciado("O número de possibilidades diferentes que esse funcionário tem para cadastrar sua senha é");
@@ -575,7 +575,7 @@ public class AdicionarQuestoesUtil {
         q34.setAno(2024);
         q34.setNumero(139);
         q34.setTextoApoio("Um artesão utiliza dois tipos de componentes, X e Y, nos enfeites que produz. Ele sempre compra todos os componentes em uma mesma loja. O quadro apresenta os preços dos dois tipos de componentes nas lojas I e II.");
-        q34.setImagem("questao139_img1_matematica_2024.png");
+        q34.setImagem("questao139_img1_matematica_2024");
         q34.setTextoApoio1("Ele confeccionará enfeites formados por duas unidades do componente X e uma unidade do componente Y e efetuará a compra na loja que oferecer o menor valor total para a confecção de um enfeite.");
         q34.setEnunciado("O artesão efetuará a compra na loja");
         q34.setAlternativaA("I, pois o valor é R$ 7,00.");
@@ -613,7 +613,7 @@ public class AdicionarQuestoesUtil {
         q36.setAno(2024);
         q36.setNumero(141);
         q36.setTextoApoio("Três grandezas (I, II e III) se relacionam entre si. Os gráficos a seguir, formados por segmentos de reta, descrevem as relações de dependência existentes entre as grandezas I e II, e entre as grandezas II e III.");
-        q36.setImagens("questao141_img1_matematica_2024.png", "questao141_img1_matematica_2024.png");
+        q36.setImagens("questao141_img1_matematica_2024", "questao141_img1_matematica_2024");
         q36.setEnunciado("O valor máximo assumido pela grandeza III, quando a grandeza I varia de 1 a 3, é");
         q36.setAlternativaA("1,0.");
         q36.setAlternativaB("2,5.");
@@ -629,7 +629,7 @@ public class AdicionarQuestoesUtil {
         q37.setAno(2024);
         q37.setNumero(142);
         q37.setTextoApoio("Uma criança, utilizando um aplicativo, escreveu uma mensagem para enviar a um amigo. Essa mensagem foi escrita seguindo estas etapas:");
-        q37.setImagens("questao142_img1_matematica_2024.png");
+        q37.setImagens("questao142_img1_matematica_2024");
         q37.setTextoApoio1("A criança seguiu copiando e colando, em cada etapa, o que tinha no visor na etapa imediatamente anterior, até concluir a 20ª etapa. Em seguida, enviou a mensagem.");
         q37.setEnunciado("Qual foi o total de figuras contidas na mensagem enviada?");
         q37.setAlternativaA("3 × 219");
