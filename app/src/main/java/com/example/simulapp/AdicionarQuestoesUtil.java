@@ -559,7 +559,7 @@ public class AdicionarQuestoesUtil {
         q33.setTextoApoio("Para abrir a porta de uma empresa, cada funcionário deve cadastrar uma senha utilizando um teclado alfanumérico como o representado na figura.");
         q33.setImagem("questao138_img1_matematica_2024.png");
         q33.setTextoApoio1("Por exemplo: a tecla que contém o número 2 traz as letras correlacionadas A, B e C. Cada toque nessa tecla mostra, sequencialmente, os seguintes caracteres: 2, A, B e C. Para os próximos toques, essa sequência se repete. As demais teclas funcionam da mesma maneira.");
-        q33.setTextoApoio2("As senhas a serem cadastradas pelos funcionários devem conter 5 caracteres, sendo 2 algarismos distintos seguidos de 3 letras diferentes, nessa ordem. Um funcionário irá cadastrar a sua primeira senha, podendo escolher entre as teclas que apresentam os números 1, 2, 5, 7 e 0 e as respectivas letras correlacionadas, quando houver.")
+        q33.setTextoApoio2("As senhas a serem cadastradas pelos funcionários devem conter 5 caracteres, sendo 2 algarismos distintos seguidos de 3 letras diferentes, nessa ordem. Um funcionário irá cadastrar a sua primeira senha, podendo escolher entre as teclas que apresentam os números 1, 2, 5, 7 e 0 e as respectivas letras correlacionadas, quando houver.");
         q33.setEnunciado("O número de possibilidades diferentes que esse funcionário tem para cadastrar sua senha é");
         q33.setAlternativaA("11520.");
         q33.setAlternativaB("14400.");
