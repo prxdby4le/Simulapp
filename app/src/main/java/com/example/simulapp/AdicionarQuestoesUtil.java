@@ -624,7 +624,7 @@ public class AdicionarQuestoesUtil {
         databaseHelper.inserirQuestao(q36);
 
         // Questão 37 -
-        /*Questao q37 = new Questao();
+        Questao q37 = new Questao();
         q37.setArea(DatabaseHelper.AREA_MATEMATICA);
         q37.setAno(2024);
         q37.setNumero(142);
@@ -632,20 +632,65 @@ public class AdicionarQuestoesUtil {
         q37.setImagens("questao142_img1_matematica_2024");
         q37.setTextoApoio1("A criança seguiu copiando e colando, em cada etapa, o que tinha no visor na etapa imediatamente anterior, até concluir a 20ª etapa. Em seguida, enviou a mensagem.");
         q37.setEnunciado("Qual foi o total de figuras contidas na mensagem enviada?");
-        q37.setAlternativaA("3 × 219");
-        q37.setAlternativaB("3 × 220");
-        q37.setAlternativaC("3 × 221");
-        q37.setAlternativaD("3 × 220 − 1");
-        q37.setAlternativaE("3 × 220 − 3");
+        q37.setAlternativaA("3 × 2^19");
+        q37.setAlternativaB("3 × 2^20");
+        q37.setAlternativaC("3 × 2^21");
+        q37.setAlternativaD("3 × 2^20 − 1");
+        q37.setAlternativaE("3 × 2^20 − 3");
         q37.setRespostaCorreta("A");
-        databaseHelper.inserirQuestao(q37); */
+        databaseHelper.inserirQuestao(q37);
 
         // Questão 38 -
-
+        Questao q38 = new Questao();
+        q38.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q38.setAno(2024);
+        q38.setNumero(143);
+        q38.setTextoApoio("Uma casa de shows terá um evento cujo custo total de produção é de R$ 34 350,00, sendo que comporta 500 pessoas. O preço do ingresso será de R$ 130,00 e, normalmente, 60% das pessoas adquirem meia-entrada, pagando R$ 65,00 pelo ingresso. Além do faturamento proveniente da venda de ingressos, a casa de shows vende, com 60% de lucro, bebidas e petiscos ao público no dia do evento.");
+        q38.setTextoApoio1("Após ter vendido todos os 500 ingressos, constatou-se que a quantidade de meias-entradas vendidas superou em 50% o que estava previsto, impactando o faturamento estimado com a venda de ingressos.");
+        q38.setTextoApoio2("No dia do evento, decidiu-se manter o percentual de 60% de lucro sobre as bebidas e petiscos, pois todo o público que comprou ingresso compareceu ao show. Com isso, espera-se ter lucro de R$ 17 000,00 nesse evento.");
+        q38.setEnunciado("Para que se alcance o lucro esperado, o gasto médio por pessoa com bebidas e petiscos, em real, deverá ser de");
+        q38.setAlternativaA("19,50.");
+        q38.setAlternativaB("28,80.");
+        q38.setAlternativaC("34,00.");
+        q38.setAlternativaD("52,00.");
+        q38.setAlternativaE("68,70");
+        q38.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q38);
 
         // Questão 39 -
-
+        Questao q39 = new Questao();
+        q39.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q39.setAno(2024);
+        q39.setNumero(144);
+        q39.setTextoApoio("Para obter um sólido de revolução (rotação de 360° em torno de um eixo fixo), uma professora realizou as seguintes etapas:");
+        q39.setTextoApoio1("• recortou o trapézio retângulo PQRS de um material rígido;\n" +
+                "• afixou o lado PS do trapézio em uma vareta fixa retilínea (eixo de rotação);\n" +
+                "• girou o trapézio 360° em torno da vareta e obteve um sólido de revolução.");
+        q39.setTextoApoio2("Observe a figura que apresenta o trapézio afixado na vareta e o sentido de giro.");
+        q39.setImagens("questao144_img1_matematica_2024");
+        q39.setEnunciado("O sólido obtido foi um(a)");
+        q39.setAlternativaA("cone.");
+        q39.setAlternativaB("cilindro.");
+        q39.setAlternativaC("pirâmide.");
+        q39.setAlternativaD("tronco de cone.");
+        q39.setAlternativaE("tronco de pirâmide.");
+        q39.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q39);
 
         // Questão 40 -
+        Questao q40 = new Questao();
+        q40.setArea(DatabaseHelper.AREA_MATEMATICA);
+        q40.setAno(2024);
+        q40.setNumero(145);
+        q40.setTextoApoio("O estádio do Maracanã passou por algumas modificações estruturais para a realização da Copa do Mundo de 2014, como, por exemplo, as dimensões do campo retangular. Para se adaptar aos padrões da Fifa, as dimensões do campo foram reduzidas de 110 m × 75 m para 105 m × 68 m.");
+        q40.setFonte("Disponível em: http://virgula.uol.com.br. Acesso em: 14 ago. 2013 (adaptado).");
+        q40.setEnunciado("Em quantos metros quadrados a área do campo do Maracanã foi reduzida?");
+        q40.setAlternativaA("24");
+        q40.setAlternativaB("35");
+        q40.setAlternativaC("555");
+        q40.setAlternativaD("1110");
+        q40.setAlternativaE("1145");
+        q40.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q40);
     }
 }
