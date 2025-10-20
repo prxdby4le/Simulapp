@@ -38,7 +38,18 @@
                 android:textSize="14sp"
                 android:textColor="#666666"
                 android:textStyle="bold"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvQuestaoOriginal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Questão 91 - ENEM 2024"
+                android:textSize="16sp"
+                android:textColor="#2E3A59"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"
+                android:gravity="center" />
 
             <!-- Container para múltiplos textos de apoio -->
             <LinearLayout

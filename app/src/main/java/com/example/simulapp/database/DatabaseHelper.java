@@ -14,7 +14,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "simulapp.db";
-    private static final int DATABASE_VERSION = 3; // Incrementada para incluir novos campos
+    private static final int DATABASE_VERSION = 4;
 
     private static final String TABLE_QUESTOES = "questoes";
     private static final String COLUMN_ID = "id";
@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_IMAGEM = "imagem";
     private static final String COLUMN_TEXTO_APOIO = "texto_apoio";
     private static final String COLUMN_FONTE = "fonte";
+    private static final String COLUMN_IDIOMA_ESTRANGEIRO = "idioma_estrangeiro";
     // Novos campos para múltiplos textos de apoio
     private static final String COLUMN_TEXTO_APOIO_1 = "texto_apoio_1";
     private static final String COLUMN_TEXTO_APOIO_2 = "texto_apoio_2";
@@ -61,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_IMAGEM + " TEXT, "
                 + COLUMN_TEXTO_APOIO + " TEXT, "
                 + COLUMN_FONTE + " TEXT, "
+                + COLUMN_IDIOMA_ESTRANGEIRO + " TEXT, "
                 + COLUMN_TEXTO_APOIO_1 + " TEXT, "
                 + COLUMN_TEXTO_APOIO_2 + " TEXT, "
                 + COLUMN_TEXTO_APOIO_3 + " TEXT, "
@@ -98,7 +100,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             questao.getArea()
         });
 
-        // Se já existe, deletar a antiga antes de inserir a nova
         if (cursor.moveToFirst()) {
             long existingId = cursor.getLong(0);
             db.delete(TABLE_QUESTOES, COLUMN_ID + " = ?", new String[]{String.valueOf(existingId)});
@@ -113,6 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_IMAGEM, questao.getImagem());
         values.put(COLUMN_TEXTO_APOIO, questao.getTextoApoio());
         values.put(COLUMN_FONTE, questao.getFonte());
+        values.put(COLUMN_IDIOMA_ESTRANGEIRO, questao.getIdiomaEstrangeiro());
         values.put(COLUMN_TEXTO_APOIO_1, questao.getTextoApoio1());
         values.put(COLUMN_TEXTO_APOIO_2, questao.getTextoApoio2());
         values.put(COLUMN_TEXTO_APOIO_3, questao.getTextoApoio3());
@@ -154,6 +156,65 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 questao.setImagem(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGEM)));
                 questao.setTextoApoio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO)));
                 questao.setFonte(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FONTE)));
+                questao.setIdiomaEstrangeiro(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IDIOMA_ESTRANGEIRO)));
+                questao.setTextoApoio1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_1)));
+                questao.setTextoApoio2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_2)));
+                questao.setTextoApoio3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_3)));
+                questao.setTextoApoio4(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_4)));
+                questao.setReferenciaTexto1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_1)));
+                questao.setReferenciaTexto2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_2)));
+                questao.setReferenciaTexto3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_3)));
+                questao.setReferenciaTexto4(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_4)));
+                questao.setAlternativaA(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_A)));
+                questao.setAlternativaB(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_B)));
+                questao.setAlternativaC(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_C)));
+                questao.setAlternativaD(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_D)));
+                questao.setAlternativaE(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_E)));
+                questao.setRespostaCorreta(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RESPOSTA_CORRETA)));
+
+                questoes.add(questao);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return questoes;
+    }
+
+    public List<Questao> getQuestoesPorAreaComIdioma(String area, int quantidade, String idiomaEstrangeiro) {
+        List<Questao> questoes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query;
+        String[] args;
+
+        if (idiomaEstrangeiro == null) {
+            query = "SELECT * FROM " + TABLE_QUESTOES +
+                    " WHERE " + COLUMN_AREA + " = ? " +
+                    " ORDER BY RANDOM() LIMIT ?";
+            args = new String[]{area, String.valueOf(quantidade)};
+        } else {
+            query = "SELECT * FROM " + TABLE_QUESTOES +
+                    " WHERE " + COLUMN_AREA + " = ? " +
+                    " AND (" + COLUMN_IDIOMA_ESTRANGEIRO + " = ? OR " + COLUMN_IDIOMA_ESTRANGEIRO + " IS NULL) " +
+                    " ORDER BY RANDOM() LIMIT ?";
+            args = new String[]{area, idiomaEstrangeiro, String.valueOf(quantidade)};
+        }
+
+        Cursor cursor = db.rawQuery(query, args);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Questao questao = new Questao();
+                questao.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)));
+                questao.setArea(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AREA)));
+                questao.setAno(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ANO)));
+                questao.setNumero(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NUMERO)));
+                questao.setEnunciado(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ENUNCIADO)));
+                questao.setImagem(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGEM)));
+                questao.setTextoApoio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO)));
+                questao.setFonte(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FONTE)));
+                questao.setIdiomaEstrangeiro(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IDIOMA_ESTRANGEIRO)));
                 questao.setTextoApoio1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_1)));
                 questao.setTextoApoio2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_2)));
                 questao.setTextoApoio3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_3)));
@@ -183,6 +244,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (qtdLinguagens > 0) {
             todasQuestoes.addAll(getQuestoesPorArea(AREA_LINGUAGENS, qtdLinguagens));
+        }
+        if (qtdHumanas > 0) {
+            todasQuestoes.addAll(getQuestoesPorArea(AREA_HUMANAS, qtdHumanas));
+        }
+        if (qtdNatureza > 0) {
+            todasQuestoes.addAll(getQuestoesPorArea(AREA_NATUREZA, qtdNatureza));
+        }
+        if (qtdMatematica > 0) {
+            todasQuestoes.addAll(getQuestoesPorArea(AREA_MATEMATICA, qtdMatematica));
+        }
+
+        java.util.Collections.shuffle(todasQuestoes);
+
+        return todasQuestoes;
+    }
+
+    public List<Questao> getQuestoesSimuladoComIdioma(int qtdLinguagens, int qtdHumanas, int qtdNatureza, int qtdMatematica, String idiomaEstrangeiro) {
+        List<Questao> todasQuestoes = new ArrayList<>();
+
+        if (qtdLinguagens > 0) {
+            todasQuestoes.addAll(getQuestoesPorAreaComIdioma(AREA_LINGUAGENS, qtdLinguagens, idiomaEstrangeiro));
         }
         if (qtdHumanas > 0) {
             todasQuestoes.addAll(getQuestoesPorArea(AREA_HUMANAS, qtdHumanas));

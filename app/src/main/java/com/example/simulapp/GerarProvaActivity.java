@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import com.example.simulapp.database.DatabaseHelper;
 import com.example.simulapp.model.Questao;
@@ -25,6 +27,8 @@ public class GerarProvaActivity extends AppCompatActivity {
     private EditText etQuantidadeHumanas;
     private EditText etQuantidadeNatureza;
     private EditText etQuantidadeMatematica;
+    private SwitchMaterial switchIdiomaEstrangeiro;
+    private TextView tvIdiomaAtual;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +52,17 @@ public class GerarProvaActivity extends AppCompatActivity {
         etQuantidadeHumanas = findViewById(R.id.etQuantidadeHumanas);
         etQuantidadeNatureza = findViewById(R.id.etQuantidadeNatureza);
         etQuantidadeMatematica = findViewById(R.id.etQuantidadeMatematica);
+        switchIdiomaEstrangeiro = findViewById(R.id.switchIdiomaEstrangeiro);
+        tvIdiomaAtual = findViewById(R.id.tvIdiomaAtual);
+
+        // Configurar switch de idioma
+        switchIdiomaEstrangeiro.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                tvIdiomaAtual.setText("Espanhol");
+            } else {
+                tvIdiomaAtual.setText("Inglês");
+            }
+        });
 
         setupCounterByName("etQuantidadeLinguagens", "btnIncrementarLinguagens", "btnDecrementarLinguagens");
         setupCounterByName("etQuantidadeHumanas", "btnIncrementarHumanas", "btnDecrementarHumanas");
@@ -83,8 +98,10 @@ public class GerarProvaActivity extends AppCompatActivity {
             return;
         }
 
-        List<Questao> questoes = databaseHelper.getQuestoesSimulado(
-                qtdLinguagens, qtdHumanas, qtdNatureza, qtdMatematica
+        String idiomaEstrangeiro = switchIdiomaEstrangeiro.isChecked() ? "espanhol" : "ingles";
+
+        List<Questao> questoes = databaseHelper.getQuestoesSimuladoComIdioma(
+                qtdLinguagens, qtdHumanas, qtdNatureza, qtdMatematica, idiomaEstrangeiro
         );
 
         if (questoes.isEmpty()) {

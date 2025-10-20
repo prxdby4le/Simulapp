@@ -3,6 +3,8 @@ package com.example.simulapp.model;
 import android.text.TextUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Questao implements Serializable {
     private long id;
@@ -13,6 +15,7 @@ public class Questao implements Serializable {
     private String imagem;
     private String textoApoio;
     private String fonte;
+    private String idiomaEstrangeiro; // "ingles", "espanhol", ou null para questões que não são de língua estrangeira
     // Novos campos para múltiplos textos de apoio
     private String textoApoio1;
     private String textoApoio2;
@@ -30,7 +33,66 @@ public class Questao implements Serializable {
     private String respostaCorreta;
     private String respostaUsuario;
 
+    // Nova estrutura para armazenar elementos na ordem de adição
+    private List<ElementoQuestao> elementosOrdenados = new ArrayList<>();
+
+    public static class ElementoQuestao implements Serializable {
+        public enum TipoElemento {
+            TEXTO_APOIO, IMAGEM, REFERENCIA, ENUNCIADO
+        }
+
+        private TipoElemento tipo;
+        private String conteudo;
+
+        public ElementoQuestao(TipoElemento tipo, String conteudo) {
+            this.tipo = tipo;
+            this.conteudo = conteudo;
+        }
+
+        public TipoElemento getTipo() {
+            return tipo;
+        }
+
+        public String getConteudo() {
+            return conteudo;
+        }
+    }
+
     public Questao() {
+    }
+
+    // Métodos para adicionar elementos na ordem
+    public void addTextoApoio(String texto) {
+        if (!TextUtils.isEmpty(texto)) {
+            elementosOrdenados.add(new ElementoQuestao(ElementoQuestao.TipoElemento.TEXTO_APOIO, texto));
+        }
+    }
+
+    public void addImagem(String nomeImagem) {
+        if (!TextUtils.isEmpty(nomeImagem)) {
+            elementosOrdenados.add(new ElementoQuestao(ElementoQuestao.TipoElemento.IMAGEM, nomeImagem));
+        }
+    }
+
+    public void addReferencia(String referencia) {
+        if (!TextUtils.isEmpty(referencia)) {
+            elementosOrdenados.add(new ElementoQuestao(ElementoQuestao.TipoElemento.REFERENCIA, referencia));
+        }
+    }
+
+    public void addEnunciado(String enunciado) {
+        if (!TextUtils.isEmpty(enunciado)) {
+            this.enunciado = enunciado;
+            elementosOrdenados.add(new ElementoQuestao(ElementoQuestao.TipoElemento.ENUNCIADO, enunciado));
+        }
+    }
+
+    public List<ElementoQuestao> getElementosOrdenados() {
+        return elementosOrdenados;
+    }
+
+    public boolean temElementosOrdenados() {
+        return !elementosOrdenados.isEmpty();
     }
 
     public long getId() {
@@ -114,6 +176,14 @@ public class Questao implements Serializable {
 
     public void setFonte(String fonte) {
         this.fonte = fonte;
+    }
+
+    public String getIdiomaEstrangeiro() {
+        return idiomaEstrangeiro;
+    }
+
+    public void setIdiomaEstrangeiro(String idiomaEstrangeiro) {
+        this.idiomaEstrangeiro = idiomaEstrangeiro;
     }
 
     // Getters e Setters para os novos campos de texto de apoio

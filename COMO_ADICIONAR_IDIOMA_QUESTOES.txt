@@ -1,0 +1,165 @@
+==================================================================
+   COMO ADICIONAR A CONDIÇÃO DE IDIOMA ESTRANGEIRO NAS QUESTÕES
+==================================================================
+
+Para adicionar a condição de idioma estrangeiro em uma questão, você precisa
+usar o método setIdiomaEstrangeiro() ao criar a questão no arquivo
+AdicionarQuestoesUtil.java.
+
+------------------------------------------------------------------
+VALORES POSSÍVEIS:
+------------------------------------------------------------------
+- "ingles"   -> Para questões de Língua Inglesa
+- "espanhol" -> Para questões de Língua Espanhola
+- null ou não definir -> Para questões que NÃO são de língua estrangeira
+
+------------------------------------------------------------------
+EXEMPLO 1 - QUESTÃO DE INGLÊS:
+------------------------------------------------------------------
+
+// Questão 2 - Linguagens 2024 (INGLÊS)
+Questao q2 = new Questao();
+q2.setArea(DatabaseHelper.AREA_LINGUAGENS);
+q2.setAno(2024);
+q2.setNumero(2);
+q2.setIdiomaEstrangeiro("ingles");  // <--- ADICIONE ESTA LINHA
+q2.setTextoApoio("Oh, so we can hate each other and fear each other...");
+q2.setFonte("KEYS, A. Here. Estados Unidos: RCA Records, 2016.");
+q2.setEnunciado("Nessa letra de canção, que aborda um contexto de ódio...");
+q2.setAlternativaA("mudança de comportamento.");
+q2.setAlternativaB("panorama de conflitos.");
+q2.setAlternativaC("rotina de isolamento.");
+q2.setAlternativaD("perspectiva bélica.");
+q2.setAlternativaE("cenário relogioso.");
+q2.setRespostaCorreta("A");
+databaseHelper.inserirQuestao(q2);
+
+------------------------------------------------------------------
+EXEMPLO 2 - QUESTÃO DE ESPANHOL:
+------------------------------------------------------------------
+
+// Questão de Espanhol (exemplo hipotético)
+Questao qEsp = new Questao();
+qEsp.setArea(DatabaseHelper.AREA_LINGUAGENS);
+qEsp.setAno(2024);
+qEsp.setNumero(50);
+qEsp.setIdiomaEstrangeiro("espanhol");  // <--- ADICIONE ESTA LINHA
+qEsp.setTextoApoio("La educación es el arma más poderosa...");
+qEsp.setEnunciado("O texto em espanhol aborda...");
+qEsp.setAlternativaA("alternativa A");
+qEsp.setAlternativaB("alternativa B");
+qEsp.setAlternativaC("alternativa C");
+qEsp.setAlternativaD("alternativa D");
+qEsp.setAlternativaE("alternativa E");
+qEsp.setRespostaCorreta("A");
+databaseHelper.inserirQuestao(qEsp);
+
+------------------------------------------------------------------
+EXEMPLO 3 - QUESTÃO QUE NÃO É DE LÍNGUA ESTRANGEIRA:
+------------------------------------------------------------------
+
+// Questão 1 - Linguagens 2024 (NÃO é de língua estrangeira)
+Questao q1 = new Questao();
+q1.setArea(DatabaseHelper.AREA_LINGUAGENS);
+q1.setAno(2024);
+q1.setNumero(1);
+// NÃO precisa adicionar setIdiomaEstrangeiro()
+q1.setEnunciado("A relação entre as citações atribuídas...");
+q1.setImagens("questao1_img1_linguagens_2024", "questao1_img2_linguagens_2024");
+q1.setFonte("Disponível em: http://thumbpress.com...");
+q1.setAlternativaA("dar oportunidade a pessoas...");
+q1.setAlternativaB("identificar contextos...");
+q1.setAlternativaC("tirar proveito de situações...");
+q1.setAlternativaD("evitar dificuldades...");
+q1.setAlternativaE("contestar circunstâncias...");
+q1.setRespostaCorreta("C");
+databaseHelper.inserirQuestao(q1);
+
+------------------------------------------------------------------
+QUESTÕES QUE VOCÊ DEVE MODIFICAR NO SEU CÓDIGO:
+------------------------------------------------------------------
+
+Analisando seu arquivo AdicionarQuestoesUtil.java, identifiquei que as
+seguintes questões são de INGLÊS e devem receber o idioma:
+
+✓ Questão 2 (número 2) - Letra de música em inglês
+✓ Questão 4 (número 4) - Texto em inglês sobre imigrantes
+✓ Questão 5 (número 5) - Carta em inglês
+
+------------------------------------------------------------------
+COMO APLICAR AS MUDANÇAS:
+------------------------------------------------------------------
+
+1. Abra o arquivo:
+   AdicionarQuestoesUtil.java
+
+2. Localize cada uma das questões mencionadas acima
+
+3. Adicione a linha:
+   q[numero].setIdiomaEstrangeiro("ingles");
+
+   Logo após definir a área, ano e número da questão
+
+4. Salve o arquivo
+
+5. IMPORTANTE: Desinstale o app do emulador e instale novamente
+   (isso é necessário para recriar o banco de dados com o novo campo)
+
+------------------------------------------------------------------
+EXEMPLO PRÁTICO - QUESTÃO 2:
+------------------------------------------------------------------
+
+ANTES:
+```java
+// Questão 2 - Humanas 2024
+Questao q2 = new Questao();
+q2.setArea(DatabaseHelper.AREA_LINGUAGENS);
+q2.setAno(2024);
+q2.setNumero(2);
+q2.setTextoApoio("Oh, so we can hate each other...");
+```
+
+DEPOIS:
+```java
+// Questão 2 - Humanas 2024
+Questao q2 = new Questao();
+q2.setArea(DatabaseHelper.AREA_LINGUAGENS);
+q2.setAno(2024);
+q2.setNumero(2);
+q2.setIdiomaEstrangeiro("ingles");  // <--- ADICIONE ESTA LINHA
+q2.setTextoApoio("Oh, so we can hate each other...");
+```
+
+------------------------------------------------------------------
+COMO FUNCIONA NO APP:
+------------------------------------------------------------------
+
+Depois de adicionar o idioma nas questões:
+
+1. O usuário abre a tela "Gerar Prova"
+2. Define a quantidade de questões de cada área
+3. Usa o SWITCH para escolher entre Inglês ou Espanhol
+4. Ao gerar a prova:
+   - Se Inglês está selecionado: mostra apenas questões de inglês
+   - Se Espanhol está selecionado: mostra apenas questões de espanhol
+   - Questões sem idioma (null) são incluídas em ambos os casos
+
+------------------------------------------------------------------
+DÚVIDAS COMUNS:
+------------------------------------------------------------------
+
+Q: E se eu não definir o idioma?
+R: A questão será incluída em ambos os filtros (inglês e espanhol)
+
+Q: Posso ter questões de outras línguas?
+R: Sim! Basta usar outro valor, como: q.setIdiomaEstrangeiro("frances");
+
+Q: Preciso modificar questões de outras áreas?
+R: Não! O filtro só afeta questões da área de LINGUAGENS
+
+Q: Como sei se está funcionando?
+R: Teste gerando uma prova com inglês e depois com espanhol.
+   As questões de língua estrangeira devem mudar.
+
+==================================================================
+

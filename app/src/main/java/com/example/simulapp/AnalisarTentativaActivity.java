@@ -25,6 +25,7 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
     private int questaoAtualIndex = 0;
 
     private TextView tvNumeroQuestao;
+    private TextView tvQuestaoOriginal;
     private TextView tvEnunciado;
     private LinearLayout layoutTextosApoio;
     private LinearLayout layoutImagens;
@@ -50,6 +51,7 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> finish());
 
         tvNumeroQuestao = findViewById(R.id.tvNumeroQuestao);
+        tvQuestaoOriginal = findViewById(R.id.tvQuestaoOriginal);
         tvEnunciado = findViewById(R.id.tvEnunciado);
         layoutTextosApoio = findViewById(R.id.layoutTextosApoio);
         layoutImagens = findViewById(R.id.layoutImagens);
@@ -90,10 +92,9 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
         Questao questao = questoes.get(questaoAtualIndex);
 
         tvNumeroQuestao.setText("Questão " + (questaoAtualIndex + 1) + " de " + questoes.size() +
-                " - " + questao.getArea() + " (" + questao.getAno() + ")");
-        tvEnunciado.setText(questao.getEnunciado());
+                " - " + questao.getArea());
+        tvQuestaoOriginal.setText("Questão " + questao.getNumero() + " - Caderno azul - ENEM " + questao.getAno());
 
-        // Exibir múltiplos textos de apoio
         layoutTextosApoio.removeAllViews();
         if (questao.temTextosApoio()) {
             layoutTextosApoio.setVisibility(View.VISIBLE);
@@ -134,7 +135,6 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
             layoutTextosApoio.setVisibility(View.GONE);
         }
 
-        // Exibir imagens
         layoutImagens.removeAllViews();
         if (questao.temImagens()) {
             layoutImagens.setVisibility(View.VISIBLE);
@@ -164,33 +164,27 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
             layoutImagens.setVisibility(View.GONE);
         }
 
-        // Exibir alternativas com indicação visual
         tvAlternativaA.setText("A) " + questao.getAlternativaA());
         tvAlternativaB.setText("B) " + questao.getAlternativaB());
         tvAlternativaC.setText("C) " + questao.getAlternativaC());
         tvAlternativaD.setText("D) " + questao.getAlternativaD());
         tvAlternativaE.setText("E) " + questao.getAlternativaE());
 
-        // Resetar estilos
         resetarAlternativa(tvAlternativaA);
         resetarAlternativa(tvAlternativaB);
         resetarAlternativa(tvAlternativaC);
         resetarAlternativa(tvAlternativaD);
         resetarAlternativa(tvAlternativaE);
 
-        // Aplicar estilos de acordo com resposta
         String respostaCorreta = questao.getRespostaCorreta().toUpperCase();
         String respostaUsuario = questao.getRespostaUsuario() != null ? questao.getRespostaUsuario().toUpperCase() : "";
 
-        // Marcar a resposta correta com borda verde e ✓
         marcarAlternativaCorreta(getTextViewPorLetra(respostaCorreta), respostaCorreta);
 
-        // Se o usuário errou, marcar a resposta dele com borda vermelha e traço
         if (!respostaUsuario.isEmpty() && !respostaUsuario.equals(respostaCorreta)) {
             marcarAlternativaErrada(getTextViewPorLetra(respostaUsuario), respostaUsuario);
         }
 
-        // Controle de navegação
         btnAnterior.setEnabled(questaoAtualIndex > 0);
         btnProxima.setEnabled(questaoAtualIndex < questoes.size() - 1);
     }
