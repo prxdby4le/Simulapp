@@ -75,12 +75,12 @@ public class GerarProvaActivity extends AppCompatActivity {
 
     private void inicializarQuestoes() {
         SharedPreferences prefs = getSharedPreferences("SimulappPrefs", MODE_PRIVATE);
-        boolean questoesInicializadas = prefs.getBoolean("questoes_inicializadas", false);
+        boolean questoesInicializadas = prefs.getBoolean("questoes_inicializadas_v5", false);
 
         if (!questoesInicializadas) {
             new Thread(() -> {
                 AdicionarQuestoesUtil.adicionarQuestoes(databaseHelper);
-                prefs.edit().putBoolean("questoes_inicializadas", true).apply();
+                prefs.edit().putBoolean("questoes_inicializadas_v5", true).apply();
             }).start();
         }
     }

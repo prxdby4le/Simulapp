@@ -104,26 +104,45 @@ public class SimuladoActivity extends AppCompatActivity {
         layoutImagens.removeAllViews();
 
         if (questao.temElementosOrdenados()) {
+            boolean exibiuReferencia = false;
+            boolean exibiuImagem = false;
+            Questao.ElementoQuestao.TipoElemento ultimoTipo = null;
             for (Questao.ElementoQuestao elemento : questao.getElementosOrdenados()) {
                 switch (elemento.getTipo()) {
                     case TEXTO_APOIO:
                         adicionarTextoApoio(elemento.getConteudo());
+                        ultimoTipo = Questao.ElementoQuestao.TipoElemento.TEXTO_APOIO;
                         break;
                     case IMAGEM:
                         adicionarImagem(elemento.getConteudo());
+                        exibiuImagem = true;
+                        ultimoTipo = Questao.ElementoQuestao.TipoElemento.IMAGEM;
                         break;
                     case REFERENCIA:
-                        adicionarReferencia(elemento.getConteudo());
+                        if (ultimoTipo == Questao.ElementoQuestao.TipoElemento.IMAGEM) {
+                            adicionarReferenciaEmImagens(elemento.getConteudo());
+                        } else {
+                            adicionarReferencia(elemento.getConteudo());
+                        }
+                        exibiuReferencia = true;
+                        ultimoTipo = Questao.ElementoQuestao.TipoElemento.REFERENCIA;
                         break;
                     case ENUNCIADO:
                         tvEnunciado.setText(elemento.getConteudo());
+                        ultimoTipo = Questao.ElementoQuestao.TipoElemento.ENUNCIADO;
                         break;
                 }
+            }
+            // Fallback: se não houve referência explícita, mas há fonte definida, exibi-la
+            if (!exibiuReferencia && !android.text.TextUtils.isEmpty(questao.getFonte())) {
+                if (exibiuImagem) adicionarReferenciaEmImagens(questao.getFonte());
+                else adicionarReferencia(questao.getFonte());
             }
         } else {
             tvEnunciado.setText(questao.getEnunciado());
 
             // Exibir múltiplos textos de apoio (método antigo)
+            boolean exibiuReferencia = false;
             if (questao.temTextosApoio()) {
                 layoutTextosApoio.setVisibility(View.VISIBLE);
                 String[] textosApoio = questao.getTextosApoio();
@@ -131,18 +150,27 @@ public class SimuladoActivity extends AppCompatActivity {
                 for (String texto : textosApoio) {
                     if (texto.startsWith("Fonte:") || texto.contains("Disponível em:") || texto.contains("Acesso em:")) {
                         adicionarReferencia(texto);
+                        exibiuReferencia = true;
                     } else {
                         adicionarTextoApoio(texto);
                     }
                 }
             }
 
+            boolean exibiuImagem = false;
             if (questao.temImagens()) {
                 layoutImagens.setVisibility(View.VISIBLE);
                 String[] imagens = questao.getImagens();
                 for (String nomeImagem : imagens) {
                     adicionarImagem(nomeImagem);
+                    exibiuImagem = true;
                 }
+            }
+
+            // Se não houve referência e existe uma fonte geral, posicionar conforme contexto
+            if (!exibiuReferencia && !TextUtils.isEmpty(questao.getFonte())) {
+                if (exibiuImagem) adicionarReferenciaEmImagens(questao.getFonte());
+                else adicionarReferencia(questao.getFonte());
             }
         }
 
@@ -214,6 +242,23 @@ public class SimuladoActivity extends AppCompatActivity {
         tvReferencia.setLayoutParams(params);
 
         layoutTextosApoio.addView(tvReferencia);
+    }
+
+    private void adicionarReferenciaEmImagens(String referencia) {
+        layoutImagens.setVisibility(View.VISIBLE);
+        TextView tvReferencia = new TextView(this);
+        tvReferencia.setText(referencia);
+        tvReferencia.setTextColor(getResources().getColor(R.color.colorTextoFonte));
+        tvReferencia.setTypeface(null, android.graphics.Typeface.ITALIC);
+        tvReferencia.setTextSize(11);
+        tvReferencia.setGravity(android.view.Gravity.END);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.topMargin = (int) (4 * getResources().getDisplayMetrics().density);
+        layoutImagens.addView(tvReferencia, params);
     }
 
     private void adicionarImagem(String nomeImagem) {

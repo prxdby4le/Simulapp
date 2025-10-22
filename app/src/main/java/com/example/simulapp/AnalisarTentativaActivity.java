@@ -96,72 +96,74 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
         tvQuestaoOriginal.setText("Questão " + questao.getNumero() + " - Caderno azul - ENEM " + questao.getAno());
 
         layoutTextosApoio.removeAllViews();
-        if (questao.temTextosApoio()) {
-            layoutTextosApoio.setVisibility(View.VISIBLE);
-            String[] textosApoio = questao.getTextosApoio();
-
-            for (int i = 0; i < textosApoio.length; i++) {
-                String texto = textosApoio[i];
-                TextView tvTexto = new TextView(this);
-                tvTexto.setText(texto);
-                tvTexto.setTextSize(14);
-
-                if (texto.startsWith("Fonte:") || texto.contains("Disponível em:") || texto.contains("Acesso em:")) {
-                    tvTexto.setTextColor(getResources().getColor(R.color.colorTextoFonte));
-                    tvTexto.setTypeface(null, android.graphics.Typeface.ITALIC);
-                    tvTexto.setTextSize(11);
-                    tvTexto.setGravity(android.view.Gravity.END);
-                } else {
-                    tvTexto.setTextColor(getResources().getColor(R.color.colorTextoApoio));
-                    tvTexto.setBackground(getResources().getDrawable(R.drawable.border_text));
-                    tvTexto.setPadding(
-                            (int) (12 * getResources().getDisplayMetrics().density),
-                            (int) (12 * getResources().getDisplayMetrics().density),
-                            (int) (12 * getResources().getDisplayMetrics().density),
-                            (int) (12 * getResources().getDisplayMetrics().density)
-                    );
-                }
-
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
-                tvTexto.setLayoutParams(params);
-
-                layoutTextosApoio.addView(tvTexto);
-            }
-        } else {
-            layoutTextosApoio.setVisibility(View.GONE);
-        }
-
         layoutImagens.removeAllViews();
-        if (questao.temImagens()) {
-            layoutImagens.setVisibility(View.VISIBLE);
-            String[] imagens = questao.getImagens();
 
-            for (String nomeImagem : imagens) {
-                int resourceId = getResources().getIdentifier(nomeImagem, "mipmap", getPackageName());
-
-                if (resourceId != 0) {
-                    ImageView imageView = new ImageView(this);
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT
-                    ));
-                    imageView.setAdjustViewBounds(true);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    imageView.setImageResource(resourceId);
-
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-                    params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
-                    imageView.setLayoutParams(params);
-
-                    layoutImagens.addView(imageView);
+        if (questao.temElementosOrdenados()) {
+            boolean exibiuReferencia = false;
+            boolean exibiuImagem = false;
+            Questao.ElementoQuestao.TipoElemento ultimoTipo = null;
+            for (Questao.ElementoQuestao elemento : questao.getElementosOrdenados()) {
+                switch (elemento.getTipo()) {
+                    case TEXTO_APOIO:
+                        adicionarTextoApoio(elemento.getConteudo());
+                        ultimoTipo = Questao.ElementoQuestao.TipoElemento.TEXTO_APOIO;
+                        break;
+                    case IMAGEM:
+                        adicionarImagem(elemento.getConteudo());
+                        exibiuImagem = true;
+                        ultimoTipo = Questao.ElementoQuestao.TipoElemento.IMAGEM;
+                        break;
+                    case REFERENCIA:
+                        if (ultimoTipo == Questao.ElementoQuestao.TipoElemento.IMAGEM) {
+                            adicionarReferenciaEmImagens(elemento.getConteudo());
+                        } else {
+                            adicionarReferencia(elemento.getConteudo());
+                        }
+                        exibiuReferencia = true;
+                        ultimoTipo = Questao.ElementoQuestao.TipoElemento.REFERENCIA;
+                        break;
+                    case ENUNCIADO:
+                        tvEnunciado.setText(elemento.getConteudo());
+                        ultimoTipo = Questao.ElementoQuestao.TipoElemento.ENUNCIADO;
+                        break;
                 }
             }
+            if (!exibiuReferencia && questao.getFonte() != null && !questao.getFonte().isEmpty()) {
+                if (exibiuImagem) adicionarReferenciaEmImagens(questao.getFonte());
+                else adicionarReferencia(questao.getFonte());
+            }
         } else {
-            layoutImagens.setVisibility(View.GONE);
+            boolean exibiuReferencia = false;
+            if (questao.temTextosApoio()) {
+                layoutTextosApoio.setVisibility(View.VISIBLE);
+                String[] textosApoio = questao.getTextosApoio();
+                for (String texto : textosApoio) {
+                    if (texto.startsWith("Fonte:") || texto.contains("Disponível em:") || texto.contains("Acesso em:")) {
+                        adicionarReferencia(texto);
+                        exibiuReferencia = true;
+                    } else {
+                        adicionarTextoApoio(texto);
+                    }
+                }
+            } else {
+                layoutTextosApoio.setVisibility(View.GONE);
+            }
+
+            boolean exibiuImagem = false;
+            if (questao.temImagens()) {
+                String[] imagens = questao.getImagens();
+                for (String nomeImagem : imagens) {
+                    adicionarImagem(nomeImagem);
+                    exibiuImagem = true;
+                }
+            } else {
+                layoutImagens.setVisibility(View.GONE);
+            }
+
+            if (!exibiuReferencia && questao.getFonte() != null && !questao.getFonte().isEmpty()) {
+                if (exibiuImagem) adicionarReferenciaEmImagens(questao.getFonte());
+                else adicionarReferencia(questao.getFonte());
+            }
         }
 
         tvAlternativaA.setText("A) " + questao.getAlternativaA());
@@ -187,6 +189,83 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
 
         btnAnterior.setEnabled(questaoAtualIndex > 0);
         btnProxima.setEnabled(questaoAtualIndex < questoes.size() - 1);
+    }
+
+    private void adicionarTextoApoio(String texto) {
+        layoutTextosApoio.setVisibility(View.VISIBLE);
+        TextView tvTexto = new TextView(this);
+        tvTexto.setText(texto);
+        tvTexto.setTextSize(14);
+        tvTexto.setTextColor(getResources().getColor(R.color.colorTextoApoio));
+        tvTexto.setBackground(getResources().getDrawable(R.drawable.border_text));
+        tvTexto.setPadding(
+                (int) (12 * getResources().getDisplayMetrics().density),
+                (int) (12 * getResources().getDisplayMetrics().density),
+                (int) (12 * getResources().getDisplayMetrics().density),
+                (int) (12 * getResources().getDisplayMetrics().density)
+        );
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
+        tvTexto.setLayoutParams(params);
+        layoutTextosApoio.addView(tvTexto);
+    }
+
+    private void adicionarImagem(String nomeImagem) {
+        layoutImagens.setVisibility(View.VISIBLE);
+        int resourceId = getResources().getIdentifier(nomeImagem, "mipmap", getPackageName());
+        if (resourceId != 0) {
+            ImageView imageView = new ImageView(this);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            imageView.setAdjustViewBounds(true);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            imageView.setImageResource(resourceId);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+            params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
+            imageView.setLayoutParams(params);
+            layoutImagens.addView(imageView);
+        }
+    }
+
+    private void adicionarReferenciaEmImagens(String referencia) {
+        layoutImagens.setVisibility(View.VISIBLE);
+        TextView tvReferencia = new TextView(this);
+        tvReferencia.setText(referencia);
+        tvReferencia.setTextColor(getResources().getColor(R.color.colorTextoFonte));
+        tvReferencia.setTypeface(null, android.graphics.Typeface.ITALIC);
+        tvReferencia.setTextSize(11);
+        tvReferencia.setGravity(android.view.Gravity.END);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.topMargin = (int) (4 * getResources().getDisplayMetrics().density);
+        layoutImagens.addView(tvReferencia, params);
+    }
+
+    private void adicionarReferencia(String referencia) {
+        layoutTextosApoio.setVisibility(View.VISIBLE);
+        TextView tvReferencia = new TextView(this);
+        tvReferencia.setText(referencia);
+        tvReferencia.setTextColor(getResources().getColor(R.color.colorTextoFonte));
+        tvReferencia.setTypeface(null, android.graphics.Typeface.ITALIC);
+        tvReferencia.setTextSize(11);
+        tvReferencia.setGravity(android.view.Gravity.END);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
+        tvReferencia.setLayoutParams(params);
+
+        layoutTextosApoio.addView(tvReferencia);
     }
 
     private TextView getTextViewPorLetra(String letra) {

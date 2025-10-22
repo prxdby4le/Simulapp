@@ -9,13 +9,17 @@ import android.text.TextUtils;
 
 import com.example.simulapp.model.Questao;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "simulapp.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     private static final String TABLE_QUESTOES = "questoes";
     private static final String COLUMN_ID = "id";
@@ -42,6 +46,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ALTERNATIVA_D = "alternativa_d";
     private static final String COLUMN_ALTERNATIVA_E = "alternativa_e";
     private static final String COLUMN_RESPOSTA_CORRETA = "resposta_correta";
+    // Novo: persistir a ordem de elementos (texto, imagem, referencia, enunciado)
+    private static final String COLUMN_ELEMENTOS_ORDENADOS = "elementos_ordenados";
 
     public static final String AREA_LINGUAGENS = "Linguagens";
     public static final String AREA_HUMANAS = "Humanas";
@@ -77,14 +83,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ALTERNATIVA_C + " TEXT NOT NULL, "
                 + COLUMN_ALTERNATIVA_D + " TEXT NOT NULL, "
                 + COLUMN_ALTERNATIVA_E + " TEXT NOT NULL, "
-                + COLUMN_RESPOSTA_CORRETA + " TEXT NOT NULL)";
+                + COLUMN_RESPOSTA_CORRETA + " TEXT NOT NULL, "
+                + COLUMN_ELEMENTOS_ORDENADOS + " TEXT)";
         db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTOES);
-        onCreate(db);
+        // Migração incremental sem perder dados
+        if (oldVersion < 5) {
+            try {
+                db.execSQL("ALTER TABLE " + TABLE_QUESTOES + " ADD COLUMN " + COLUMN_ELEMENTOS_ORDENADOS + " TEXT");
+            } catch (Exception ignore) {
+                // coluna já pode existir; ignorar
+            }
+        }
     }
 
     public long inserirQuestao(Questao questao) {
@@ -120,11 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     case REFERENCIA:
                         if (!textos.isEmpty()) {
                             int idx = textos.size() - 1;
-                            // ultima referência encontrada sobrepõe a anterior para o mesmo texto
                             refs.set(idx, el.getConteudo());
-                        } else if (TextUtils.isEmpty(questao.getFonte())) {
-                            // se houver referência antes de qualquer texto, usar como fonte geral
-                            questao.setFonte(el.getConteudo());
                         }
                         break;
                     case ENUNCIADO:
@@ -133,11 +142,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         }
                         break;
                     case IMAGEM:
-                        // já tratadas no modelo via addImagem()
+                        // imagens já foram acumuladas no campo 'imagem' pelo modelo
                         break;
                 }
             }
-            // Preencher nos campos 1..4 apenas se ainda não setados manualmente
             if (TextUtils.isEmpty(questao.getTextoApoio1()) && textos.size() >= 1) questao.setTextoApoio1(textos.get(0));
             if (TextUtils.isEmpty(questao.getTextoApoio2()) && textos.size() >= 2) questao.setTextoApoio2(textos.get(1));
             if (TextUtils.isEmpty(questao.getTextoApoio3()) && textos.size() >= 3) questao.setTextoApoio3(textos.get(2));
@@ -173,9 +181,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ALTERNATIVA_E, questao.getAlternativaE());
         values.put(COLUMN_RESPOSTA_CORRETA, questao.getRespostaCorreta());
 
+        // Serializar elementos ordenados em JSON
+        if (questao.temElementosOrdenados()) {
+            try {
+                JSONArray arr = new JSONArray();
+                for (Questao.ElementoQuestao el : questao.getElementosOrdenados()) {
+                    JSONObject o = new JSONObject();
+                    o.put("tipo", el.getTipo().name());
+                    o.put("conteudo", el.getConteudo());
+                    arr.put(o);
+                }
+                values.put(COLUMN_ELEMENTOS_ORDENADOS, arr.toString());
+            } catch (JSONException e) {
+                values.putNull(COLUMN_ELEMENTOS_ORDENADOS);
+            }
+        } else {
+            values.putNull(COLUMN_ELEMENTOS_ORDENADOS);
+        }
+
         long id = db.insert(TABLE_QUESTOES, null, values);
         db.close();
         return id;
+    }
+
+    private void preencherElementosOrdenadosSeExistir(Questao questao, Cursor cursor) {
+        int idx = cursor.getColumnIndex(COLUMN_ELEMENTOS_ORDENADOS);
+        if (idx == -1) return;
+        String json = cursor.getString(idx);
+        if (android.text.TextUtils.isEmpty(json)) return;
+        try {
+            org.json.JSONArray arr = new org.json.JSONArray(json);
+            // Limpar qualquer estado anterior
+            questao.getElementosOrdenados().clear();
+            for (int i = 0; i < arr.length(); i++) {
+                org.json.JSONObject o = arr.getJSONObject(i);
+                String tipo = o.optString("tipo");
+                String conteudo = o.optString("conteudo");
+                if (android.text.TextUtils.isEmpty(conteudo)) continue;
+                Questao.ElementoQuestao.TipoElemento t;
+                if ("IMAGEM".equals(tipo)) t = Questao.ElementoQuestao.TipoElemento.IMAGEM;
+                else if ("TEXTO_APOIO".equals(tipo)) t = Questao.ElementoQuestao.TipoElemento.TEXTO_APOIO;
+                else if ("REFERENCIA".equals(tipo)) t = Questao.ElementoQuestao.TipoElemento.REFERENCIA;
+                else if ("ENUNCIADO".equals(tipo)) t = Questao.ElementoQuestao.TipoElemento.ENUNCIADO;
+                else continue;
+
+                questao.getElementosOrdenados().add(new Questao.ElementoQuestao(t, conteudo));
+
+                if (t == Questao.ElementoQuestao.TipoElemento.ENUNCIADO && android.text.TextUtils.isEmpty(questao.getEnunciado())) {
+                    questao.setEnunciado(conteudo);
+                }
+            }
+        } catch (org.json.JSONException ignore) {
+        }
     }
 
     public List<Questao> getQuestoesPorArea(String area, int quantidade) {
@@ -214,6 +271,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 questao.setAlternativaD(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_D)));
                 questao.setAlternativaE(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_E)));
                 questao.setRespostaCorreta(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RESPOSTA_CORRETA)));
+
+                // Reconstruir ordem
+                preencherElementosOrdenadosSeExistir(questao, cursor);
 
                 questoes.add(questao);
             } while (cursor.moveToNext());
@@ -272,6 +332,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 questao.setAlternativaD(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_D)));
                 questao.setAlternativaE(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_E)));
                 questao.setRespostaCorreta(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RESPOSTA_CORRETA)));
+
+                // Reconstruir ordem
+                preencherElementosOrdenadosSeExistir(questao, cursor);
 
                 questoes.add(questao);
             } while (cursor.moveToNext());
