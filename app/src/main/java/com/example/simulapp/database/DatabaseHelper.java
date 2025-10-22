@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 
 import com.example.simulapp.model.Questao;
 
@@ -105,6 +106,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.delete(TABLE_QUESTOES, COLUMN_ID + " = ?", new String[]{String.valueOf(existingId)});
         }
         cursor.close();
+
+        // Mapear elementos ordenados (se existirem) para os campos texto_apoio_1..4 e referencias
+        if (questao.temElementosOrdenados()) {
+            ArrayList<String> textos = new ArrayList<>();
+            ArrayList<String> refs = new ArrayList<>();
+            for (Questao.ElementoQuestao el : questao.getElementosOrdenados()) {
+                switch (el.getTipo()) {
+                    case TEXTO_APOIO:
+                        textos.add(el.getConteudo());
+                        refs.add(null);
+                        break;
+                    case REFERENCIA:
+                        if (!textos.isEmpty()) {
+                            int idx = textos.size() - 1;
+                            // ultima referência encontrada sobrepõe a anterior para o mesmo texto
+                            refs.set(idx, el.getConteudo());
+                        } else if (TextUtils.isEmpty(questao.getFonte())) {
+                            // se houver referência antes de qualquer texto, usar como fonte geral
+                            questao.setFonte(el.getConteudo());
+                        }
+                        break;
+                    case ENUNCIADO:
+                        if (TextUtils.isEmpty(questao.getEnunciado())) {
+                            questao.setEnunciado(el.getConteudo());
+                        }
+                        break;
+                    case IMAGEM:
+                        // já tratadas no modelo via addImagem()
+                        break;
+                }
+            }
+            // Preencher nos campos 1..4 apenas se ainda não setados manualmente
+            if (TextUtils.isEmpty(questao.getTextoApoio1()) && textos.size() >= 1) questao.setTextoApoio1(textos.get(0));
+            if (TextUtils.isEmpty(questao.getTextoApoio2()) && textos.size() >= 2) questao.setTextoApoio2(textos.get(1));
+            if (TextUtils.isEmpty(questao.getTextoApoio3()) && textos.size() >= 3) questao.setTextoApoio3(textos.get(2));
+            if (TextUtils.isEmpty(questao.getTextoApoio4()) && textos.size() >= 4) questao.setTextoApoio4(textos.get(3));
+
+            if (TextUtils.isEmpty(questao.getReferenciaTexto1()) && refs.size() >= 1) questao.setReferenciaTexto1(refs.get(0));
+            if (TextUtils.isEmpty(questao.getReferenciaTexto2()) && refs.size() >= 2) questao.setReferenciaTexto2(refs.get(1));
+            if (TextUtils.isEmpty(questao.getReferenciaTexto3()) && refs.size() >= 3) questao.setReferenciaTexto3(refs.get(2));
+            if (TextUtils.isEmpty(questao.getReferenciaTexto4()) && refs.size() >= 4) questao.setReferenciaTexto4(refs.get(3));
+        }
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_AREA, questao.getArea());

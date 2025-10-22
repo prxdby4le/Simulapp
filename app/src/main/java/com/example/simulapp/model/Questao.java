@@ -68,9 +68,34 @@ public class Questao implements Serializable {
         }
     }
 
-    public void addImagem(String nomeImagem) {
-        if (!TextUtils.isEmpty(nomeImagem)) {
-            elementosOrdenados.add(new ElementoQuestao(ElementoQuestao.TipoElemento.IMAGEM, nomeImagem));
+    // Atualizado: aceitar múltiplas imagens e persistir no campo 'imagem'
+    public void addImagem(String... nomesImagens) {
+        if (nomesImagens == null || nomesImagens.length == 0) return;
+
+        // Adiciona aos elementos ordenados e acumula lista válida
+        List<String> novas = new ArrayList<>();
+        for (String nome : nomesImagens) {
+            if (!TextUtils.isEmpty(nome)) {
+                elementosOrdenados.add(new ElementoQuestao(ElementoQuestao.TipoElemento.IMAGEM, nome));
+                novas.add(nome);
+            }
+        }
+        if (novas.isEmpty()) return;
+
+        // Mescla com imagens já definidas no campo persistido
+        String[] ja = getImagens();
+        List<String> todas = new ArrayList<>();
+        if (ja != null && ja.length > 0) {
+            for (String s : ja) {
+                if (!TextUtils.isEmpty(s)) todas.add(s);
+            }
+        }
+        todas.addAll(novas);
+        // Atualiza o campo string pipe-separated
+        if (todas.isEmpty()) {
+            this.imagem = null;
+        } else {
+            this.imagem = TextUtils.join("|", todas);
         }
     }
 

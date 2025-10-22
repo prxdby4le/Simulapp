@@ -7,31 +7,21 @@ public class AdicionarQuestoesUtil {
 
     public static void adicionarQuestoes(DatabaseHelper databaseHelper) {
         // Questão 1 - Linguagens 2024
-        //define q1 como variavel da primeira questão
         Questao q1 = new Questao();
-        //define a area de uma das 4 que estão no arquivo que te mostrei
         q1.setArea(DatabaseHelper.AREA_LINGUAGENS);
-        //define o ano da questão que vc escolheu adicionar
         q1.setAno(2024);
-        //define o numero da questão
         q1.setNumero(1);
-        //seta o enunciado, ou seja a pergunta
-        q1.setEnunciado("A relação entre as citações atribuídas ao físico Albert Einstein e ao cantor e compositor Bob Marley reside na crença de que é necessário");
-        //define as imagens (+ de 1, se quiser adicionar só 1 é so deixar no singular: q1.setImagem)
-        q1.setImagens("questao1_img1_linguagens_2024", "questao1_img2_linguagens_2024");
-        //seta a fonte da imagem ou do texto de apoio
-        q1.setFonte("Disponível em: http://thumbpress.com. Acesso em: 28 out. 2013.");
-        //define as alternativas de A até a E
+        q1.addImagem("questao1_img1_linguagens_2024");
+        q1.addImagem("questao1_img2_linguagens_2024");
+        q1.addReferencia("Disponível em: http://thumbpress.com. Acesso em: 28 out. 2013.");
+        q1.addEnunciado("A relação entre as citações atribuídas ao físico Albert Einstein e ao cantor e compositor Bob Marley reside na crença de que é necessário");
         q1.setAlternativaA("dar oportunidade a pessoas que parecem necessitadas.");
         q1.setAlternativaB("identificar contextos que podem representar perigo.");
         q1.setAlternativaC("tirar proveito de situações que podem ser adversas.");
         q1.setAlternativaD("evitar dificuldades que parecem ser intransponíveis.");
         q1.setAlternativaE("contestar circunstâncias que parecem ser harmônicas");
-        //define qual delas ta correta
         q1.setRespostaCorreta("C");
-        //adiciona a variavel q1 no banco
         databaseHelper.inserirQuestao(q1);
-        // IMPORTANTE: SEMPRE QUE QUISER TESTAR O APP COM UMA QUESTÃO NOVA, DEVE DESINSTALAR DO EMULADOR E INSTALAR DNV
 
         // Questão 2 - Humanas 2024
         Questao q2 = new Questao();
@@ -230,7 +220,7 @@ public class AdicionarQuestoesUtil {
         q13.setArea(DatabaseHelper.AREA_NATUREZA);
         q13.setAno(2024);
         q13.setNumero(93);
-        q13.setEnunciado("No senso comum, considera-se, ainda hoje, que compostos orgânicos são substâncias presentes nos seres vivos. Na Química, a expressão “compostos orgânicos” tem um uso histórico de mais de 200 anos, adquirindo diferentes conotações ao longo do desenvolvimento dessa ciência. Atualmente, atribui-se a essa expressão outro significado.A concepção científica atual define esses compostos como substâncias");
+        q13.addEnunciado("No senso comum, considera-se, ainda hoje, que compostos orgânicos são substâncias presentes nos seres vivos. Na Química, a expressão “compostos orgânicos” tem um uso histórico de mais de 200 anos, adquirindo diferentes conotações ao longo do desenvolvimento dessa ciência. Atualmente, atribui-se a essa expressão outro significado.A concepção científica atual define esses compostos como substâncias");
         q13.setAlternativaA("benéficas à saúde humana.");
         q13.setAlternativaB("capazes de serem biodegradadas.");
         q13.setAlternativaC("formadas a partir de gás carbônico.");
