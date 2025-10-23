@@ -1140,14 +1140,17 @@ public class AdicionarQuestoesUtil {
         q520.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q520.setAno(2023);
         q520.setNumero(16);
-        q520.addTextoApoio("");
-        q520.addReferencia("");
-        q520.setEnunciado("");
-        q520.setAlternativaA("");
-        q520.setAlternativaB("");
-        q520.setAlternativaC("");
-        q520.setAlternativaD("");
-        q520.setAlternativaE("");
+        q520.addTextoApoio("Mandioca, macaxeira, aipim e castelinha são nomes diferentes da mesma planta. Semáforo, sinaleiro e farol também significam a mesma coisa. O que muda é só o hábito cultural de cada região. A mesma coisa acontece com a Língua Brasileira de Sinais (Libras). Embora ela seja a comunicação oficial da comunidade surda no Brasil, existem sinais que variam em relação à região, à idade e até ao gênero de quem se comunica. A cor verde, por exemplo,\n" +
+                "possui sinais diferentes no Rio de Janeiro, Paraná e São Paulo. São os regionalismos na língua de sinais.\n" +
+                "Essas variações são um dos temas da disciplina Linguística na língua de sinais, oferecida pela Universidade Estadual Paulista (Unesp) ao longo do segundo semestre. “Muitas pessoas pensam que a língua de sinais é universal, o que não é verdade”, explica a professora e chefe do Departamento de Linguística, Literatura e Letras Clássicas da Unesp. “Mesmo dentro de um mesmo país, ela sofre variação em relação à localização geográfica, à faixa etária e até ao gênero dos usuários”, completa a especialista.\n" +
+                "Os surdos podem criar sinais diferentes para identificar lugares, objetos e conceitos. Em São Paulo, o sinal de “cerveja” é feito com um giro do punho como uma meia-volta. Em Minas, a bebida é citada quando os dedos indicador e médio batem no lado do rosto. Também ocorrem mudanças históricas. Um sinal pode sofrer alterações decorrentes dos costumes da geração que o utiliza.");
+        q520.addReferencia("Disponível em: www.educacao.sp.gov.br. Acesso em: 1 nov. 2021 (adaptado)");
+        q520.setEnunciado("Nesse texto, a Língua Brasileira de Sinais (Libras)");
+        q520.setAlternativaA("passa por fenômenos de variação linguística como qualquer outra língua.");
+        q520.setAlternativaB("apresenta variações regionais, assumindo novo sentido para algumas palavras.");
+        q520.setAlternativaC("sofre mudança estrutural motivada pelo uso de sinais diferentes para algumas palavras.");
+        q520.setAlternativaD("diferencia-se em todo o Brasil, desenvolvendo cada região a sua própria língua de sinais.");
+        q520.setAlternativaE("é ininteligível para parte dos usuários em razão das mudanças de sinais motivadas geograficamente.");
         q520.setRespostaCorreta("A");
         databaseHelper.inserirQuestao(q520);
 
@@ -1155,14 +1158,14 @@ public class AdicionarQuestoesUtil {
         q521.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q521.setAno(2023);
         q521.setNumero(17);
-        q521.addTextoApoio("");
-        q521.addReferencia("");
-        q521.setEnunciado("");
-        q521.setAlternativaA("");
-        q521.setAlternativaB("");
-        q521.setAlternativaC("");
-        q521.setAlternativaD("");
-        q521.setAlternativaE("");
+        q521.addTextoApoio("Como é bom reencontrar os leitores da Revista da Cultura por meio de uma publicação com outro visual, conteúdo de qualidade e interesses ampliados! ]cultura[, este nome simples, e eu diria mesmo familiar, nasce entre dois colchetes voltados para fora. E não é por acaso: são sinais abertos, receptivos, propícios à circulação de ideias. O DNA da publicação se mantém o mesmo, afinal, por longos anos montamos nossas edições com assuntos saídos das estantes de uma grande livraria — e assim continuará sendo. Literatura, sociologia, filosofia, artes... nunca será difícil montar a pauta da revista porque os livros nos ensinam que monotonia é só para quem não lê.");
+        q521.addReferencia("HERZ, P. ]cultura[, n. 1, jun. 2018 (adaptado).");
+        q521.setEnunciado("O uso não padrão dos colchetes para nomear a revista atribui-lhes uma nova função e está correlacionado ao(à)");
+        q521.setAlternativaA("perfil de público-alvo, constituído por leitores exigentes e especializados em leitura acadêmica.");
+        q521.setAlternativaB("propósito do editor, chamando a atenção para o rigor normativo nos textos da revista.");
+        q521.setAlternativaC("exclusividade na seleção temática, direcionada para a área das ciências humanas.");
+        q521.setAlternativaD("identidade da revista, voltada para a recepção e a promoção de ideias circulantes em livros.");
+        q521.setAlternativaE("padrão editorial dos artigos, organizados em torno de uma proposta de design inovador.");
         q521.setRespostaCorreta("D");
         databaseHelper.inserirQuestao(q521);
 
@@ -1170,14 +1173,33 @@ public class AdicionarQuestoesUtil {
         q522.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q522.setAno(2023);
         q522.setNumero(18);
-        q522.addTextoApoio("");
-        q522.addReferencia("");
-        q522.setEnunciado("");
-        q522.setAlternativaA("");
-        q522.setAlternativaB("");
-        q522.setAlternativaC("");
-        q522.setAlternativaD("");
-        q522.setAlternativaE("");
+        q522.addTextoApoio("TEXTO 1: Alegria, alegria");
+        q522.addTextoApoio("O sol nas bancas de revista\n" +
+                "Me enche de alegria e preguiça\n" +
+                "Quem lê tanta notícia\n" +
+                "Eu vou\n" +
+                "Por entre fotos e nomes\n" +
+                "Os olhos cheios de cores\n" +
+                "O peito cheio de amores vãos\n" +
+                "Eu vou\n" +
+                "Por que não, por que não?");
+        q522.addReferencia("VELOSO, C. Alegria, alegria. Rio de Janeiro: Polygram, 1990 (fragmento)");
+        q522.addTextoApoio("Anjos tronchos");
+        q522.addTextoApoio("Uns anjos tronchos do Vale do Silício\n" +
+                "Desses que vivem no escuro em plena luz\n" +
+                "Disseram vai ser virtuoso no vício\n" +
+                "Das telas dos azuis mais do que azuis\n" +
+                "Agora a minha história é um denso algoritmo\n" +
+                "Que vende venda a vendedores reais\n" +
+                "Neurônios meus ganharam novo outro ritmo\n" +
+                "E mais, e mais, e mais, e mais, e mais");
+        q522.addReferencia("VELOSO, C. Meu coco. Rio de Janeiro: Sony, 2021 (fragmento)");
+        q522.setEnunciado("Embora oriundas de momentos históricos diferentes, essas letras de canção têm em comum a");
+        q522.setAlternativaA("referência às cores como elemento de crítica a hábitos contemporâneos.");
+        q522.setAlternativaB("percepção da profusão de informações gerada pela tecnologia.");
+        q522.setAlternativaC("contraposição entre os vícios e as virtudes da vida moderna.");
+        q522.setAlternativaD("busca constante pela liberdade de expressão individual.");
+        q522.setAlternativaE("crítica à finalidade comercial das notícias.");
         q522.setRespostaCorreta("B");
         databaseHelper.inserirQuestao(q522);
 
@@ -1185,14 +1207,22 @@ public class AdicionarQuestoesUtil {
         q523.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q523.setAno(2023);
         q523.setNumero(19);
-        q523.addTextoApoio("");
-        q523.addReferencia("");
-        q523.setEnunciado("");
-        q523.setAlternativaA("");
-        q523.setAlternativaB("");
-        q523.setAlternativaC("");
-        q523.setAlternativaD("");
-        q523.setAlternativaE("");
+        q523.addTextoApoio("“São tantas formas de matar um preto\n" +
+                "Que para alguns sua morte é justificada\n" +
+                "Devia tá fazendo coisa errada\n" +
+                "Se não era bandido, um dia ia ser\n" +
+                "Por ser PRETO sua morte é defendida\n" +
+                "O PRETO sempre merece morrer”.");
+        q523.addTextoApoio("A estrofe acima é do poeta e educador social Baticum Proletário, que atua na periferia de Fortaleza, no Ceará, preparando jovens — em quase sua totalidade negros — para enfrentar as dificuldades impostas pelo racismo estrutural no país.\n" +
+                "É a partir da arte que Baticum consegue envolver a juventude em um projeto de fortalecimento dessa população ao promover batalhas de rimas, slams e saraus com temáticas que discutem os problemas sociais. Não por acaso, o tema mais explorado nas rimas, versos e prosas é a violência. De acordo com o mais recente Atlas da violência, em 2019, os negros representaram 77% das vítimas de homicídios, quase 30 assassinatos por 100 mil habitantes, a maioria deles jovens.\n" +
+                "O Atlas revela ainda que um negro tem quase 2,7 vezes mais chance de ser morto do que um branco, o que justifica o movimento de resistência crescente no Brasil.");
+        q523.addReferencia("MENDONÇA, F. Disponível em: www.cartacapital.com.br. Acesso em: 22 nov. 2021 (adaptado)");
+        q523.setEnunciado("O uso de citação e de dados estatísticos nesse texto tem o objetivo de");
+        q523.setAlternativaA("ressaltar a importância da poesia para denunciar a morte de negros, que cresce a cada dia.");
+        q523.setAlternativaB("destacar o crescimento exponencial da temática do preconceito na produção literária no Brasil.");
+        q523.setAlternativaC("demonstrar o incremento no quantitativo de expressões artísticas na discussão de problemas sociais.");
+        q523.setAlternativaD("evidenciar argumentos que reforçam a ideia de que os negros são vítimas em potencial da violência.");
+        q523.setAlternativaE("salientar o aumento da participação de jovens nos movimentos de resistência na área da cultura.");
         q523.setRespostaCorreta("D");
         databaseHelper.inserirQuestao(q523);
 
@@ -1200,105 +1230,119 @@ public class AdicionarQuestoesUtil {
         q524.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q524.setAno(2023);
         q524.setNumero(20);
-        q524.addTextoApoio("");
-        q524.addReferencia("");
-        q524.setEnunciado("");
-        q524.setAlternativaA("");
-        q524.setAlternativaB("");
-        q524.setAlternativaC("");
-        q524.setAlternativaD("");
-        q524.setAlternativaE("");
-        q524.setRespostaCorreta("");
+        q524.addTextoApoio("No princípio era o verbo. A frase que abre o primeiro capítulo do Evangelho de João e remete à criação do mundo, assim como também faz o Gênesis, é a mais famosa da Bíblia. A ideia de que o mundo é criado pela palavra, porém, é tão estruturante que está presente em outras religiões, para muito além das fundadas no cristianismo. Como humanos, a linguagem é o mundo que habitamos. Basta tentar imaginar um mundo em que não podemos usar palavras para dizer de nós e dos outros para compreender o que isso significa. Ou um mundo em que aquilo que você diz não é entendido pelo outro, e o que o outro diz não é entendido por você.\n" +
+                "O que acontece então quando a palavra é destruída e, com ela, a linguagem?\n" +
+                "Durante séculos, em diferentes sociedades e línguas, é importante lembrar, a linguagem serviu — e ainda serve — para manter privilégios de grupos de poder e deixar todos os outros de fora. Quem entende linguagem de advogados, juízes e promotores, linguagem de médicos, linguagem de burocratas, linguagem de cientistas? A maior parte da população foi submetida à violência de propositalmente ser impedida de compreender a linguagem daqueles que determinam seus destinos.\n" +
+                "Se o princípio é o verbo, o fim pode ser o silenciamento. Mesmo que ele seja cheio de gritos entre aqueles que já não têm linguagem comum para compreender uns aos outros.");
+        q524.addReferencia("BRUM, E. Disponível em: https://brasil.elpais.com. Acesso em: 5 nov. 2021.");
+        q524.setEnunciado("Nesse texto, a estratégia usada para convencer o leitor de que uma grande parcela da população não compreende a linguagem daqueles que detêm o poder foi");
+        q524.setAlternativaA("revelar a origem religiosa da linguagem");
+        q524.setAlternativaB("questionar o temor sobre o futuro da linguagem.");
+        q524.setAlternativaC("descrever a relação entre sociedade e linguagem.\n");
+        q524.setAlternativaD("apresentar as consequências do esfacelamento da linguagem.");
+        q524.setAlternativaE("criticar o obstáculo promovido pelos usos especializados da linguagem.");
+        q524.setRespostaCorreta("E");
         databaseHelper.inserirQuestao(q524);
 
         Questao q525 = new Questao();
         q525.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q525.setAno(2023);
         q525.setNumero(21);
-        q525.addTextoApoio("");
-        q525.addReferencia("");
-        q525.setEnunciado("");
-        q525.setAlternativaA("");
-        q525.setAlternativaB("");
-        q525.setAlternativaC("");
-        q525.setAlternativaD("");
-        q525.setAlternativaE("");
-        q525.setRespostaCorreta("");
+        q525.addTextoApoio("Um grupo de pesquisadores da Universidade Federal do Ceará desenvolveu um dicionário para traduzir sintomas de doenças da linguagem popular para os termos médicos. Defruço, chanha e piloura, por exemplo, podem ser termos conhecidos para muitos, mas, durante uma consulta médica, o desconhecimento pode significar um diagnóstico errado.\n" +
+                "“Isso é um registro histórico e pode ser muito útil para estudos dessas comunidades, na abordagem médica delas. É de certa forma pioneiro no Brasil e, sem dúvida, um instrumento de trabalho importante, porque a comunicação é fundamental na relação médico-paciente”, avalia o reitor da instituição.");
+        q525.addReferencia("Disponível em: https://g1.globo.com. Acesso em: 1 nov. 2021 (adaptado).");
+        q525.setEnunciado("Ao registrarem usos regionais de termos da área médica, pesquisadores");
+        q525.setAlternativaA("apontaram erros motivados pelo desconhecimento da variedade linguística local.");
+        q525.setAlternativaB("explicaram problemas provocados pela incapacidade de comunicação.");
+        q525.setAlternativaC("descobriram novos sintomas de doenças existentes na comunidade.");
+        q525.setAlternativaD("propiciaram melhor compreensão dos sintomas dos pacientes.");
+        q525.setAlternativaE("divulgaram um novo rol de doenças características da localidade.");
+        q525.setRespostaCorreta("D");
         databaseHelper.inserirQuestao(q525);
 
         Questao q526 = new Questao();
         q526.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q526.setAno(2023);
         q526.setNumero(22);
-        q526.addTextoApoio("");
-        q526.addReferencia("");
-        q526.setEnunciado("");
-        q526.setAlternativaA("");
-        q526.setAlternativaB("");
-        q526.setAlternativaC("");
-        q526.setAlternativaD("");
-        q526.setAlternativaE("");
-        q526.setRespostaCorreta("");
+        q526.addTextoApoio("Alguém muito recentemente cortara o mato, que na época das chuvas crescia e rodeava a casa da mãe de Ponciá Vicêncio e de Luandi. Havia também vestígios de que a terra fora revolvida, como se ali fosse plantar uma pequena roça. Luandi sorriu. A mãe devia estar bastante forte, pois ainda labutava a terra. Cantou alto uma cantiga que aprendera com o pai, quando eles trabalhavam na terra dos brancos. Era uma canção que os negros mais velhos ensinavam aos mais novos. Eles diziam ser uma cantiga de voltar, que os homens, lá na África, entoavam sempre, quando estavam regressando da pesca, da caça ou de algum lugar. O pai de Luandi, no dia em que queria agradar à mulher, costumava entoar aquela cantiga ao se aproximar de casa. Luandi não entendia as palavras do canto; sabia, porém, que era uma língua que alguns negros falavam ainda, principalmente os velhos. Era uma cantiga alegre. Luandi, além de cantar, acompanhava o ritmo batendo com as palmas das mãos em um atabaque imaginário. Estava de regresso à terra. Voltava em casa. Chegava cantando, dançando a doce e vitoriosa cantiga de regressar.");
+        q526.addReferencia("EVARISTO, C. Ponciá Vicêncio. Rio de Janeiro: Pallas, 2018");
+        q526.setEnunciado("A leitura do texto permite reconhecer a “cantiga de voltar“ como patrimônio linguístico que");
+        q526.setAlternativaA("representa a memória de uma língua africana extinta.");
+        q526.setAlternativaB("exalta a rotina executada por jovens afrodescendentes.");
+        q526.setAlternativaC("preserva a ancestralidade africana por meio da tradição oral.");
+        q526.setAlternativaD("resgata a musicalidade africana por meio de palavras inteligíveis");
+        q526.setAlternativaE("remonta à tristeza dos negros mais velhos com saudade da África.");
+        q526.setRespostaCorreta("C");
         databaseHelper.inserirQuestao(q526);
 
         Questao q527 = new Questao();
         q527.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q527.setAno(2023);
         q527.setNumero(23);
-        q527.addTextoApoio("");
-        q527.addReferencia("");
-        q527.setEnunciado("");
-        q527.setAlternativaA("");
-        q527.setAlternativaB("");
-        q527.setAlternativaC("");
-        q527.setAlternativaD("");
-        q527.setAlternativaE("");
-        q527.setRespostaCorreta("");
+        q527.addTextoApoio("TEXTO I");
+        q527.addTextoApoio("Zapeei os canais, como há dezenas de anos faço, e pá: parei num que exibia um episódio daquela velha família do futuro, Os Jetsons.\n" +
+                "Nesse episódio em particular, a Jane Jetson, esposa do George, tratava de dirigir aquele veículo voador deles. Meu queixo foi caindo à medida que as piadinhas machistas sobre mulheres dirigirem foram se acumulando. Impressionante! Que futuro careta aqueles roteiristas imaginavam! Seriam incapazes de projetar algo melhor, e não apenas em termos de tecnologias, robôs e carros voadores? Será que nossa máxima visão de futuro só atinge as coisas, e jamais as pessoas? Como a Jane, uma mulher de 33 anos no desenho, poderia ser o que foram as minhas bisavós?\n" +
+                "O futuro, naquele desenho, se esqueceu de ser melhor nas relações entre as pessoas. Aliás... tão parecido com a vida.\n" +
+                "Fiquei de cara, como dizemos aqui, ou como dizíamos na minha adolescência, pobre adolescência, aprendendo, sem querer e sem muita defesa, um futuro tão besta quanto o passado.");
+        q527.addReferencia("RIBEIRO, A. E. Disponível em: www.rascunho.com br. Acesso em: 21 out. 2021 (adaptado)");
+        q527.addTextoApoio("TEXTO II");
+        q527.addTextoApoio("Masculino e feminino são campos escorregadios que só se definem por oposição, sempre incompleta, um do outro. São formações imaginárias que buscam produzir ma diferença radical e complementar onde só existem, de fato, mínimas diferenças. O resto é questão de estilo. Até pelo menos a segunda metade do século 19, o divisor de águas era claro: os homens ocupavam o espaço público. As mulheres tratavam da vida privada. Privada de quê? De visibilidade, diria Hannah Arendt. De visibilidade pública. Do que as mulheres estiveram privadas até o século 20 foi de presença pública manifesta não em imagem, mas em palavra. A palavra feminina, reservada ao espaço doméstico, não produzia diferença na vida social.");
+        q527.addReferencia("KHEL, M. R. Disponível em: https://alias.estadao.com.br.\n" +
+                "Acesso em: 19 out. 2021 (adaptado).\n");
+        q527.setEnunciado("A representação da mulher apresentada no Texto I pode ser explicada pelo Texto II no que diz respeito à(às)");
+        q527.setAlternativaA("censura a formas de expressão femininas.");
+        q527.setAlternativaB("ausência da figura feminina na vida pública.");
+        q527.setAlternativaC("construções imaginárias cristalizadas na sociedade");
+        q527.setAlternativaD("limitações inerentes às figuras femininas e masculinas");
+        q527.setAlternativaE("dificuldade na atribuição de papéis masculinos e femininos.");
+        q527.setRespostaCorreta("C");
         databaseHelper.inserirQuestao(q527);
 
         Questao q528 = new Questao();
         q528.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q528.setAno(2023);
         q528.setNumero(24);
-        q528.addTextoApoio("");
-        q528.addReferencia("");
-        q528.setEnunciado("");
-        q528.setAlternativaA("");
-        q528.setAlternativaB("");
-        q528.setAlternativaC("");
-        q528.setAlternativaD("");
-        q528.setAlternativaE("");
-        q528.setRespostaCorreta("");
+        q528.addImagem("questao24_img1_linguagens_2023");
+        q528.addReferencia("Disponível em: www.defensoriapublica.mt.gov.br. Acesso em: 29 out. 2021 (adaptado)");
+        q528.setEnunciado("Esse anúncio publicitário, veiculado durante o contexto da pandemia de covid-19, tem por finalidade");
+        q528.setAlternativaA("divulgar o canal telefônico de atendimento a casos de violência contra a mulher.");
+        q528.setAlternativaB("nformar sobre a atuação de uma entidade defensora da mulher vítima de violência.");
+        q528.setAlternativaC("evidenciar o trabalho da Defensoria Pública em relação ao problema do abuso contra a mulher.");
+        q528.setAlternativaD("alertar a sociedade sobre o aumento da violência contra a mulher em decorrência do coronavírus.");
+        q528.setAlternativaE("incentivar o público feminino a denunciar crimes de violência contra a mulher durante o período de isolamento.");
+        q528.setRespostaCorreta("E");
         databaseHelper.inserirQuestao(q528);
 
         Questao q529 = new Questao();
         q529.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q529.setAno(2023);
         q529.setNumero(25);
-        q529.addTextoApoio("");
-        q529.addReferencia("");
-        q529.setEnunciado("");
-        q529.setAlternativaA("");
-        q529.setAlternativaB("");
-        q529.setAlternativaC("");
-        q529.setAlternativaD("");
-        q529.setAlternativaE("");
-        q529.setRespostaCorreta("");
+        q529.addTextoApoio("Passado muito tempo, resolvi tentar falar, porque estava sozinha me embrenhando na mesma vereda que Donana costumava entrar. Ainda recordo da palavra que escolhi: arado. Me deleitava vendo meu pai conduzindo o arado velho da fazenda carregado pelo boi, rasgando a terra para depois lançar grãos de arroz em torrões marrons e vermelhos revolvidos. Gostava do som redondo, fácil e ruidoso que tinha ao ser enunciado. “Vou trabalhar no arado.” “Vou arar a terra.” “Seria bom ter um arado novo, esse arado tá troncho e velho.” O som que deixou minha boca era uma aberração, uma desordem, como se no lugar do pedaço perdido da língua tivesse um ovo quente. Era um arado torto, deformado, que penetrava a terra de tal forma a deixá-la infértil, destruída, dilacerada.");
+        q529.addReferencia("VIEIRA JR., I. Torto arado. São Paulo: Todavia, 2019.");
+        q529.setEnunciado("Com a perda de parte da língua na infância, a narradora tenta voltar a falar. Essa tentativa revela uma experiência que");
+        q529.setAlternativaA("reflete o olhar do pai sobre as etapas do plantio.");
+        q529.setAlternativaB("metaforiza a linguagem como ferramenta de lavoura.");
+        q529.setAlternativaC("explicita, na busca pela palavra, o medo da solidão.");
+        q529.setAlternativaD("confirma a frustração da narradora com relação à terra.");
+        q529.setAlternativaE("sugere, na ausência da linguagem, a estagnação do tempo.");
+        q529.setRespostaCorreta("B");
         databaseHelper.inserirQuestao(q529);
 
         Questao q530 = new Questao();
         q530.setArea(DatabaseHelper.AREA_LINGUAGENS);
         q530.setAno(2023);
         q530.setNumero(26);
-        q530.addTextoApoio("");
-        q530.addReferencia("");
-        q530.setEnunciado("");
-        q530.setAlternativaA("");
-        q530.setAlternativaB("");
-        q530.setAlternativaC("");
-        q530.setAlternativaD("");
-        q530.setAlternativaE("");
-        q530.setRespostaCorreta("");
+        q530.addTextoApoio("A escravidão");
+        q530.addTextoApoio("Esses meninos que aí andam jogando peteca não viram nunca um escravo... Quando crescerem, saberão que já houve no Brasil uma raça triste, votada à escravidão e ao desespero; e verão nos museus a coleção hedionda dos troncos, dos vira-mundos e dos bacalhaus; e terão notícias dos trágicos horrores de uma época maldita: filhos arrancados ao seio das mães, virgens violadas em pranto, homens assados lentamente em fornos de cal, mulheres nuas recebendo na sua mísera nudez desvalida o duplo ultraje das chicotadas e dos olhares do feitor bestial. [...]\n" +
+                "Mas a sua indignação nunca poderá ser tão grande como a daqueles que nasceram e cresceram em pleno horror, no meio desse horrível drama de sangue e lodo, sentindo dentro do ouvido e da alma, numa arrastada e contínua melopeia, o longo gemer da raça mártir — orquestração satânica de todos os soluços, de todas as impressões, de todos os lamentos que a tortura e a injustiça podem arrancar a gargantas humanas.");
+        q530.addReferencia("BILAC, O. Disponível em: www.escritas.org. Acesso em: 29 out. 2021");
+        q530.setEnunciado("Publicado em 1902, o texto de Olavo Bilac enfatiza as mazelas da escravidão no Brasil ao");
+        q530.setAlternativaA("descrever de modo impessoal as consequências da exploração racial sobre as gerações futuras.");
+        q530.setAlternativaB("contrapor a infância privilegiada das crianças da época à infância violentada das crianças escravizadas.");
+        q530.setAlternativaC("antecipar o futuro apagamento das marcas da escravidão no contexto social.");
+        q530.setAlternativaD("criticar a atenuação da violência contra os povos escravizados nas memórias retratadas pelos museus.");
+        q530.setAlternativaE("imaginar a reação de indiferença de seus contemporâneos com os escravizados libertos");
+        q530.setRespostaCorreta("C");
         databaseHelper.inserirQuestao(q530);
     }
 }
