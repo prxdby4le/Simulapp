@@ -682,5 +682,623 @@ public class AdicionarQuestoesUtil {
         q40.setAlternativaE("1145");
         q40.setRespostaCorreta("D");
         databaseHelper.inserirQuestao(q40);
+
+        Questao q500 = new Questao();
+        q500.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q500.setAno(2023);
+        q500.setNumero(1);
+        q500.setIdiomaEstrangeiro("Inglês");
+        q500.addImagem("questao1_img1_linguagens_2023");
+        q500.addTextoApoio("The average american tosses 300 pounds of food\n" +
+                "each year, making food the number one contributor to\n" +
+                "America’s landfills. Eat your leftovers and keep your\n" +
+                "perishables in the fridge – the Earth is counting on it.");
+        q500.addReferencia("Disponível em: https://mir-s3-cdn-cf.behance.net. Acesso em: 29 out. 2021 (adaptado).");
+        q500.addEnunciado("Esse cartaz de campanha sugere que");
+        q500.setAlternativaA("os lixões precisam de ampliação. ");
+        q500.setAlternativaB("o desperdício degrada o ambiente.");
+        q500.setAlternativaC("os mercados doam alimentos perecíveis.");
+        q500.setAlternativaD("a desnutrição compromete o raciocínio.");
+        q500.setAlternativaE("as residências carecem de refrigeradores.");
+        q500.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q500);
+
+        Questao q501 = new Questao();
+        q501.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q501.setAno(2023);
+        q501.setNumero(2);
+        q501.setIdiomaEstrangeiro("Inglês");
+        q501.addTextoApoio("No man is an island,\n" +
+                "Entire of itself;\n" +
+                "Every man is a piece of the continent,\n" +
+                "A part of the main.\n" +
+                "[...]\n" +
+                "Any man’s death diminishes me,\n" +
+                "Because I am involved in mankind.");
+        q501.addReferencia("DONNE, J. The Works of John Donne. Londres: John W. Parker, 1839 (fragmento).");
+        q501.addEnunciado("Nesse poema, a expressão “No man is an island”ressalta o(a)");
+        q501.setAlternativaA("medo da morte.");
+        q501.setAlternativaB("ideia de conexão.");
+        q501.setAlternativaC("conceito de solidão.");
+        q501.setAlternativaD("risco de devastação.");
+        q501.setAlternativaE("necessidade de empatia.");
+        q501.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q501);
+
+        Questao q502 = new Questao();
+        q502.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q502.setAno(2023);
+        q502.setNumero(3);
+        q502.setIdiomaEstrangeiro("Inglês");
+        q502.addTextoApoio("Things We Carry on the Sea\n \n" +
+                "We carry tears in our eyes: good-bye father, good-bye\n" +
+                "[mother\n" +
+                "We carry soil in small bags: may home never fade in our\n" +
+                "[hearts\n" +
+                "We carry carnage of mining, droughts, floods, genocides\n" +
+                "We carry dust of our families and neighbors incinerated\n" +
+                "[in mushroom clouds\n" +
+                "We carry our islands sinking under the sea\n" +
+                "We carry our hands, feet, bones, hearts and best minds\n" +
+                "[for a new life\n" +
+                "We carry diplomas: medicine, engineer, nurse,\n" +
+                "[education, math, poetry, even if they mean\n" +
+                "[nothing to the other shore\n" +
+                "We carry railroads, plantations, laundromats,\n" +
+                "[bodegas, taco trucks, farms, factories, nursing\n" +
+                "[homes, hospitals, schools, temples... built on\n" +
+                "[our ancestors’ backs\n" +
+                "We carry old homes along the spine, new dreams in our\n" +
+                "[chests\n" +
+                "We carry yesterday, today and tomorrow\n" +
+                "We’re orphans of the wars forced upon us\n" +
+                "We’re refugees of the sea rising from industrial wastes\n" +
+                "And we carry our mother tongues\n" +
+                "[...]\n" +
+                "As we drift... in our rubber boats... from shore... to shore...\n" +
+                "[to shore...\n");
+        q502.addReferencia("PING, W. Disponível em: https://poets.org. Acesso em: 1 jun. 2023 (fragmento).");
+        q502.addEnunciado("Ao retratar a trajetória de refugiados, o poema recorre à imagem de viagem marítima para destacar o(a)");
+        q502.setAlternativaA("risco de choques culturais.");
+        q502.setAlternativaB("impacto do ensino de história");
+        q502.setAlternativaC("importância da luta ambiental.");
+        q502.setAlternativaD("existência de experiências plurais.");
+        q502.setAlternativaE("necessidade de capacitação profissional.");
+        q502.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q502);
+
+        Questao q503 = new Questao();
+        q503.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q503.setAno(2023);
+        q503.setNumero(4);
+        q503.setIdiomaEstrangeiro("Inglês");
+        q503.addTextoApoio("Spanglish\n" + "\n" +
+                "pues estoy creando Spanglish\n" +
+                "bi-cultural systems\n" +
+                "scientific lexicographical\n" +
+                "inter-textual integrations\n" +
+                "two expressions\n" +
+                "existentially wired\n" +
+                "two dominant languages\n" +
+                "continentally abrazándose\n" +
+                "in colloquial combate\n" +
+                "imperio spanglish emerges\n" +
+                "sobre territorio bi-lingual\n" +
+                "las novelas mexicanas\n" +
+                "mixing with radiorocknroll\n" +
+                "immigrant/migrant\n" +
+                "nasal mispronouncements\n" +
+                "hip-hop, street salsa, spanish pop\n" +
+                "standard english classroom\n" +
+                "with computer technicalities\n" +
+                "spanglish is literally perfect");
+        q503.addReferencia("LAVIERA, T. Benedición: The Complete Poetry of Tato Laviera.\n" +
+                "Houston: Arte Público Press, 2014 (fragmento).");
+        q503.addEnunciado("Nesse poema de Tato Laviera, o eu lírico destaca uma");
+        q503.setAlternativaA("convergência linguístico-cultural.");
+        q503.setAlternativaB("característica histórico-cultural.");
+        q503.setAlternativaC("tendência estilístico-literária.");
+        q503.setAlternativaD("discriminação cultural.");
+        q503.setAlternativaE("censura musical.");
+        q503.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q503);
+
+        Questao q504 = new Questao();
+        q504.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q504.setAno(2023);
+        q504.setNumero(5);
+        q504.setIdiomaEstrangeiro("Inglês");
+        q504.addImagem("questao5_img1_linguagens_2023");
+        q504.addTextoApoio("“Oh, you’ll love working here. Nobody treats you any\n" +
+                "differently just because of your age, race, or gender.”");
+        q504.addReferencia("Disponível em: www.cartoonstock.com. Acesso em: 25 out. 2021.");
+        q504.addEnunciado("Ao retratar o ambiente de trabalho em um escritório, esse cartum tem por objetivo");
+        q504.setAlternativaA("criticar um padrão de vestimenta.");
+        q504.setAlternativaB("destacar a falta de diversidade.");
+        q504.setAlternativaC("indicar um modo de interação.");
+        q504.setAlternativaD("elogiar um modelo de organização.");
+        q504.setAlternativaE("salientar o espírito de cooperação");
+        q504.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q504);
+
+        Questao q505 = new Questao();
+        q505.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q505.setAno(2023);
+        q505.setNumero(1);
+        q505.setIdiomaEstrangeiro("Espanhol");
+        q505.addImagem("questao6_img1_linguagens_2023");
+        q505.addReferencia("Disponível em: www.otrasvoceseneducacion.org. Acesso em: 8 nov. 2022.");
+        q505.addTextoApoio("Ishaan Awashi es un niño de 8 años cuyo mundo está plagado de maravillas que nadie más parece apreciar: colores, peces, perros y cometas, que simplemente no son importantes en la vida de los adultos, que parecen más interesados en cosas como los deberes, las notas o la limpieza. E Ishaan parece no poder hacer nada bien en clase. Cuando los problemas que ocasiona superan a sus padres, es internado en un colegio para que le disciplinen. Las cosas no mejoran en el nuevo colegio, donde Ishaan tiene además que aceptar estar lejos de sus padres. Hasta que un día, el nuevo profesor de arte, Ram Shankar Nikumbh, entra en escena, se interesa por el pequeño Ishaan y todo cambia.");
+        q505.addReferencia("Disponível em: https://elfinalde.com. Acesso em: 26 out. 2021 (adaptado).");
+        q505.addEnunciado("O filme Como estrellas en la tierra aborda o tema da dislexia. Relacionando o cartaz do filme com a sinopse, constata-se que o(a)");
+        q505.setAlternativaA("olhar diferenciado para com o outro gera mudanças.");
+        q505.setAlternativaB("estudante com dislexia apresenta um tom questionador");
+        q505.setAlternativaC("abordagem para lidar com a dislexia é pautada na disciplina");
+        q505.setAlternativaD("contato com os pais prejudica o acompanhamento da dislexia.");
+        q505.setAlternativaE("mudança de interesses ocorre na transição da infância para a vida adulta.");
+        q505.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q505);
+
+        Questao q506 = new Questao();
+        q506.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q506.setAno(2023);
+        q506.setNumero(2);
+        q506.setIdiomaEstrangeiro("Espanhol");
+        q506.addTextoApoio("Me niego rotundamente\n" +
+                "A negar mi voz,\n" +
+                "Mi sangre y mi piel.\n" +
+                "Y me niego rotundamente\n" +
+                "A dejar de ser yo,\n" +
+                "A dejar de sentirme bien\n" +
+                "Cuando miro mi rostro en el espejo\n" +
+                "Con mi boca\n" +
+                "Rotundamente grande,\n" +
+                "Y mi nariz\n" +
+                "Rotundamente hermosa,\n" +
+                "Y mis dientes\n" +
+                "Rotundamente blancos,\n" +
+                "Y mi piel valientemente negra.\n" +
+                "Y me niego categóricamente\n" +
+                "A dejar de hablar\n" +
+                "Mi lengua, mi acento y mi historia.\n" +
+                "Y me niego absolutamente\n" +
+                "A ser parte de los que callan,\n" +
+                "De los que temen,\n" +
+                "De los que lloran.\n" +
+                "Porque me acepto\n" +
+                "Rotundamente libre,\n" +
+                "Rotundamente negra,\n" +
+                "Rotundamente hermosa.");
+        q506.addReferencia("CAMPBELL BARR, S. Disponível em: https://negracubanateniaqueser.com.\n" +
+                "Acesso em: 25 out. 2021.\n");
+        q506.addEnunciado("Para enfatizar características e atitudes que reforçam a identidade da mulher negra, o poema da escritora costarriquenha apresenta");
+        q506.setAlternativaA("advérbios como “rotundamente” e “categóricamente”.");
+        q506.setAlternativaB("verbos reflexivos como “me niego” e “me acepto”.");
+        q506.setAlternativaC("adjetivos como “grande” e “hermosa”.");
+        q506.setAlternativaD("substantivos como “sangre” e “piel”.");
+        q506.setAlternativaE("adjetivos possessivos como “mi” e “mis”.");
+        q506.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q506);
+
+        Questao q507 = new Questao();
+        q507.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q507.setAno(2023);
+        q507.setNumero(3);
+        q507.setIdiomaEstrangeiro("Espanhol");
+        q507.addTextoApoio("“Caramelos” en sus suelos\n" + "\n" +
+                "Las tierras de España, tu vista enamoran; sus gentes; te amistan; ¿“cocinas”?, ¡“te molan”!\n" +
+                "¿El plato común?, ¡pues «tortilla/patatas»!; en bares, figones, o tascas, ¡las «tapas»!; “sabor nacional”, ¡el «gazpacho», sus «vinos», «sangría», y «jamón» de sabrosos cochinos! (Cual “sellos”, te grabas sus «Típicos Platos»; ¡sabrás por dó pasas, por sólo tu olfato!, ¡si en cada lugar, un sabor peculiar, “al paso” cautiva tu buen paladar!).\n" +
+                "¡Son más que “recetas”!, ¡será “alegoría”!, ¡será “identidad”! (¡hay “reserva” en su «Guía»!); son platos allende un “timón conductor”, ¡son mar, ríos, sierras!, ¡son valles, son flor!, ¡y aportan “Conventos” a gastronomía, sus «dulces»! (sabor “celestial”, ¡de ambrosía!).");
+        q507.addReferencia("QUIROZ Y LÓPEZ, M. Disponível em: https://pt.calameo.com. Acesso em: 25 out. 2021.\n");
+        q507.addEnunciado("Nesse poema, o eu poético enaltece a");
+        q507.setAlternativaA("característica amistosa do povo espanhol.");
+        q507.setAlternativaB("beleza das paisagens naturais da Espanha.");
+        q507.setAlternativaC("variedade de pratos na gastronomia espanhola.");
+        q507.setAlternativaD("relação entre os sentidos do paladar e do olfato na gastronomia.");
+        q507.setAlternativaE("gastronomia como representação da identidade cultural de um povo.");
+        q507.setRespostaCorreta("E");
+        databaseHelper.inserirQuestao(q507);
+
+        Questao q508 = new Questao();
+        q508.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q508.setAno(2023);
+        q508.setNumero(4);
+        q508.setIdiomaEstrangeiro("Espanhol");
+        q508.addTextoApoio("Técnicas de manipulación y el resultado\n" + "\n" +
+                "Manipular es sembrar en la conciencia y en la mente de la gente ideas, actitudes, conceptos y aspiraciones — incluso falsas e inmorales — que sirvan a los objetivos de sus manipuladores.\n" +
+                "Manipular es una de las primeras cosas que aprendemos en la vida. A muy temprana edad, los bebés descubren el poder del llanto, el berrinche, los pataleos, la risa o alguna “gracia” como recursos para demandar atención, exigir comida, pedir ayuda o simplemente mantener ocupada a la gente. Nuestras actitudes de adultos reflejan lo mucho o poco que algunos maduraron, procesaron y rebasaron ese periodo.\n" +
+                "Para que exista un manipulador, debe haber una base de ciudadanos indefensos, dóciles, desinformados. El manipulador es celoso, a veces casi paranoico; no admite cuestionamientos ni quiere que nadie ocupe su espacio, sabe que su vigencia depende de presencia controladora. Todos los días, hay que marcar la línea de discurso, incidir en el debate. El ridículo vale la pena si con ello se logra una cortina de humo.");
+        q508.addReferencia("Disponível em: www.forbes.com.mx. Acesso em: 7 out. 2021 (adaptado)");
+        q508.addEnunciado("Nesse texto, a expressão “cortina de humo” revela que o manipulador");
+        q508.setAlternativaA("amadurece tardiamente");
+        q508.setAlternativaB("busca mascarar a verdade.");
+        q508.setAlternativaC("rejeita questionamentos alheios.");
+        q508.setAlternativaD("aproxima-se de pessoas indefesas");
+        q508.setAlternativaE("faz-se presente de forma controladora.");
+        q508.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q508);
+
+        Questao q509 = new Questao();
+        q509.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q509.setAno(2023);
+        q509.setNumero(5);
+        q509.setIdiomaEstrangeiro("Espanhol");
+        q509.addTextoApoio("Que quede claro\n" + "n" +
+                "Cómo es posible que se cierren\n" +
+                "tantas bocas, tantos ojos,\n" +
+                "tantas puertas, muchas mentes ante un\n" +
+                "acto xenofóbico sin precedentes.\n" + "n" +
+                "Presidentes, ministros, cancilleres,\n" +
+                "autoridades, responsables.\n" +
+                "¿Quién pagará el daño causado a familiares?\n" +
+                "Por un loco del estrada sin modales. [...]\n" + "n" +
+                "Se alejó de aquel lugar donde su color era\n" +
+                "mucho más que su color, era su raza.\n" +
+                "Persiguiendo un sueño que desapareció,\n" +
+                "que se fusionó y terminó en una pesadilla. [...]\n" + "n" +
+                "Déjame que te cuente esta historia\n" +
+                "que sucedió en el metro de Barcelona,\n" +
+                "cuando aquella mañana la injusticia\n" +
+                "y xenofobia se juntaron de la mano,\n" +
+                "protagonizando una de las más feas escenas de racismo.\n" + "n" +
+                "En aquel vagón viajaba un ángel de color diferente,\n" +
+                "en su camino se interpuso aquel inconsciente,\n" +
+                "que aún sabiendo lo que hacía,\n" +
+                "seguía hablando con su gente.\n" + "n" +
+                "Le dio al ángel dos patadas en su cara,\n" +
+                "se rió de ella sin cambiar la mirada.\n" +
+                "Y aún anda suelto, aún anda suelto...");
+        q509.addReferencia("ORISHAS. In: Cosita buena. Delaware: Suerte Publishing LLC, 2008 (fragmento).\n");
+        q509.addEnunciado("A letra da canção Que quede claro, da banda cubana Orishas, revela o(a)");
+        q509.setAlternativaA("indignação diante do desrespeito à diversidade.");
+        q509.setAlternativaB("violência característica das grandes metrópoles.");
+        q509.setAlternativaC("preconceito da sociedade com relação ao misticismo.");
+        q509.setAlternativaD("descuido da população com os sonhos dos imigrantes.");
+        q509.setAlternativaE("falta de segurança existente no transporte público urbano.");
+        q509.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q509);
+
+        Questao q510 = new Questao();
+        q510.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q510.setAno(2023);
+        q510.setNumero(6);
+        q510.addTextoApoio("A sessão do Comitê Olímpico Internacional (COI) aprovou uma mudança histórica e inédita no lema olímpico, criado em 1894 pelo Barão Pierre de Coubertin para expressar os valores e a excelência do esporte. Mais de 120 anos depois, o lema tem sua primeira alteração para ressaltar a solidariedade e incluir a palavra “juntos”: mais rápido, mais alto, mais forte — juntos. A mudança foi aprovada por unanimidade pelos membros do COI e celebrada pelo presidente da entidade.");
+        q510.addReferencia("Disponível em: https://ge.globo.com. Acesso em: 10 nov. 2021 (adaptado)");
+        q510.setEnunciado("De acordo com o texto, a alteração do lema olímpico teve como objetivo a");
+        q510.setAlternativaA("unificação do lema anterior ao atual.");
+        q510.setAlternativaB("aproximação entre o lema olímpico e o COI.");
+        q510.setAlternativaC("junção do lema olímpico com os princípios esportivos.");
+        q510.setAlternativaD("associação entre o lema olímpico e a cooperatividade.");
+        q510.setAlternativaE("vinculação entre o lema olímpico e os eventos atléticos.");
+        q510.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q510);
+
+        Questao q511 = new Questao();
+        q511.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q511.setAno(2023);
+        q511.setNumero(7);
+        q511.addTextoApoio("Mais iluminada que outras\n" + "\n" +
+                "Tenho dois seios, estas duas coxas, duas mãos que me são muito úteis, olhos escuros, estas duas sobrancelhas que preencho com maquiagem comprada por dezenove e noventa e orelhas que não aceitam bijuterias. Este corpo é um corpo\n" +
+                "faminto, dentado, cruel, capaz e violento. Movo os braços e multidões correm desesperadas. Caminho no escuro com o rosto para baixo, pois cada parte isolada de mim tem sua própria vida e não quero domá-las. Animal da caatinga. Forte demais. Engolidora de espadas e espinhos.\n" +
+                "Dizem e eu ouvi, mas depois também li, que o estado do Ceará aboliu a escravidão quatro anos antes do restante do país. Todos aqueles corpos que eram trazidos com seus dedos contados, seus calcanhares prontos e seus umbigos em fogo, todos eles foram interrompidos no porto. Um homem — dizem e eu ouvi e depois também li — liderou o levante. E todos esses corpos foram buscar outros incômodos. Foram ser incomodados.");
+        q511.addReferencia("ARRAES, J. Redemoinho em dia quente. São Paulo: Alfaguara, 2019.");
+        q511.setEnunciado("Nesse texto, os recursos expressivos usados pela narradora");
+        q511.setAlternativaA("revelam as marcas da violência de raça e de gênero na construção da identidade.");
+        q511.setAlternativaB("questionam o pioneirismo do estado do Ceará no enfrentamento à escravidão.");
+        q511.setAlternativaC("reproduzem padrões estéticos em busca da valorização da autoestima feminina.");
+        q511.setAlternativaD("sugerem uma atmosfera onírica alinhada ao desejo de resgate da espiritualidade.");
+        q511.setAlternativaE("mimetizam, na paisagem, os corpos transformados pela violência da escravidão.");
+        q511.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q511);
+
+        Questao q512 = new Questao();
+        q512.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q512.setAno(2023);
+        q512.setNumero(8);
+        q512.addTextoApoio("De quem é esta língua?\n" + "\n" +
+                "Uma pequena editora brasileira, a Urutau, acaba de lançar em Lisboa uma “antologia antirracista de poetas estrangeiros em Portugal”, com o título Volta para a tua terra.\n" +
+                "O livro denuncia as diversas formas de racismo a que os imigrantes estão sujeitos. Alguns dos poetas brasileiros\n" +
+                "antologiados queixam-se do desdém com que um grande número de portugueses acolhe o português brasileiro. É uma queixa frequente.\n" +
+                "“Aqui em Portugal eles dizem / — eles dizem — / que nosso português é errado, que nós não falamos português”, escreve a poetisa paulista Maria Giulia Pinheiro, para concluir: “Se a sua linguagem, a lusitana, / ainda conserva a palavra da opressão / ela não é a mais bonita do mundo./ Ela é uma das mais violentas”.");
+        q512.addReferencia("AGUALUSA, J. E. Disponível em: https://oglobo.globo.com.  Acesso em: 22 nov. 2021 (adaptado).");
+        q512.setEnunciado("O texto de Agualusa tematiza o preconceito em relação ao português brasileiro. Com base no trecho citado pelo autor, infere-se que esse preconceito se deve");
+        q512.setAlternativaA("à dificuldade de consolidação da literatura brasileira em outros países.");
+        q512.setAlternativaB("aos diferentes graus de instrução formal entre os falantes de língua portuguesa");
+        q512.setAlternativaC("à existência de uma língua ideal que alguns falantes lusitanos creem ser a falada em Portugal.");
+        q512.setAlternativaD("ao intercâmbio cultural que ocorre entre os povos dos diferentes países de língua portuguesa.");
+        q512.setAlternativaE("à distância territorial entre os falantes do português que vivem em Portugal e no Brasil.");
+        q512.setRespostaCorreta("c");
+        databaseHelper.inserirQuestao(q512);
+
+        Questao q513 = new Questao();
+        q513.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q513.setAno(2023);
+        q513.setNumero(9);
+        q513.addTextoApoio("Na Idade Média, as notícias se propagavam com surpreendente eficácia.Segundo uma emérita professora de Sorbonne, um cavalo era capaz de percorrer 30 quilômetros por dia, mas o tempo podia se acelerar dependendo do interesse da notícia. As ordens mendicantes tinham um papel importante na disseminação de informações, assim como os jograis, os peregrinos e os vagabundos, porque todos eles percorriam grandes distâncias. As cidades também tinham correios organizados e selos para lacrar mensagens e tentar certificar a veracidade das correspondências. Graças a tudo isso, a circulação de boatos era intensa e politicamente relevante. Um exemplo clássico de fake news da era medieval é a história do rei que desaparece na batalha e reaparece muito depois, idoso e transformado.");
+        q513.addReferencia("Disponível em: www.elpais.com.br. Acesso em: 18 jun. 2018 (adaptado).");
+        q513.setEnunciado("A propagação sistemática de informações é um fenômeno recorrente na história e no desenvolvimento das sociedades. No texto, a eficácia dessa propagação está diretamente relacionada ao(à)");
+        q513.setAlternativaA("velocidade de circulação das notícias");
+        q513.setAlternativaB("nível de letramento da população marginalizada.");
+        q513.setAlternativaC("poder de censura por parte dos serviços públicos.");
+        q513.setAlternativaD("legitimidade da voz dos representantes da nobreza.");
+        q513.setAlternativaE("diversidade dos meios disponíveis em uma época histórica.");
+        q513.setRespostaCorreta("E");
+        databaseHelper.inserirQuestao(q513);
+
+        Questao q514 = new Questao();
+        q514.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q514.setAno(2023);
+        q514.setNumero(10);
+        q514.addTextoApoio("Se a interferência de contas falsas em discussões políticas nas redes sociais já representava um perigo para os sistemas democráticos, sua sofisticação e maior semelhança com pessoas reais têm agravado o problema pelo mundo.\n" +
+                "O perigo cresceu porque a tecnologia e os métodos evoluíram dos robôs, os “bots” — softwares com tarefas on-line automatizadas —, para os “ciborgues” ou “trolls”, contas controladas diretamente por humanos com ajuda de um pouco de automação.\n" +
+                "Mas pesquisadores começam agora a observar outros padrões de comportamento: quando mensagens não são programadas, sua publicação se concentra só em horários de trabalho, já que é controlada por pessoas cuja profissão é exatamente essa, administrar um perfil falso durante o dia.\n" +
+                "Outra pista: a pobreza vocabular das mensagens publicadas por esses perfis. Um funcionário de uma empresa que supostamente produzia e vendia perfis falsos explica que às vezes “faltava criatividade” para criar mensagens distintas controlando tantos perfis falsos ao mesmo tempo");
+        q514.addReferencia("GRAGNANI, J. Disponível em: www.bbc.com. Acesso em: 16 dez. 2017.");
+        q514.setEnunciado("De acordo com o texto, a análise de características da linguagem empregada por perfis automatizados contribui para o(a)");
+        q514.setAlternativaA("controle da atuação dos profissionais de TI.");
+        q514.setAlternativaB("desenvolvimento de tecnologias como os “trolls”.");
+        q514.setAlternativaC("flexibilização dos turnos de trabalho dos controladores.");
+        q514.setAlternativaD("necessidade de regulamentação do funcionamento dos “bots”.");
+        q514.setAlternativaE("identificação de padrões de disseminação de informações inverídicas.");
+        q514.setRespostaCorreta("E");
+        databaseHelper.inserirQuestao(q514);
+
+        Questao q515 = new Questao();
+        q515.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q515.setAno(2023);
+        q515.setNumero(11);
+        q515.addTextoApoio("Maio foi colorido de amarelo, e o foi porque mundialmente amarelo é a cor convencionada para as advertências. No trânsito, essas advertências têm sido fatais. A estimativa, caso nada seja feito, é a de que se atinjam assustadoras 2,4 milhões de mortes no trânsito em 2030 em todo o mundo.\n" +
+                "A pressa constante, o sentimento de invencibilidade, a certeza de invulnerabilidade, a necessidade de poder, a falta de civilidade, a certeza de impunidade, a ausência de solidariedade, a inexistência de compaixão e o desrespeito por si próprio são circunstâncias reais que, não raro, concorrem para o comportamento violento no trânsito.\n" +
+                "O Maio Amarelo, que preconiza a atenção pela vida, é uma das iniciativas nesse sentido. E é precisamente a atenção pela vida que está esquecida. Essa atenção, por certo, requer menos pressa, mais civilidade, limites assegurados, consciência de vulnerabilidade, solidariedade, compaixão e respeito por si e pelo outro. Reafirmar e praticar esses princípios e valores talvez seja um caminho mais seguro e menos violento, que garanta a vida e não celebre a morte.");
+        q515.addReferencia("Disponível em: http://portaldotransito.com.br. Acesso em: 11 dez. 2018 (adaptado)");
+        q515.setEnunciado("Considerando os procedimentos argumentativos utilizados, infere-se que o objetivo desse texto é");
+        q515.setAlternativaA("enumerar as causas determinantes da violência no trânsito.");
+        q515.setAlternativaB("contextualizar a campanha de advertência no cenário mundial.");
+        q515.setAlternativaC("divulgar dados numéricos alarmantes sobre acidentes de trânsito.");
+        q515.setAlternativaD("sensibilizar o público para a importância de uma direção responsável.");
+        q515.setAlternativaE("restringir os problemas da violência no trânsito a aspectos emocionais.");
+        q515.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q515);
+
+        Questao q516 = new Questao();
+        q516.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q516.setAno(2023);
+        q516.setNumero(12);
+        q516.addTextoApoio("Ainda daquela vez pude constatar a bizarrice dos costumes que constituíam as leis mais ou menos constantes do seu mundo: ao me aproximar, verifiquei que o Sr. Timóteo, gordo e suado, trajava um vestido de franjas e lantejoulas que pertencera a sua mãe. O corpete descia-lhe excessivamente justo na cintura, e aqui e ali rebentava através da costura um pouco da carne aprisionada, esgarçando a fazenda e tornando o prazer de vestir-se daquele modo uma autêntica espécie de suplício. Movia-se ele com lentidão, meneando todas as suas franjas e abanando-se vigorosamente com um desses leques de madeira de sândalo, o que o envolvia numa enjoativa onda de perfume. Não sei direito o que colocara sobre a cabeça, assemelhava-se mais a um turbante ou a um chapéu sem abas de onde saíam vigorosas mechas de cabelos alourados. Como era costume seu também, trazia o rosto pintado — e para isto, bem como para suas vestimentas, apoderara-se de todo o guarda-roupa deixado por sua mãe, também em sua época famosa pela extravagância com que se vestia — o que sem dúvida fazia sobressair-lhe o nariz enorme, tão característico da família Meneses.");
+        q516.addReferencia("CARDOSO, L. Crônica da casa assassinada. São Paulo: Círculo do Livro, s.d");
+        q516.setEnunciado("Pela voz de uma empregada da casa, a descrição de um dos membros da família exemplifica a renovação da ficção urbana nos anos 1950, aqui observada na");
+        q516.setAlternativaA("opção por termos e expressões de sentido ambíguo.");
+        q516.setAlternativaB("crítica social inspirada pelo convívio com os patrões.");
+        q516.setAlternativaC("descrição impressionista do fetiche do personagem.");
+        q516.setAlternativaD("presença de um foco narrativo de caráter impreciso.");
+        q516.setAlternativaE("ambiência de mistério das relações entre familiares.");
+        q516.setRespostaCorreta("C");
+        databaseHelper.inserirQuestao(q516);
+
+        Questao q517 = new Questao();
+        q517.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q517.setAno(2023);
+        q517.setNumero(13);
+        q517.addTextoApoio("Girassol da madrugada\n" + "\n" +
+                "Teu dedo curioso me segue lento no rosto\n" +
+                "Os sulcos, as sombras machucadas por onde a\n" +
+                "[vida passou.\n" +
+                "Que silêncio, prenda minha... Que desvio triunfal\n" +
+                "[da verdade,\n" +
+                "Que círculos vagarosos na lagoa em que uma asa\n" +
+                "[gratuita roçou...\n" +
+                "Tive quatro amores eternos...\n" +
+                "O primeiro era moça donzela,\n" +
+                "O segundo... eclipse, boi que fala, cataclisma,\n" +
+                "O terceiro era a rica senhora,\n" +
+                "O quarto és tu... E eu afinal me repousei dos\n" +
+                "[meus cuidados");
+        q517.addReferencia("ANDRADE, M. Poesias completas. Rio de Janeiro: Nova Fronteira, 2013 (fragmento).");
+        q517.setEnunciado("Perante o outro, o eu lírico revela, na força das memórias evocadas, a");
+        q517.setAlternativaA("vergonha das marcas provocadas pela passagem do tempo.");
+        q517.setAlternativaB("indecisão em face das possibilidades afetivas do presente.");
+        q517.setAlternativaC("serenidade sedimentada pela entrega pacífica ao desejo.");
+        q517.setAlternativaD("frustração causada pela vontade de retorno ao passado.");
+        q517.setAlternativaE("disponibilidade para a exploração do prazer efêmero.");
+        q517.setRespostaCorreta("C");
+        databaseHelper.inserirQuestao(q517);
+
+        Questao q518 = new Questao();
+        q518.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q518.setAno(2023);
+        q518.setNumero(14);
+        q518.addTextoApoio("Dão Lalalão\n" + "\n" + "Do povoado do Ão, ou dos sítios perto, alguém precisava urgente de querer vir por escutar a novela do rádio. Ouvia-a, aprendia-a, guardava na ideia, e, retornado ao Ão, no dia seguinte, a repetia a outros.\n" +
+                "Assim estavam jantando, vinham os do povoado receber a nova parte da novela do rádio. Ouvir já tinham ouvido tudo, de uma vez, fugia da regra: falhara ali no Ão, na véspera, o caminhão de um comprador de galinhas e ovos, seo Abrãozinho Buristém, que carregava um rádio pequeno, de pilhas, armara um fio no arame da cerca... Mas queriam escutar outra vez, por confirmação. — “A estória é estável de boa, mal que acompridada: taca e não rende...” — explicava o Zuz ao Dalberto.\n" +
+                "Soropita começou a recontar o capítulo da novela. Sem trabalho, se recordava das palavras, até com clareza — disso se admirava. Contava com prazer de demorar, encher a sala com o poder de outros altos personagens. Tomar a atenção de todos, pudesse contar aquilo noite adiante. Era preciso trazer luz, nem uns enxergavam mais os outros; quando alguém ria, ria de muito longe. O capítulo da novela estava terminando");
+        q518.addReferencia("ROSA, J. G. Noites do sertão (Corpo de baile). São Paulo: Global, 2021.\n");
+        q518.setEnunciado("Nesse trecho do conto, o gosto dos moradores do povoado por ouvir a novela de rádio recontada por Soropita deve-se ao(à)");
+        q518.setAlternativaA("qualidade do som do rádio.");
+        q518.setAlternativaB("estabilidade do enredo contado");
+        q518.setAlternativaC("ineditismo do capítulo da novela.");
+        q518.setAlternativaD("jeito singular de falar aos ouvintes");
+        q518.setAlternativaE("dificuldade de compreensão da história.");
+        q518.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q518);
+
+        Questao q519 = new Questao();
+        q519.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q519.setAno(2023);
+        q519.setNumero(15);
+        q519.addTextoApoio("As cinzas do Museu Nacional, no Rio de Janeiro, consumido pelas chamas no mês de setembro de 2018, são mais do que restos de fósseis, cerâmicas e espécimes raros. O museu abrigava, entre mais de 20 milhões de peças, os esqueletos com as respostas para perguntas que ainda não haviam sido respondidas — ou sequer feitas — por pesquisadores brasileiros. E o incêndio pode ter calado para sempre palavras e cantos indígenas ancestrais, de línguas que não existem mais no mundo.\n" +
+                "O acervo do local continha gravações de conversas, cantos e rituais de dezenas de sociedades indígenas, muitas feitas durante a década de 1960 com antigos gravadores de rolo e que ainda não haviam sido digitalizadas. Alguns dos registros abordavam línguas já extintas, sem falantes originais ainda vivos. “A esperança é que outras instituições tenham registros dessas línguas”, diz a linguista Marilia Facó Soares. A pesquisadora, que trabalha com os índios Tikuna, o maior grupo da Amazônia brasileira, crê ter perdido parte de seu material. “Terei que fazer novas viagens de campo para recompor meus arquivos. Mas obviamente não dá para recuperar a fala de nativos já falecidos, geralmente os mais idosos”, lamenta.");
+        q519.addReferencia("Disponível em: https://brasil.elpais.com. Acesso em: 10 dez. 2018 (adaptado)");
+        q519.setEnunciado("A perda dos registros linguísticos no incêndio do Museu Nacional tem impacto potencializado, uma vez que");
+        q519.setAlternativaA("exige a retomada das pesquisas por especialistas de diferentes áreas");
+        q519.setAlternativaB("representa danos irreparáveis à memória e à identidade nacionais.");
+        q519.setAlternativaC("impossibilita o surgimento de novas pesquisas na área");
+        q519.setAlternativaD("resulta na extinção da cultura de povos originários.");
+        q519.setAlternativaE("inviabiliza o estudo da língua do povo Tikuna.");
+        q519.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q519);
+
+        Questao q520 = new Questao();
+        q520.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q520.setAno(2023);
+        q520.setNumero(16);
+        q520.addTextoApoio("");
+        q520.addReferencia("");
+        q520.setEnunciado("");
+        q520.setAlternativaA("");
+        q520.setAlternativaB("");
+        q520.setAlternativaC("");
+        q520.setAlternativaD("");
+        q520.setAlternativaE("");
+        q520.setRespostaCorreta("A");
+        databaseHelper.inserirQuestao(q520);
+
+        Questao q521 = new Questao();
+        q521.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q521.setAno(2023);
+        q521.setNumero(17);
+        q521.addTextoApoio("");
+        q521.addReferencia("");
+        q521.setEnunciado("");
+        q521.setAlternativaA("");
+        q521.setAlternativaB("");
+        q521.setAlternativaC("");
+        q521.setAlternativaD("");
+        q521.setAlternativaE("");
+        q521.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q521);
+
+        Questao q522 = new Questao();
+        q522.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q522.setAno(2023);
+        q522.setNumero(18);
+        q522.addTextoApoio("");
+        q522.addReferencia("");
+        q522.setEnunciado("");
+        q522.setAlternativaA("");
+        q522.setAlternativaB("");
+        q522.setAlternativaC("");
+        q522.setAlternativaD("");
+        q522.setAlternativaE("");
+        q522.setRespostaCorreta("B");
+        databaseHelper.inserirQuestao(q522);
+
+        Questao q523 = new Questao();
+        q523.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q523.setAno(2023);
+        q523.setNumero(19);
+        q523.addTextoApoio("");
+        q523.addReferencia("");
+        q523.setEnunciado("");
+        q523.setAlternativaA("");
+        q523.setAlternativaB("");
+        q523.setAlternativaC("");
+        q523.setAlternativaD("");
+        q523.setAlternativaE("");
+        q523.setRespostaCorreta("D");
+        databaseHelper.inserirQuestao(q523);
+
+        Questao q524 = new Questao();
+        q524.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q524.setAno(2023);
+        q524.setNumero(20);
+        q524.addTextoApoio("");
+        q524.addReferencia("");
+        q524.setEnunciado("");
+        q524.setAlternativaA("");
+        q524.setAlternativaB("");
+        q524.setAlternativaC("");
+        q524.setAlternativaD("");
+        q524.setAlternativaE("");
+        q524.setRespostaCorreta("");
+        databaseHelper.inserirQuestao(q524);
+
+        Questao q525 = new Questao();
+        q525.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q525.setAno(2023);
+        q525.setNumero(21);
+        q525.addTextoApoio("");
+        q525.addReferencia("");
+        q525.setEnunciado("");
+        q525.setAlternativaA("");
+        q525.setAlternativaB("");
+        q525.setAlternativaC("");
+        q525.setAlternativaD("");
+        q525.setAlternativaE("");
+        q525.setRespostaCorreta("");
+        databaseHelper.inserirQuestao(q525);
+
+        Questao q526 = new Questao();
+        q526.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q526.setAno(2023);
+        q526.setNumero(22);
+        q526.addTextoApoio("");
+        q526.addReferencia("");
+        q526.setEnunciado("");
+        q526.setAlternativaA("");
+        q526.setAlternativaB("");
+        q526.setAlternativaC("");
+        q526.setAlternativaD("");
+        q526.setAlternativaE("");
+        q526.setRespostaCorreta("");
+        databaseHelper.inserirQuestao(q526);
+
+        Questao q527 = new Questao();
+        q527.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q527.setAno(2023);
+        q527.setNumero(23);
+        q527.addTextoApoio("");
+        q527.addReferencia("");
+        q527.setEnunciado("");
+        q527.setAlternativaA("");
+        q527.setAlternativaB("");
+        q527.setAlternativaC("");
+        q527.setAlternativaD("");
+        q527.setAlternativaE("");
+        q527.setRespostaCorreta("");
+        databaseHelper.inserirQuestao(q527);
+
+        Questao q528 = new Questao();
+        q528.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q528.setAno(2023);
+        q528.setNumero(24);
+        q528.addTextoApoio("");
+        q528.addReferencia("");
+        q528.setEnunciado("");
+        q528.setAlternativaA("");
+        q528.setAlternativaB("");
+        q528.setAlternativaC("");
+        q528.setAlternativaD("");
+        q528.setAlternativaE("");
+        q528.setRespostaCorreta("");
+        databaseHelper.inserirQuestao(q528);
+
+        Questao q529 = new Questao();
+        q529.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q529.setAno(2023);
+        q529.setNumero(25);
+        q529.addTextoApoio("");
+        q529.addReferencia("");
+        q529.setEnunciado("");
+        q529.setAlternativaA("");
+        q529.setAlternativaB("");
+        q529.setAlternativaC("");
+        q529.setAlternativaD("");
+        q529.setAlternativaE("");
+        q529.setRespostaCorreta("");
+        databaseHelper.inserirQuestao(q529);
+
+        Questao q530 = new Questao();
+        q530.setArea(DatabaseHelper.AREA_LINGUAGENS);
+        q530.setAno(2023);
+        q530.setNumero(26);
+        q530.addTextoApoio("");
+        q530.addReferencia("");
+        q530.setEnunciado("");
+        q530.setAlternativaA("");
+        q530.setAlternativaB("");
+        q530.setAlternativaC("");
+        q530.setAlternativaD("");
+        q530.setAlternativaE("");
+        q530.setRespostaCorreta("");
+        databaseHelper.inserirQuestao(q530);
     }
 }
