@@ -19,7 +19,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "simulapp.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6; // bumped from 5 to 6 para suportar imagens nas alternativas
 
     private static final String TABLE_QUESTOES = "questoes";
     private static final String COLUMN_ID = "id";
@@ -45,6 +45,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ALTERNATIVA_C = "alternativa_c";
     private static final String COLUMN_ALTERNATIVA_D = "alternativa_d";
     private static final String COLUMN_ALTERNATIVA_E = "alternativa_e";
+    // Novos: imagens para alternativas
+    private static final String COLUMN_ALTERNATIVA_A_IMAGEM = "alternativa_a_imagem";
+    private static final String COLUMN_ALTERNATIVA_B_IMAGEM = "alternativa_b_imagem";
+    private static final String COLUMN_ALTERNATIVA_C_IMAGEM = "alternativa_c_imagem";
+    private static final String COLUMN_ALTERNATIVA_D_IMAGEM = "alternativa_d_imagem";
+    private static final String COLUMN_ALTERNATIVA_E_IMAGEM = "alternativa_e_imagem";
+
     private static final String COLUMN_RESPOSTA_CORRETA = "resposta_correta";
     // Novo: persistir a ordem de elementos (texto, imagem, referencia, enunciado)
     private static final String COLUMN_ELEMENTOS_ORDENADOS = "elementos_ordenados";
@@ -83,6 +90,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_ALTERNATIVA_C + " TEXT NOT NULL, "
                 + COLUMN_ALTERNATIVA_D + " TEXT NOT NULL, "
                 + COLUMN_ALTERNATIVA_E + " TEXT NOT NULL, "
+                + COLUMN_ALTERNATIVA_A_IMAGEM + " TEXT, "
+                + COLUMN_ALTERNATIVA_B_IMAGEM + " TEXT, "
+                + COLUMN_ALTERNATIVA_C_IMAGEM + " TEXT, "
+                + COLUMN_ALTERNATIVA_D_IMAGEM + " TEXT, "
+                + COLUMN_ALTERNATIVA_E_IMAGEM + " TEXT, "
                 + COLUMN_RESPOSTA_CORRETA + " TEXT NOT NULL, "
                 + COLUMN_ELEMENTOS_ORDENADOS + " TEXT)";
         db.execSQL(CREATE_TABLE);
@@ -97,6 +109,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } catch (Exception ignore) {
                 // coluna já pode existir; ignorar
             }
+        }
+        if (oldVersion < 6) {
+            // Adicionar colunas de imagens das alternativas
+            try { db.execSQL("ALTER TABLE " + TABLE_QUESTOES + " ADD COLUMN " + COLUMN_ALTERNATIVA_A_IMAGEM + " TEXT"); } catch (Exception ignore) {}
+            try { db.execSQL("ALTER TABLE " + TABLE_QUESTOES + " ADD COLUMN " + COLUMN_ALTERNATIVA_B_IMAGEM + " TEXT"); } catch (Exception ignore) {}
+            try { db.execSQL("ALTER TABLE " + TABLE_QUESTOES + " ADD COLUMN " + COLUMN_ALTERNATIVA_C_IMAGEM + " TEXT"); } catch (Exception ignore) {}
+            try { db.execSQL("ALTER TABLE " + TABLE_QUESTOES + " ADD COLUMN " + COLUMN_ALTERNATIVA_D_IMAGEM + " TEXT"); } catch (Exception ignore) {}
+            try { db.execSQL("ALTER TABLE " + TABLE_QUESTOES + " ADD COLUMN " + COLUMN_ALTERNATIVA_E_IMAGEM + " TEXT"); } catch (Exception ignore) {}
         }
     }
 
@@ -179,6 +199,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ALTERNATIVA_C, questao.getAlternativaC());
         values.put(COLUMN_ALTERNATIVA_D, questao.getAlternativaD());
         values.put(COLUMN_ALTERNATIVA_E, questao.getAlternativaE());
+        // Novos: imagens alternativas
+        values.put(COLUMN_ALTERNATIVA_A_IMAGEM, questao.getAlternativaAImagem());
+        values.put(COLUMN_ALTERNATIVA_B_IMAGEM, questao.getAlternativaBImagem());
+        values.put(COLUMN_ALTERNATIVA_C_IMAGEM, questao.getAlternativaCImagem());
+        values.put(COLUMN_ALTERNATIVA_D_IMAGEM, questao.getAlternativaDImagem());
+        values.put(COLUMN_ALTERNATIVA_E_IMAGEM, questao.getAlternativaEImagem());
+
         values.put(COLUMN_RESPOSTA_CORRETA, questao.getRespostaCorreta());
 
         // Serializar elementos ordenados em JSON
@@ -270,6 +297,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 questao.setAlternativaC(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_C)));
                 questao.setAlternativaD(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_D)));
                 questao.setAlternativaE(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_E)));
+                // Imagens alternativas
+                int idxA = cursor.getColumnIndex(COLUMN_ALTERNATIVA_A_IMAGEM);
+                if (idxA != -1) questao.setAlternativaAImagem(cursor.getString(idxA));
+                int idxB = cursor.getColumnIndex(COLUMN_ALTERNATIVA_B_IMAGEM);
+                if (idxB != -1) questao.setAlternativaBImagem(cursor.getString(idxB));
+                int idxC = cursor.getColumnIndex(COLUMN_ALTERNATIVA_C_IMAGEM);
+                if (idxC != -1) questao.setAlternativaCImagem(cursor.getString(idxC));
+                int idxD = cursor.getColumnIndex(COLUMN_ALTERNATIVA_D_IMAGEM);
+                if (idxD != -1) questao.setAlternativaDImagem(cursor.getString(idxD));
+                int idxE = cursor.getColumnIndex(COLUMN_ALTERNATIVA_E_IMAGEM);
+                if (idxE != -1) questao.setAlternativaEImagem(cursor.getString(idxE));
+
                 questao.setRespostaCorreta(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RESPOSTA_CORRETA)));
 
                 // Reconstruir ordem
@@ -331,6 +370,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 questao.setAlternativaC(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_C)));
                 questao.setAlternativaD(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_D)));
                 questao.setAlternativaE(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_E)));
+                // Imagens alternativas
+                int idxA = cursor.getColumnIndex(COLUMN_ALTERNATIVA_A_IMAGEM);
+                if (idxA != -1) questao.setAlternativaAImagem(cursor.getString(idxA));
+                int idxB = cursor.getColumnIndex(COLUMN_ALTERNATIVA_B_IMAGEM);
+                if (idxB != -1) questao.setAlternativaBImagem(cursor.getString(idxB));
+                int idxC = cursor.getColumnIndex(COLUMN_ALTERNATIVA_C_IMAGEM);
+                if (idxC != -1) questao.setAlternativaCImagem(cursor.getString(idxC));
+                int idxD = cursor.getColumnIndex(COLUMN_ALTERNATIVA_D_IMAGEM);
+                if (idxD != -1) questao.setAlternativaDImagem(cursor.getString(idxD));
+                int idxE = cursor.getColumnIndex(COLUMN_ALTERNATIVA_E_IMAGEM);
+                if (idxE != -1) questao.setAlternativaEImagem(cursor.getString(idxE));
+
                 questao.setRespostaCorreta(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RESPOSTA_CORRETA)));
 
                 // Reconstruir ordem
@@ -401,5 +452,102 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return count;
+    }
+
+    // Verificar se as questões já foram carregadas
+    public boolean isQuestoesCarregadas() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + TABLE_QUESTOES;
+        Cursor cursor = db.rawQuery(query, null);
+
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        // Se tiver pelo menos 100 questões, considera que foi carregado
+        return count >= 100;
+    }
+
+    // Obter total de questões no banco
+    public int getTotalQuestoes() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + TABLE_QUESTOES;
+        Cursor cursor = db.rawQuery(query, null);
+
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public List<Questao> getQuestoesPorIds(long[] ids) {
+        List<Questao> questoes = new ArrayList<>();
+        if (ids == null || ids.length == 0) return questoes;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT * FROM ").append(TABLE_QUESTOES).append(" WHERE ").append(COLUMN_ID).append(" IN (");
+        String[] args = new String[ids.length];
+        for (int i = 0; i < ids.length; i++) {
+            sb.append("?");
+            if (i < ids.length - 1) sb.append(",");
+            args[i] = String.valueOf(ids[i]);
+        }
+        sb.append(")");
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(sb.toString(), args);
+        if (cursor.moveToFirst()) {
+            do {
+                Questao questao = new Questao();
+                questao.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)));
+                questao.setArea(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AREA)));
+                questao.setAno(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ANO)));
+                questao.setNumero(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NUMERO)));
+                questao.setEnunciado(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ENUNCIADO)));
+                questao.setImagem(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGEM)));
+                questao.setTextoApoio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO)));
+                questao.setFonte(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FONTE)));
+                questao.setIdiomaEstrangeiro(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IDIOMA_ESTRANGEIRO)));
+                questao.setTextoApoio1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_1)));
+                questao.setTextoApoio2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_2)));
+                questao.setTextoApoio3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_3)));
+                questao.setTextoApoio4(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_4)));
+                questao.setReferenciaTexto1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_1)));
+                questao.setReferenciaTexto2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_2)));
+                questao.setReferenciaTexto3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_3)));
+                questao.setReferenciaTexto4(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_4)));
+                questao.setAlternativaA(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_A)));
+                questao.setAlternativaB(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_B)));
+                questao.setAlternativaC(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_C)));
+                questao.setAlternativaD(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_D)));
+                questao.setAlternativaE(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_E)));
+                // Imagens alternativas
+                int idxA = cursor.getColumnIndex(COLUMN_ALTERNATIVA_A_IMAGEM);
+                if (idxA != -1) questao.setAlternativaAImagem(cursor.getString(idxA));
+                int idxB = cursor.getColumnIndex(COLUMN_ALTERNATIVA_B_IMAGEM);
+                if (idxB != -1) questao.setAlternativaBImagem(cursor.getString(idxB));
+                int idxC = cursor.getColumnIndex(COLUMN_ALTERNATIVA_C_IMAGEM);
+                if (idxC != -1) questao.setAlternativaCImagem(cursor.getString(idxC));
+                int idxD = cursor.getColumnIndex(COLUMN_ALTERNATIVA_D_IMAGEM);
+                if (idxD != -1) questao.setAlternativaDImagem(cursor.getString(idxD));
+                int idxE = cursor.getColumnIndex(COLUMN_ALTERNATIVA_E_IMAGEM);
+                if (idxE != -1) questao.setAlternativaEImagem(cursor.getString(idxE));
+
+                preencherElementosOrdenadosSeExistir(questao, cursor);
+
+                questoes.add(questao);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return questoes;
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="alt_image_max_height">180dp</dimen>
+    <!-- Optional: common horizontal margin if needed across layouts -->
+    <dimen name="content_horizontal_margin">16dp</dimen>
+    <dimen name="block_bottom_margin">8dp</dimen>
+    <dimen name="text_block_padding">12dp</dimen>
+    <dimen name="alt_image_drawable_padding">8dp</dimen>
+    <dimen name="small_top_margin">4dp</dimen>
+
+    <!-- Fraction of screen height reserved as the max height for context images -->
+    <item name="context_image_max_height_fraction" type="fraction">45%</item>
+</resources>

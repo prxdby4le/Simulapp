@@ -1,6 +1,10 @@
 package com.example.simulapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,12 +18,18 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.example.simulapp.database.DatabaseHelper;
 import com.example.simulapp.model.Questao;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SimuladoActivity extends AppCompatActivity {
 
@@ -67,7 +77,23 @@ public class SimuladoActivity extends AppCompatActivity {
         btnProxima = findViewById(R.id.btnProxima);
         btnFinalizar = findViewById(R.id.btnFinalizar);
 
-        questoes = (List<Questao>) getIntent().getSerializableExtra("questoes");
+        // Preferir IDs para evitar TransactionTooLargeException
+        long[] ids = getIntent().getLongArrayExtra("questao_ids");
+        if (ids != null && ids.length > 0) {
+            DatabaseHelper db = new DatabaseHelper(this);
+            List<Questao> carregadas = db.getQuestoesPorIds(ids);
+            // Reordenar conforme a ordem dos IDs recebidos
+            Map<Long, Questao> porId = new HashMap<>();
+            for (Questao q : carregadas) porId.put(q.getId(), q);
+            questoes = new ArrayList<>(ids.length);
+            for (long id : ids) {
+                Questao q = porId.get(id);
+                if (q != null) questoes.add(q);
+            }
+        } else {
+            // Compatibilidade: receber lista serializada quando pequena
+            questoes = (List<Questao>) getIntent().getSerializableExtra("questoes");
+        }
 
         if (questoes == null || questoes.isEmpty()) {
             Toast.makeText(this, "Nenhuma questão disponível", Toast.LENGTH_SHORT).show();
@@ -77,20 +103,14 @@ public class SimuladoActivity extends AppCompatActivity {
 
         exibirQuestao();
 
-        rgAlternativas.setOnCheckedChangeListener((group, checkedId) -> {
-            salvarResposta();
-        });
-
+        rgAlternativas.setOnCheckedChangeListener((group, checkedId) -> salvarResposta());
         btnProxima.setOnClickListener(v -> {
             if (questaoAtualIndex < questoes.size() - 1) {
                 questaoAtualIndex++;
                 exibirQuestao();
             }
         });
-
-        btnFinalizar.setOnClickListener(v -> {
-            finalizarSimulado();
-        });
+        btnFinalizar.setOnClickListener(v -> finalizarSimulado());
     }
 
     private void exibirQuestao() {
@@ -174,11 +194,19 @@ public class SimuladoActivity extends AppCompatActivity {
             }
         }
 
-        rbAlternativaA.setText("A) " + questao.getAlternativaA());
-        rbAlternativaB.setText("B) " + questao.getAlternativaB());
-        rbAlternativaC.setText("C) " + questao.getAlternativaC());
-        rbAlternativaD.setText("D) " + questao.getAlternativaD());
-        rbAlternativaE.setText("E) " + questao.getAlternativaE());
+        // Substituir para evitar "null" quando a alternativa só tem imagem
+        rbAlternativaA.setText(formatAlternativa("A", questao.getAlternativaA()));
+        rbAlternativaB.setText(formatAlternativa("B", questao.getAlternativaB()));
+        rbAlternativaC.setText(formatAlternativa("C", questao.getAlternativaC()));
+        rbAlternativaD.setText(formatAlternativa("D", questao.getAlternativaD()));
+        rbAlternativaE.setText(formatAlternativa("E", questao.getAlternativaE()));
+
+        // Configurar imagens das alternativas (se houver)
+        configurarImagemAlternativa(rbAlternativaA, questao.getAlternativaAImagem());
+        configurarImagemAlternativa(rbAlternativaB, questao.getAlternativaBImagem());
+        configurarImagemAlternativa(rbAlternativaC, questao.getAlternativaCImagem());
+        configurarImagemAlternativa(rbAlternativaD, questao.getAlternativaDImagem());
+        configurarImagemAlternativa(rbAlternativaE, questao.getAlternativaEImagem());
 
         if (questao.isRespondida()) {
             switch (questao.getRespostaUsuario().toUpperCase()) {
@@ -201,25 +229,40 @@ public class SimuladoActivity extends AppCompatActivity {
         }
     }
 
+    private void configurarImagemAlternativa(RadioButton radioButton, String nomeImagemBase) {
+        // Limpar padrão
+        radioButton.setCompoundDrawables(null, null, null, null);
+        if (TextUtils.isEmpty(nomeImagemBase)) return;
+        Drawable drawable = carregarDrawablePorNome(nomeImagemBase);
+        if (drawable != null) {
+            int maxWidth = getMaxAltDrawableWidthPx();
+            int maxHeight = getResources().getDimensionPixelSize(R.dimen.alt_image_max_height);
+            int iw = Math.max(1, drawable.getIntrinsicWidth());
+            int ih = Math.max(1, drawable.getIntrinsicHeight());
+            float scale = Math.min(1f, Math.min((float) maxWidth / iw, (float) maxHeight / ih));
+            int w = Math.max(1, Math.round(iw * scale));
+            int h = Math.max(1, Math.round(ih * scale));
+            drawable.setBounds(0, 0, w, h);
+            radioButton.setCompoundDrawables(null, drawable, null, null);
+            radioButton.setCompoundDrawablePadding(getResources().getDimensionPixelSize(R.dimen.alt_image_drawable_padding));
+        }
+    }
+
     private void adicionarTextoApoio(String texto) {
         layoutTextosApoio.setVisibility(View.VISIBLE);
         TextView tvTexto = new TextView(this);
         tvTexto.setText(texto);
         tvTexto.setTextSize(14);
-        tvTexto.setTextColor(getResources().getColor(R.color.colorTextoApoio));
-        tvTexto.setBackground(getResources().getDrawable(R.drawable.border_text));
-        tvTexto.setPadding(
-            (int) (12 * getResources().getDisplayMetrics().density),
-            (int) (12 * getResources().getDisplayMetrics().density),
-            (int) (12 * getResources().getDisplayMetrics().density),
-            (int) (12 * getResources().getDisplayMetrics().density)
-        );
+        tvTexto.setTextColor(ContextCompat.getColor(this, R.color.colorTextoApoio));
+        tvTexto.setBackground(ContextCompat.getDrawable(this, R.drawable.border_text));
+        int pad = getResources().getDimensionPixelSize(R.dimen.text_block_padding);
+        tvTexto.setPadding(pad, pad, pad, pad);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
+        params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.block_bottom_margin);
         tvTexto.setLayoutParams(params);
 
         layoutTextosApoio.addView(tvTexto);
@@ -229,7 +272,7 @@ public class SimuladoActivity extends AppCompatActivity {
         layoutTextosApoio.setVisibility(View.VISIBLE);
         TextView tvReferencia = new TextView(this);
         tvReferencia.setText(referencia);
-        tvReferencia.setTextColor(getResources().getColor(R.color.colorTextoFonte));
+        tvReferencia.setTextColor(ContextCompat.getColor(this, R.color.colorTextoFonte));
         tvReferencia.setTypeface(null, android.graphics.Typeface.ITALIC);
         tvReferencia.setTextSize(11);
         tvReferencia.setGravity(android.view.Gravity.END);
@@ -238,7 +281,7 @@ public class SimuladoActivity extends AppCompatActivity {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
+        params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.block_bottom_margin);
         tvReferencia.setLayoutParams(params);
 
         layoutTextosApoio.addView(tvReferencia);
@@ -248,7 +291,7 @@ public class SimuladoActivity extends AppCompatActivity {
         layoutImagens.setVisibility(View.VISIBLE);
         TextView tvReferencia = new TextView(this);
         tvReferencia.setText(referencia);
-        tvReferencia.setTextColor(getResources().getColor(R.color.colorTextoFonte));
+        tvReferencia.setTextColor(ContextCompat.getColor(this, R.color.colorTextoFonte));
         tvReferencia.setTypeface(null, android.graphics.Typeface.ITALIC);
         tvReferencia.setTextSize(11);
         tvReferencia.setGravity(android.view.Gravity.END);
@@ -257,30 +300,110 @@ public class SimuladoActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.topMargin = (int) (4 * getResources().getDisplayMetrics().density);
+        params.topMargin = getResources().getDimensionPixelSize(R.dimen.small_top_margin);
         layoutImagens.addView(tvReferencia, params);
     }
 
-    private void adicionarImagem(String nomeImagem) {
+    private void adicionarImagem(String nomeImagemBase) {
         layoutImagens.setVisibility(View.VISIBLE);
-        int resourceId = getResources().getIdentifier(nomeImagem, "mipmap", getPackageName());
 
-        if (resourceId != 0) {
-            ImageView imageView = new ImageView(this);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
-            imageView.setAdjustViewBounds(true);
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageView.setImageResource(resourceId);
-
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-            params.bottomMargin = (int) (8 * getResources().getDisplayMetrics().density);
-            imageView.setLayoutParams(params);
-
-            layoutImagens.addView(imageView);
+        // 1) Tenta carregar a partir do armazenamento interno (filesDir/images)
+        File imgFile = encontrarImagemInterna(nomeImagemBase);
+        if (imgFile != null && imgFile.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            if (bitmap != null) {
+                PhotoView photoView = criarPhotoViewBase();
+                photoView.setImageBitmap(bitmap);
+                configurarZoomSeGrande(photoView, bitmap.getWidth(), bitmap.getHeight());
+                layoutImagens.addView(photoView);
+                return;
+            }
         }
+
+        // 2) Fallback: tenta como recurso drawable
+        int resIdDrawable = getResources().getIdentifier(nomeImagemBase, "drawable", getPackageName());
+        if (resIdDrawable != 0) {
+            Drawable d = ContextCompat.getDrawable(this, resIdDrawable);
+            PhotoView photoView = criarPhotoViewBase();
+            photoView.setImageDrawable(d);
+            if (d != null) configurarZoomSeGrande(photoView, Math.max(1, d.getIntrinsicWidth()), Math.max(1, d.getIntrinsicHeight()));
+            layoutImagens.addView(photoView);
+            return;
+        }
+
+        // 3) Fallback: tenta como recurso mipmap (compatibilidade antiga)
+        int resIdMipmap = getResources().getIdentifier(nomeImagemBase, "mipmap", getPackageName());
+        if (resIdMipmap != 0) {
+            Drawable d = ContextCompat.getDrawable(this, resIdMipmap);
+            PhotoView photoView = criarPhotoViewBase();
+            photoView.setImageDrawable(d);
+            if (d != null) configurarZoomSeGrande(photoView, Math.max(1, d.getIntrinsicWidth()), Math.max(1, d.getIntrinsicHeight()));
+            layoutImagens.addView(photoView);
+        }
+    }
+
+    private PhotoView criarPhotoViewBase() {
+        PhotoView photoView = new PhotoView(this);
+        photoView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        ));
+        photoView.setAdjustViewBounds(true);
+        photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        photoView.setZoomable(false); // habilita somente quando necessário
+        photoView.setMaxHeight(getMaxContextImageHeightPx());
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) photoView.getLayoutParams();
+        params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.block_bottom_margin);
+        photoView.setLayoutParams(params);
+        return photoView;
+    }
+
+    private int getMaxContextImageHeightPx() {
+        float fraction = getResources().getFraction(R.fraction.context_image_max_height_fraction, 1, 1);
+        int screenH = getResources().getDisplayMetrics().heightPixels;
+        return Math.round(screenH * fraction);
+    }
+
+    private int getScreenContentWidthPx() {
+        int screenW = getResources().getDisplayMetrics().widthPixels;
+        int hMargin = getResources().getDimensionPixelSize(R.dimen.content_horizontal_margin);
+        return Math.max(1, screenW - 2 * hMargin);
+    }
+
+    private void configurarZoomSeGrande(PhotoView photoView, int imgW, int imgH) {
+        boolean grandePorAltura = imgH > getMaxContextImageHeightPx();
+        boolean grandePorLargura = imgW > getScreenContentWidthPx();
+        photoView.setZoomable(grandePorAltura || grandePorLargura);
+    }
+
+    private int getMaxAltDrawableWidthPx() {
+        int screenW = getResources().getDisplayMetrics().widthPixels;
+        int hMargin = getResources().getDimensionPixelSize(R.dimen.content_horizontal_margin);
+        return Math.max(1, screenW - 2 * hMargin);
+    }
+
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round(dp * density);
+    }
+
+    private File encontrarImagemInterna(String nomeBase) {
+        try {
+            File dir = new File(getFilesDir(), "images");
+            if (!dir.exists()) return null;
+            File[] files = dir.listFiles();
+            if (files == null || files.length == 0) return null;
+            for (File f : files) {
+                String nome = f.getName();
+                int idx = nome.lastIndexOf('.');
+                String semExt = (idx > 0) ? nome.substring(0, idx) : nome;
+                if (semExt.equalsIgnoreCase(nomeBase)) {
+                    return f;
+                }
+            }
+        } catch (Exception ignore) {
+        }
+        return null;
     }
 
     private void salvarResposta() {
@@ -299,17 +422,50 @@ public class SimuladoActivity extends AppCompatActivity {
 
     private void finalizarSimulado() {
         int acertos = 0;
-        for (Questao questao : questoes) {
-            if (questao.isCorreta()) {
+        long[] ids = new long[questoes.size()];
+        String[] respostasUsuario = new String[questoes.size()];
+        for (int i = 0; i < questoes.size(); i++) {
+            Questao q = questoes.get(i);
+            ids[i] = q.getId();
+            String r = q.getRespostaUsuario();
+            respostasUsuario[i] = r == null ? "" : r;
+            if (q.isCorreta()) {
                 acertos++;
             }
         }
 
         Intent intent = new Intent(this, ResultadoSimuladoActivity.class);
-        intent.putExtra("questoes", (ArrayList<Questao>) questoes);
+        intent.putExtra("questao_ids", ids);
+        intent.putExtra("respostas_usuario", respostasUsuario);
         intent.putExtra("acertos", acertos);
         intent.putExtra("total", questoes.size());
         startActivity(intent);
         finish();
+    }
+
+    private String formatAlternativa(String letra, String texto) {
+        return TextUtils.isEmpty(texto) ? (letra + ")") : (letra + ") " + texto);
+    }
+
+    private Drawable carregarDrawablePorNome(String nomeImagemBase) {
+        // Tenta a partir do armazenamento interno (filesDir/images)
+        File imgFile = encontrarImagemInterna(nomeImagemBase);
+        if (imgFile != null && imgFile.exists()) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            if (bitmap != null) {
+                return new BitmapDrawable(getResources(), bitmap);
+            }
+        }
+        // Fallback: tenta como drawable
+        int resIdDrawable = getResources().getIdentifier(nomeImagemBase, "drawable", getPackageName());
+        if (resIdDrawable != 0) {
+            return ContextCompat.getDrawable(this, resIdDrawable);
+        }
+        // Fallback: tenta como mipmap
+        int resIdMipmap = getResources().getIdentifier(nomeImagemBase, "mipmap", getPackageName());
+        if (resIdMipmap != 0) {
+            return ContextCompat.getDrawable(this, resIdMipmap);
+        }
+        return null;
     }
 }

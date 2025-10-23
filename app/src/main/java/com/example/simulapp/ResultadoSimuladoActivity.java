@@ -8,10 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.simulapp.model.Questao;
 import com.google.android.material.appbar.MaterialToolbar;
-
-import java.util.ArrayList;
 
 public class ResultadoSimuladoActivity extends AppCompatActivity {
 
@@ -30,7 +27,8 @@ public class ResultadoSimuladoActivity extends AppCompatActivity {
 
         int acertos = getIntent().getIntExtra("acertos", 0);
         int total = getIntent().getIntExtra("total", 0);
-        ArrayList<Questao> questoes = (ArrayList<Questao>) getIntent().getSerializableExtra("questoes");
+        long[] ids = getIntent().getLongArrayExtra("questao_ids");
+        String[] respostasUsuario = getIntent().getStringArrayExtra("respostas_usuario");
 
         TextView tvResultado = findViewById(R.id.tvResultado);
         TextView tvAcertos = findViewById(R.id.tvAcertos);
@@ -42,11 +40,12 @@ public class ResultadoSimuladoActivity extends AppCompatActivity {
 
         tvResultado.setText("Simulado Finalizado!");
         tvAcertos.setText("Você acertou " + acertos + " de " + total + " questões");
-        tvPercentual.setText(String.format("%.1f%% de aproveitamento", percentual));
+        tvPercentual.setText(String.format(java.util.Locale.getDefault(), "%.1f%% de aproveitamento", percentual));
 
         btnAnalisarTentativa.setOnClickListener(v -> {
             Intent intent = new Intent(this, AnalisarTentativaActivity.class);
-            intent.putExtra("questoes", questoes);
+            intent.putExtra("questao_ids", ids);
+            intent.putExtra("respostas_usuario", respostasUsuario);
             startActivity(intent);
         });
 

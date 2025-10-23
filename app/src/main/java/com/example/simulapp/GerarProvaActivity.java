@@ -17,7 +17,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.example.simulapp.database.DatabaseHelper;
 import com.example.simulapp.model.Questao;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class GerarProvaActivity extends AppCompatActivity {
@@ -113,8 +112,14 @@ public class GerarProvaActivity extends AppCompatActivity {
             Toast.makeText(this, "Apenas " + questoes.size() + " questões disponíveis no banco", Toast.LENGTH_LONG).show();
         }
 
+        // Extrair apenas os IDs para evitar TransactionTooLargeException
+        long[] ids = new long[questoes.size()];
+        for (int i = 0; i < questoes.size(); i++) {
+            ids[i] = questoes.get(i).getId();
+        }
+
         Intent intent = new Intent(this, SimuladoActivity.class);
-        intent.putExtra("questoes", (Serializable) questoes);
+        intent.putExtra("questao_ids", ids);
         startActivity(intent);
     }
 
