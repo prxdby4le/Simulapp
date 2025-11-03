@@ -112,9 +112,12 @@ def processar_questao(detalhes, ano, questao_id):
 def main():
     todas_questoes = []
     total_processadas = 0
+    # NOVO: bucket por ano
+    por_ano = {}
 
     for ano in ANOS_DISPONIVEIS:
         print(f"\n=== Processando ano {ano} ===")
+        por_ano.setdefault(str(ano), [])
 
         # Questões de língua estrangeira (1-5)
         for i in range(1, 6):
@@ -127,6 +130,7 @@ def main():
                     questao = processar_questao(detalhes, ano, questao_id)
                     if questao:
                         todas_questoes.append(questao)
+                        por_ano[str(ano)].append(questao)
                         total_processadas += 1
 
                 time.sleep(0.5)  # Delay para não sobrecarregar a API
@@ -141,22 +145,37 @@ def main():
                 questao = processar_questao(detalhes, ano, questao_id)
                 if questao:
                     todas_questoes.append(questao)
+                    por_ano[str(ano)].append(questao)
                     total_processadas += 1
 
             time.sleep(0.5)  # Delay para não sobrecarregar a API
 
         print(f"Total processadas até agora: {total_processadas}")
 
-    # Salvar todas as questões em JSON
+    # Salvar todas as questões em JSON (consolidado)
     output_file = os.path.join(OUTPUT_DIR, "questoes_enem.json")
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(todas_questoes, f, ensure_ascii=False, indent=2)
 
+    # NOVO: salvar por ano
+    anos_dir = Path(OUTPUT_DIR) / "anos"
+    anos_dir.mkdir(parents=True, exist_ok=True)
+
+    anos_index = []
+    for ano_str, questoes in sorted(por_ano.items(), key=lambda kv: kv[0], reverse=True):
+        ano_path = anos_dir / f"{ano_str}.json"
+        with ano_path.open('w', encoding='utf-8') as fano:
+            json.dump(questoes, fano, ensure_ascii=False, indent=2)
+        anos_index.append(ano_str)
+
+    with (anos_dir / "years.json").open('w', encoding='utf-8') as fy:
+        json.dump(anos_index, fy, ensure_ascii=False, indent=2)
+
     print(f"\n=== CONCLUÍDO ===")
     print(f"Total de questões processadas: {total_processadas}")
-    print(f"Arquivo JSON salvo em: {output_file}")
+    print(f"Arquivo JSON (todas) salvo em: {output_file}")
+    print(f"Arquivos por ano em: {anos_dir}")
     print(f"Imagens salvas em: {IMAGES_DIR}")
 
 if __name__ == "__main__":
     main()
-

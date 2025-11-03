@@ -18,3 +18,5 @@ local.properties
 /temp_enem_api/
 app/src/main/assets/images/
 app/src/main/assets/questoes_enem.json
+app/src/main/assets/questoes/
+questoes_enem/

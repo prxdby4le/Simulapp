@@ -9,16 +9,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.simulapp.database.DatabaseHelper;
-import com.example.simulapp.AdicionarQuestoesUtil;
 import com.google.android.material.button.MaterialButton;
 import com.example.simulapp.utils.QuestoesOfflineLoader;
 
 public class MenuInicialActivity extends AppCompatActivity {
 
-    private MaterialButton btnGerarProva, btnRedacao, btnImportarQuestoes;
+    private MaterialButton btnGerarProva, btnRedacao;
+    private MaterialButton btnResetarBanco;
     private TextView tvLoginLink;
     private ProgressBar progressBarCarregamento;
     private TextView tvCarregamento;
+    private TextView tvTotalQuestoes;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -30,14 +31,17 @@ public class MenuInicialActivity extends AppCompatActivity {
 
         btnGerarProva = findViewById(R.id.btnGerarProva);
         btnRedacao = findViewById(R.id.btnRedacao);
-        btnImportarQuestoes = findViewById(R.id.btnImportarQuestoes);
+        btnResetarBanco = findViewById(R.id.btnResetarBanco);
         tvLoginLink = findViewById(R.id.tvLoginLink);
         progressBarCarregamento = findViewById(R.id.progressBarCarregamento);
         tvCarregamento = findViewById(R.id.tvCarregamento);
+        tvTotalQuestoes = findViewById(R.id.tvTotalQuestoes);
 
         configurarCliques();
+        atualizarContador();
         verificarECarregarQuestoes();
     }
+
     private void configurarCliques() {
 
         btnGerarProva.setOnClickListener(new View.OnClickListener() {
@@ -56,11 +60,10 @@ public class MenuInicialActivity extends AppCompatActivity {
             }
         });
 
-        btnImportarQuestoes.setOnClickListener(new View.OnClickListener() {
+        btnResetarBanco.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuInicialActivity.this, ImportarQuestoesActivity.class);
-                startActivity(intent);
+                resetarBancoEReimportar();
             }
         });
 
@@ -73,13 +76,23 @@ public class MenuInicialActivity extends AppCompatActivity {
         });
     }
 
+    private void atualizarContador() {
+        if (tvTotalQuestoes != null) {
+            int total = 0;
+            try { total = databaseHelper.getTotalQuestoes(); } catch (Exception ignore) {}
+            tvTotalQuestoes.setText("Total de questões: " + total);
+        }
+    }
+
     private void verificarECarregarQuestoes() {
-        // Verificar se as questões já foram carregadas
-        if (!databaseHelper.isQuestoesCarregadas()) {
-            // Questões ainda não foram carregadas, iniciar importação automática
+        int total = 0;
+        try {
+            total = databaseHelper.getTotalQuestoes();
+        } catch (Exception ignore) {}
+
+        if (total < 2000) {
             iniciarImportacaoAutomatica();
         } else {
-            // Questões já carregadas, esconder indicador de carregamento
             if (progressBarCarregamento != null) {
                 progressBarCarregamento.setVisibility(View.GONE);
             }
@@ -90,7 +103,6 @@ public class MenuInicialActivity extends AppCompatActivity {
     }
 
     private void iniciarImportacaoAutomatica() {
-        // Mostrar indicador de carregamento
         if (progressBarCarregamento != null) {
             progressBarCarregamento.setVisibility(View.VISIBLE);
         }
@@ -99,12 +111,10 @@ public class MenuInicialActivity extends AppCompatActivity {
             tvCarregamento.setText("Preparando questões do ENEM (offline)...");
         }
 
-        // Desabilitar botões durante o carregamento
         btnGerarProva.setEnabled(false);
         btnRedacao.setEnabled(false);
-        btnImportarQuestoes.setEnabled(false);
+        if (btnResetarBanco != null) btnResetarBanco.setEnabled(false);
 
-        // Carregar questões a partir de um JSON nos assets (offline)
         carregarQuestoesOfflineAssets();
     }
 
@@ -126,7 +136,10 @@ public class MenuInicialActivity extends AppCompatActivity {
 
             @Override
             public void onComplete(int totalImported) {
-                runOnUiThread(() -> finalizarCarregamento(totalImported));
+                runOnUiThread(() -> {
+                    finalizarCarregamento(totalImported);
+                    atualizarContador();
+                });
             }
 
             @Override
@@ -141,7 +154,7 @@ public class MenuInicialActivity extends AppCompatActivity {
 
                     btnGerarProva.setEnabled(true);
                     btnRedacao.setEnabled(true);
-                    btnImportarQuestoes.setEnabled(true);
+                    if (btnResetarBanco != null) btnResetarBanco.setEnabled(true);
 
                     Toast.makeText(MenuInicialActivity.this,
                         "Erro ao carregar questões offline: " + error,
@@ -152,8 +165,19 @@ public class MenuInicialActivity extends AppCompatActivity {
         loader.carregarQuestoesDoAssets();
     }
 
+    private void resetarBancoEReimportar() {
+        try {
+            getApplicationContext().deleteDatabase("simulapp.db");
+            databaseHelper = new DatabaseHelper(this);
+            atualizarContador();
+            Toast.makeText(this, "Banco resetado. Reimportando...", Toast.LENGTH_SHORT).show();
+            iniciarImportacaoAutomatica();
+        } catch (Exception e) {
+            Toast.makeText(this, "Falha ao resetar banco: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void finalizarCarregamento(int totalImported) {
-        // Esconder indicador de carregamento
         if (progressBarCarregamento != null) {
             progressBarCarregamento.setVisibility(View.GONE);
         }
@@ -161,10 +185,9 @@ public class MenuInicialActivity extends AppCompatActivity {
             tvCarregamento.setVisibility(View.GONE);
         }
 
-        // Habilitar botões novamente
         btnGerarProva.setEnabled(true);
         btnRedacao.setEnabled(true);
-        btnImportarQuestoes.setEnabled(true);
+        if (btnResetarBanco != null) btnResetarBanco.setEnabled(true);
 
         Toast.makeText(MenuInicialActivity.this,
             String.format("%d questões carregadas com sucesso!", totalImported),
