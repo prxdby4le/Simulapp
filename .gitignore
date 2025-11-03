@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Ignore embedded repo and heavy offline data
+/temp_enem_api/
+app/src/main/assets/images/
+app/src/main/assets/questoes_enem.json

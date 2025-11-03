@@ -26,6 +26,8 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +51,9 @@ public class SimuladoActivity extends AppCompatActivity {
     private RadioButton rbAlternativaE;
     private Button btnProxima;
     private Button btnFinalizar;
+
+    // Índice em memória: nomeBase -> arquivo dentro de assets/images
+    private static Map<String, String> assetsImageIndex;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -339,6 +344,22 @@ public class SimuladoActivity extends AppCompatActivity {
             photoView.setImageDrawable(d);
             if (d != null) configurarZoomSeGrande(photoView, Math.max(1, d.getIntrinsicWidth()), Math.max(1, d.getIntrinsicHeight()));
             layoutImagens.addView(photoView);
+            return;
+        }
+
+        // 4) Fallback final: assets/images
+        String assetFile = encontrarImagemAssets(nomeImagemBase);
+        if (assetFile != null) {
+            try (InputStream is = getAssets().open("images/" + assetFile)) {
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                if (bitmap != null) {
+                    PhotoView photoView = criarPhotoViewBase();
+                    photoView.setImageBitmap(bitmap);
+                    configurarZoomSeGrande(photoView, bitmap.getWidth(), bitmap.getHeight());
+                    layoutImagens.addView(photoView);
+                }
+            } catch (IOException ignore) {
+            }
         }
     }
 
@@ -466,6 +487,45 @@ public class SimuladoActivity extends AppCompatActivity {
         if (resIdMipmap != 0) {
             return ContextCompat.getDrawable(this, resIdMipmap);
         }
+        // Fallback final: assets/images
+        String assetFile = encontrarImagemAssets(nomeImagemBase);
+        if (assetFile != null) {
+            try (InputStream is = getAssets().open("images/" + assetFile)) {
+                Bitmap bitmap = BitmapFactory.decodeStream(is);
+                if (bitmap != null) {
+                    return new BitmapDrawable(getResources(), bitmap);
+                }
+            } catch (IOException ignore) {
+            }
+        }
         return null;
+    }
+
+    private synchronized void ensureAssetsImageIndex() {
+        if (assetsImageIndex != null) return;
+        assetsImageIndex = new HashMap<>();
+        try {
+            String[] files = getAssets().list("images");
+            if (files != null) {
+                for (String f : files) {
+                    String base = f;
+                    int idx = base.lastIndexOf('.');
+                    if (idx > 0) base = base.substring(0, idx);
+                    assetsImageIndex.put(base.toLowerCase(), f);
+                }
+            }
+        } catch (IOException ignore) {
+        }
+    }
+
+    private String encontrarImagemAssets(String nomeBase) {
+        if (TextUtils.isEmpty(nomeBase)) return null;
+        ensureAssetsImageIndex();
+        if (assetsImageIndex == null || assetsImageIndex.isEmpty()) return null;
+        String f = assetsImageIndex.get(nomeBase.toLowerCase());
+        if (f != null) return f;
+        // Tentativa relaxada: remover espaços/underscores
+        String key2 = nomeBase.replace(" ", "_").toLowerCase();
+        return assetsImageIndex.getOrDefault(key2, null);
     }
 }

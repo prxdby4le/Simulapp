@@ -19,6 +19,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "simulapp.db";
+
     private static final int DATABASE_VERSION = 6; // bumped from 5 to 6 para suportar imagens nas alternativas
 
     private static final String TABLE_QUESTOES = "questoes";

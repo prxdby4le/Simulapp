@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.simulapp.database.DatabaseHelper;
 import com.example.simulapp.AdicionarQuestoesUtil;
 import com.google.android.material.button.MaterialButton;
+import com.example.simulapp.utils.QuestoesOfflineLoader;
 
 public class MenuInicialActivity extends AppCompatActivity {
 
@@ -95,7 +96,7 @@ public class MenuInicialActivity extends AppCompatActivity {
         }
         if (tvCarregamento != null) {
             tvCarregamento.setVisibility(View.VISIBLE);
-            tvCarregamento.setText("Preparando questões do ENEM...");
+            tvCarregamento.setText("Preparando questões do ENEM (offline)...");
         }
 
         // Desabilitar botões durante o carregamento
@@ -103,28 +104,33 @@ public class MenuInicialActivity extends AppCompatActivity {
         btnRedacao.setEnabled(false);
         btnImportarQuestoes.setEnabled(false);
 
-        // Carregar questões diretamente do código (embutidas no APK)
-        carregarQuestoesManuais();
+        // Carregar questões a partir de um JSON nos assets (offline)
+        carregarQuestoesOfflineAssets();
     }
 
-    private void carregarQuestoesManuais() {
-        new Thread(() -> {
-            try {
+    private void carregarQuestoesOfflineAssets() {
+        QuestoesOfflineLoader loader = new QuestoesOfflineLoader(this, databaseHelper);
+        loader.setProgressCallback(new QuestoesOfflineLoader.ProgressCallback() {
+            @Override
+            public void onProgress(int current, int total, String message) {
                 runOnUiThread(() -> {
+                    if (progressBarCarregamento != null) {
+                        progressBarCarregamento.setMax(Math.max(1, total));
+                        progressBarCarregamento.setProgress(Math.min(current, total));
+                    }
                     if (tvCarregamento != null) {
-                        tvCarregamento.setText("Carregando questões do ENEM...");
+                        tvCarregamento.setText(message == null ? "Carregando questões offline..." : message);
                     }
                 });
+            }
 
-                // Adicionar questões embutidas no código
-                AdicionarQuestoesUtil.adicionarQuestoes(databaseHelper);
+            @Override
+            public void onComplete(int totalImported) {
+                runOnUiThread(() -> finalizarCarregamento(totalImported));
+            }
 
-                int totalQuestoes = databaseHelper.getTotalQuestoes();
-
-                runOnUiThread(() -> {
-                    finalizarCarregamento(totalQuestoes);
-                });
-            } catch (Exception e) {
+            @Override
+            public void onError(String error) {
                 runOnUiThread(() -> {
                     if (progressBarCarregamento != null) {
                         progressBarCarregamento.setVisibility(View.GONE);
@@ -138,11 +144,12 @@ public class MenuInicialActivity extends AppCompatActivity {
                     btnImportarQuestoes.setEnabled(true);
 
                     Toast.makeText(MenuInicialActivity.this,
-                        "Erro ao carregar questões: " + e.getMessage(),
+                        "Erro ao carregar questões offline: " + error,
                         Toast.LENGTH_LONG).show();
                 });
             }
-        }).start();
+        });
+        loader.carregarQuestoesDoAssets();
     }
 
     private void finalizarCarregamento(int totalImported) {
