@@ -9,8 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.simulapp.api.EnemApiImporter;
 import com.example.simulapp.database.DatabaseHelper;
+import com.example.simulapp.utils.QuestoesOfflineLoader;
+
+import java.util.Locale;
 
 public class ImportarQuestoesActivity extends AppCompatActivity {
 
@@ -19,7 +21,6 @@ public class ImportarQuestoesActivity extends AppCompatActivity {
     private TextView tvProgress;
     private TextView tvStatus;
     private DatabaseHelper databaseHelper;
-    private EnemApiImporter apiImporter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,6 @@ public class ImportarQuestoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_importar_questoes);
 
         databaseHelper = new DatabaseHelper(this);
-        apiImporter = new EnemApiImporter(this, databaseHelper);
 
         initViews();
         setupListeners();
@@ -46,15 +46,24 @@ public class ImportarQuestoesActivity extends AppCompatActivity {
 
     private void setupListeners() {
         btnImportar.setOnClickListener(v -> iniciarImportacao());
+    }
 
-        apiImporter.setProgressCallback(new EnemApiImporter.ProgressCallback() {
+    private void iniciarImportacao() {
+        btnImportar.setEnabled(false);
+        progressBar.setVisibility(View.VISIBLE);
+        tvProgress.setVisibility(View.VISIBLE);
+        tvStatus.setVisibility(View.VISIBLE);
+        tvStatus.setText("Carregando questões offline dos assets...\nIsso pode levar alguns minutos.");
+
+        QuestoesOfflineLoader loader = new QuestoesOfflineLoader(this, databaseHelper);
+        loader.setProgressCallback(new QuestoesOfflineLoader.ProgressCallback() {
             @Override
             public void onProgress(int current, int total, String message) {
                 runOnUiThread(() -> {
-                    progressBar.setMax(total);
-                    progressBar.setProgress(current);
-                    tvProgress.setText(String.format("%d / %d", current, total));
-                    tvStatus.setText(message);
+                    progressBar.setMax(Math.max(1, total));
+                    progressBar.setProgress(Math.min(current, total));
+                    tvProgress.setText(String.format(Locale.getDefault(), "%d / %d", current, total));
+                    tvStatus.setText(message == null ? "Carregando..." : message);
                 });
             }
 
@@ -64,9 +73,9 @@ public class ImportarQuestoesActivity extends AppCompatActivity {
                     btnImportar.setEnabled(true);
                     progressBar.setVisibility(View.GONE);
                     tvProgress.setVisibility(View.GONE);
-                    tvStatus.setText(String.format("✅ Importação concluída!\n%d questões do ENEM foram importadas com sucesso.", totalImported));
+                    tvStatus.setText(String.format(Locale.getDefault(), "✅ Carregamento concluído!\n%d questões foram importadas dos assets.", totalImported));
                     Toast.makeText(ImportarQuestoesActivity.this,
-                        String.format("Sucesso! %d questões importadas", totalImported), Toast.LENGTH_LONG).show();
+                        String.format(Locale.getDefault(), "Sucesso! %d questões importadas (offline)", totalImported), Toast.LENGTH_LONG).show();
                 });
             }
 
@@ -76,23 +85,12 @@ public class ImportarQuestoesActivity extends AppCompatActivity {
                     btnImportar.setEnabled(true);
                     progressBar.setVisibility(View.GONE);
                     tvProgress.setVisibility(View.GONE);
-                    tvStatus.setText("❌ Erro: " + error + "\n\nVerifique sua conexão com a internet e tente novamente.");
+                    tvStatus.setText(String.format(Locale.getDefault(), "❌ Erro: %s", error));
                     Toast.makeText(ImportarQuestoesActivity.this,
-                        "Erro na importação: " + error, Toast.LENGTH_LONG).show();
+                        String.format(Locale.getDefault(), "Erro no carregamento offline: %s", error), Toast.LENGTH_LONG).show();
                 });
             }
         });
-    }
-
-    private void iniciarImportacao() {
-        btnImportar.setEnabled(false);
-        progressBar.setVisibility(View.VISIBLE);
-        tvProgress.setVisibility(View.VISIBLE);
-        tvStatus.setVisibility(View.VISIBLE);
-        tvStatus.setText("🌐 Conectando à API do ENEM...\nIsso pode levar 10-30 minutos.\nMantenha o app aberto e conectado ao WiFi.");
-
-        // Importar todas as questões da API
-        apiImporter.importarTodasQuestoes();
+        loader.carregarQuestoesDoAssets();
     }
 }
-
