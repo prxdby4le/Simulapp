@@ -264,12 +264,79 @@ public class Questao implements Serializable {
     public String getRespostaUsuario() { return respostaUsuario; }
     public void setRespostaUsuario(String respostaUsuario) { this.respostaUsuario = respostaUsuario; }
 
+    // Centralização: normalização e resolução para letra A–E
+    public String getRespostaCorretaLetra() { return resolveLetra(respostaCorreta); }
+    public String getRespostaUsuarioLetra() { return resolveLetra(respostaUsuario); }
+
     public boolean isRespondida() {
-        return respostaUsuario != null && !respostaUsuario.isEmpty();
+        return !TextUtils.isEmpty(getRespostaUsuarioLetra());
     }
 
     public boolean isCorreta() {
-        return respostaUsuario != null && respostaUsuario.equalsIgnoreCase(respostaCorreta);
+        String u = getRespostaUsuarioLetra();
+        String c = getRespostaCorretaLetra();
+        return !TextUtils.isEmpty(u) && u.equals(c);
+    }
+
+    // Tenta resolver o valor para uma letra A–E. Considera variações como "A)", "Gabarito: D", dígitos 1–5,
+    // e também tenta casar com o texto das alternativas (ignorando prefixo tipo "A) ").
+    public String resolveLetra(String valor) {
+        String letra = normalizarLetra(valor);
+        if (!TextUtils.isEmpty(letra)) return letra;
+        if (TextUtils.isEmpty(valor)) return "";
+        String alvo = valor.trim();
+        if (alvo.isEmpty()) return "";
+        String semPrefixo = stripLeadingLetterPattern(alvo);
+        if (equalsAlt(semPrefixo, getAlternativaA()) || equalsAlt(alvo, getAlternativaA())) return "A";
+        if (equalsAlt(semPrefixo, getAlternativaB()) || equalsAlt(alvo, getAlternativaB())) return "B";
+        if (equalsAlt(semPrefixo, getAlternativaC()) || equalsAlt(alvo, getAlternativaC())) return "C";
+        if (equalsAlt(semPrefixo, getAlternativaD()) || equalsAlt(alvo, getAlternativaD())) return "D";
+        if (equalsAlt(semPrefixo, getAlternativaE()) || equalsAlt(alvo, getAlternativaE())) return "E";
+        return "";
+    }
+
+    private static boolean equalsAlt(String a, String b) {
+        if (a == null || b == null) return false;
+        return a.trim().equalsIgnoreCase(b.trim());
+    }
+
+    private static String stripLeadingLetterPattern(String s) {
+        if (TextUtils.isEmpty(s)) return "";
+        String t = s.trim();
+        if (t.length() >= 2 && t.charAt(1) == ')') {
+            char c = Character.toUpperCase(t.charAt(0));
+            if (c >= 'A' && c <= 'E') {
+                // remover "A)" e possível espaço seguinte
+                String rest = t.substring(2).trim();
+                return rest;
+            }
+        }
+        return t;
+    }
+
+    public static String normalizarLetra(String valor) {
+        if (TextUtils.isEmpty(valor)) return "";
+        String s = valor.trim().toUpperCase();
+        s = s.replace("ALTERNATIVA", "").replace("LETRA", "").replace("CORRETA", "").replace("GABARITO", "");
+        s = s.replace(":", " ").replace("-", " ").replace("(", " ").replace(")", " ").replace(".", " ").replace("|", " ");
+        s = s.trim();
+        if (s.length() == 1) {
+            char c = s.charAt(0);
+            if (c >= 'A' && c <= 'E') return String.valueOf(c);
+            if (c >= '1' && c <= '5') return String.valueOf((char) ('A' + (c - '1')));
+        }
+        if (s.length() >= 2 && s.charAt(1) == ')' && s.charAt(0) >= 'A' && s.charAt(0) <= 'E') {
+            return String.valueOf(s.charAt(0));
+        }
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= 'A' && c <= 'E') return String.valueOf(c);
+        }
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c >= '1' && c <= '5') return String.valueOf((char) ('A' + (c - '1')));
+        }
+        return "";
     }
 
     // Métodos auxiliares para múltiplos textos de apoio

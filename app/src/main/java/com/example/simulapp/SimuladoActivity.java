@@ -24,6 +24,7 @@ import com.example.simulapp.database.DatabaseHelper;
 import com.example.simulapp.model.Questao;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.example.simulapp.R;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,7 +98,9 @@ public class SimuladoActivity extends AppCompatActivity {
             }
         } else {
             // Compatibilidade: receber lista serializada quando pequena
-            questoes = (List<Questao>) getIntent().getSerializableExtra("questoes");
+            @SuppressWarnings("unchecked")
+            List<Questao> temp = (List<Questao>) getIntent().getSerializableExtra("questoes");
+            questoes = temp;
         }
 
         if (questoes == null || questoes.isEmpty()) {

@@ -127,8 +127,13 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
                 " - " + questao.getArea());
         tvQuestaoOriginal.setText("Questão " + questao.getNumero() + " - Caderno azul - ENEM " + questao.getAno());
 
+        // Limpar containers e estado anterior
         layoutTextosApoio.removeAllViews();
         layoutImagens.removeAllViews();
+        layoutTextosApoio.setVisibility(View.GONE);
+        layoutImagens.setVisibility(View.GONE);
+
+        boolean enunciadoDefinidoNosElementos = false;
 
         if (questao.temElementosOrdenados()) {
             boolean exibiuReferencia = false;
@@ -156,6 +161,7 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
                         break;
                     case ENUNCIADO:
                         tvEnunciado.setText(elemento.getConteudo());
+                        enunciadoDefinidoNosElementos = true;
                         ultimoTipo = Questao.ElementoQuestao.TipoElemento.ENUNCIADO;
                         break;
                 }
@@ -167,7 +173,6 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
         } else {
             boolean exibiuReferencia = false;
             if (questao.temTextosApoio()) {
-                layoutTextosApoio.setVisibility(View.VISIBLE);
                 String[] textosApoio = questao.getTextosApoio();
                 for (String texto : textosApoio) {
                     if (texto.startsWith("Fonte:") || texto.contains("Disponível em:") || texto.contains("Acesso em:")) {
@@ -177,8 +182,6 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
                         adicionarTextoApoio(texto);
                     }
                 }
-            } else {
-                layoutTextosApoio.setVisibility(View.GONE);
             }
 
             boolean exibiuImagem = false;
@@ -188,8 +191,6 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
                     adicionarImagem(nomeImagem);
                     exibiuImagem = true;
                 }
-            } else {
-                layoutImagens.setVisibility(View.GONE);
             }
 
             if (!exibiuReferencia && questao.getFonte() != null && !questao.getFonte().isEmpty()) {
@@ -197,6 +198,16 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
                 else adicionarReferencia(questao.getFonte());
             }
         }
+
+        // Garantir que o enunciado seja apresentado mesmo quando não vier como elemento ordenado
+        if (!enunciadoDefinidoNosElementos) {
+            String enunciado = questao.getEnunciado();
+            tvEnunciado.setText(enunciado != null ? enunciado : "");
+        }
+
+        // Atualizar visibilidade dos containers conforme conteúdo
+        layoutTextosApoio.setVisibility(layoutTextosApoio.getChildCount() > 0 ? View.VISIBLE : View.GONE);
+        layoutImagens.setVisibility(layoutImagens.getChildCount() > 0 ? View.VISIBLE : View.GONE);
 
         tvAlternativaA.setText(formatAlternativa("A", questao.getAlternativaA()));
         tvAlternativaB.setText(formatAlternativa("B", questao.getAlternativaB()));
@@ -217,12 +228,15 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
         resetarAlternativa(tvAlternativaD);
         resetarAlternativa(tvAlternativaE);
 
-        String respostaCorreta = questao.getRespostaCorreta().toUpperCase();
-        String respostaUsuario = questao.getRespostaUsuario() != null ? questao.getRespostaUsuario().toUpperCase() : "";
+        // Normalizar corretas e respostas do usuário para letras A-E via modelo
+        String respostaCorreta = questao.getRespostaCorretaLetra();
+        String respostaUsuario = questao.getRespostaUsuarioLetra();
 
-        marcarAlternativaCorreta(getTextViewPorLetra(respostaCorreta), respostaCorreta);
+        if (!TextUtils.isEmpty(respostaCorreta)) {
+            marcarAlternativaCorreta(getTextViewPorLetra(respostaCorreta), respostaCorreta);
+        }
 
-        if (!respostaUsuario.isEmpty() && !respostaUsuario.equals(respostaCorreta)) {
+        if (!TextUtils.isEmpty(respostaUsuario) && !respostaUsuario.equals(respostaCorreta)) {
             marcarAlternativaErrada(getTextViewPorLetra(respostaUsuario), respostaUsuario);
         }
 
@@ -428,7 +442,8 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
     }
 
     private TextView getTextViewPorLetra(String letra) {
-        switch (letra) {
+        if (letra == null) return null;
+        switch (letra.toUpperCase()) {
             case "A": return tvAlternativaA;
             case "B": return tvAlternativaB;
             case "C": return tvAlternativaC;
@@ -453,8 +468,12 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
         if (tv != null) {
             tv.setBackground(ContextCompat.getDrawable(this, R.drawable.border_correct));
             tv.setTextColor(Color.parseColor("#2E7D32"));
+            // Garantir destaque visual forte: checkmark + sublinhado
             String textoOriginal = tv.getText().toString();
-            tv.setText("✓ " + textoOriginal);
+            if (!textoOriginal.startsWith("✓ ")) {
+                tv.setText("✓ " + textoOriginal);
+            }
+            tv.setPaintFlags((tv.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG)) | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 

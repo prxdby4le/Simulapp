@@ -29,6 +29,9 @@ public class MenuInicialActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
+        // Normalizar respostas corretas legadas (execução rápida; ignora erros)
+        try { databaseHelper.normalizarRespostasCorretas(); } catch (Exception ignore) {}
+
         btnGerarProva = findViewById(R.id.btnGerarProva);
         btnRedacao = findViewById(R.id.btnRedacao);
         btnResetarBanco = findViewById(R.id.btnResetarBanco);
@@ -137,6 +140,8 @@ public class MenuInicialActivity extends AppCompatActivity {
             @Override
             public void onComplete(int totalImported) {
                 runOnUiThread(() -> {
+                    // Após importação, normalizar respostas corretas
+                    try { databaseHelper.normalizarRespostasCorretas(); } catch (Exception ignore) {}
                     finalizarCarregamento(totalImported);
                     atualizarContador();
                 });

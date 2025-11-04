@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "simulapp.db";
 
-    private static final int DATABASE_VERSION = 6; // bumped from 5 to 6 para suportar imagens nas alternativas
+    private static final int DATABASE_VERSION = 7; // bumped to 7: add unique partial indexes por idioma
 
     private static final String TABLE_QUESTOES = "questoes";
     private static final String COLUMN_ID = "id";
@@ -99,6 +99,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_RESPOSTA_CORRETA + " TEXT NOT NULL, "
                 + COLUMN_ELEMENTOS_ORDENADOS + " TEXT)";
         db.execSQL(CREATE_TABLE);
+
+        // Índices únicos parciais para garantir integridade considerando idioma nulo vs. não nulo
+        try {
+            db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS idx_questoes_unique_sem_idioma ON " + TABLE_QUESTOES +
+                    " (" + COLUMN_ANO + ", " + COLUMN_NUMERO + ", " + COLUMN_AREA + ") " +
+                    " WHERE " + COLUMN_IDIOMA_ESTRANGEIRO + " IS NULL");
+        } catch (Exception ignore) {}
+        try {
+            db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS idx_questoes_unique_com_idioma ON " + TABLE_QUESTOES +
+                    " (" + COLUMN_ANO + ", " + COLUMN_NUMERO + ", " + COLUMN_AREA + ", " + COLUMN_IDIOMA_ESTRANGEIRO + ") " +
+                    " WHERE " + COLUMN_IDIOMA_ESTRANGEIRO + " IS NOT NULL");
+        } catch (Exception ignore) {}
     }
 
     @Override
@@ -119,21 +131,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             try { db.execSQL("ALTER TABLE " + TABLE_QUESTOES + " ADD COLUMN " + COLUMN_ALTERNATIVA_D_IMAGEM + " TEXT"); } catch (Exception ignore) {}
             try { db.execSQL("ALTER TABLE " + TABLE_QUESTOES + " ADD COLUMN " + COLUMN_ALTERNATIVA_E_IMAGEM + " TEXT"); } catch (Exception ignore) {}
         }
+        if (oldVersion < 7) {
+            // Criar índices únicos parciais para evitar sobrescritas entre variações de idioma
+            try {
+                db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS idx_questoes_unique_sem_idioma ON " + TABLE_QUESTOES +
+                        " (" + COLUMN_ANO + ", " + COLUMN_NUMERO + ", " + COLUMN_AREA + ") " +
+                        " WHERE " + COLUMN_IDIOMA_ESTRANGEIRO + " IS NULL");
+            } catch (Exception ignore) {}
+            try {
+                db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS idx_questoes_unique_com_idioma ON " + TABLE_QUESTOES +
+                        " (" + COLUMN_ANO + ", " + COLUMN_NUMERO + ", " + COLUMN_AREA + ", " + COLUMN_IDIOMA_ESTRANGEIRO + ") " +
+                        " WHERE " + COLUMN_IDIOMA_ESTRANGEIRO + " IS NOT NULL");
+            } catch (Exception ignore) {}
+        }
     }
 
     public long inserirQuestao(Questao questao) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // Verificar se já existe uma questão com o mesmo ano, número e área
-        String query = "SELECT " + COLUMN_ID + " FROM " + TABLE_QUESTOES +
-                      " WHERE " + COLUMN_ANO + " = ? AND " +
-                      COLUMN_NUMERO + " = ? AND " +
-                      COLUMN_AREA + " = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{
-            String.valueOf(questao.getAno()),
-            String.valueOf(questao.getNumero()),
-            questao.getArea()
-        });
+        // Verificar se já existe uma questão com o mesmo ano, número, área e idioma (null-safe)
+        String idioma = questao.getIdiomaEstrangeiro();
+        Cursor cursor;
+        if (idioma == null) {
+            String query = "SELECT " + COLUMN_ID + " FROM " + TABLE_QUESTOES +
+                           " WHERE " + COLUMN_ANO + " = ? AND " +
+                           COLUMN_NUMERO + " = ? AND " +
+                           COLUMN_AREA + " = ? AND " +
+                           COLUMN_IDIOMA_ESTRANGEIRO + " IS NULL";
+            cursor = db.rawQuery(query, new String[]{
+                String.valueOf(questao.getAno()),
+                String.valueOf(questao.getNumero()),
+                questao.getArea()
+            });
+        } else {
+            String query = "SELECT " + COLUMN_ID + " FROM " + TABLE_QUESTOES +
+                           " WHERE " + COLUMN_ANO + " = ? AND " +
+                           COLUMN_NUMERO + " = ? AND " +
+                           COLUMN_AREA + " = ? AND " +
+                           COLUMN_IDIOMA_ESTRANGEIRO + " = ?";
+            cursor = db.rawQuery(query, new String[]{
+                String.valueOf(questao.getAno()),
+                String.valueOf(questao.getNumero()),
+                questao.getArea(),
+                idioma
+            });
+        }
 
         if (cursor.moveToFirst()) {
             long existingId = cursor.getLong(0);
@@ -207,7 +249,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ALTERNATIVA_D_IMAGEM, questao.getAlternativaDImagem());
         values.put(COLUMN_ALTERNATIVA_E_IMAGEM, questao.getAlternativaEImagem());
 
-        values.put(COLUMN_RESPOSTA_CORRETA, questao.getRespostaCorreta());
+        // Persistir resposta correta normalizada (A–E) quando possível
+        String respNorm = questao.getRespostaCorretaLetra();
+        values.put(COLUMN_RESPOSTA_CORRETA, TextUtils.isEmpty(respNorm) ? questao.getRespostaCorreta() : respNorm);
 
         // Serializar elementos ordenados em JSON
         if (questao.temElementosOrdenados()) {
@@ -550,5 +594,144 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return questoes;
+    }
+
+    /**
+     * Busca todas as questões de uma área específica, ordenadas por ano e número.
+     * Usado para selecionar questões por índice (algoritmo de código de prova).
+     *
+     * @param area Área/Competência (Linguagens, Humanas, Natureza, Matemática)
+     * @param idiomaEstrangeiro Idioma (inglês, espanhol) ou null para qualquer
+     * @return Lista de questões ordenadas
+     */
+    public List<Questao> getTodasQuestoesPorArea(String area, String idiomaEstrangeiro) {
+        List<Questao> questoes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query;
+        String[] args;
+
+        if (idiomaEstrangeiro != null && !idiomaEstrangeiro.isEmpty()) {
+            // Filtrar por idioma se especificado
+            query = "SELECT * FROM " + TABLE_QUESTOES +
+                   " WHERE " + COLUMN_AREA + " = ? " +
+                   " AND (" + COLUMN_IDIOMA_ESTRANGEIRO + " = ? OR " + COLUMN_IDIOMA_ESTRANGEIRO + " IS NULL)" +
+                   " ORDER BY " + COLUMN_ANO + ", " + COLUMN_NUMERO;
+            args = new String[]{area, idiomaEstrangeiro};
+        } else {
+            // Buscar todas, sem filtro de idioma
+            query = "SELECT * FROM " + TABLE_QUESTOES +
+                   " WHERE " + COLUMN_AREA + " = ? " +
+                   " ORDER BY " + COLUMN_ANO + ", " + COLUMN_NUMERO;
+            args = new String[]{area};
+        }
+
+        Cursor cursor = db.rawQuery(query, args);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Questao questao = new Questao();
+                questao.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)));
+                questao.setArea(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AREA)));
+                questao.setAno(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ANO)));
+                questao.setNumero(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NUMERO)));
+                questao.setEnunciado(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ENUNCIADO)));
+                questao.setImagem(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGEM)));
+                questao.setTextoApoio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO)));
+                questao.setFonte(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FONTE)));
+                questao.setIdiomaEstrangeiro(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IDIOMA_ESTRANGEIRO)));
+                questao.setTextoApoio1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_1)));
+                questao.setTextoApoio2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_2)));
+                questao.setTextoApoio3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_3)));
+                questao.setTextoApoio4(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEXTO_APOIO_4)));
+                questao.setReferenciaTexto1(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_1)));
+                questao.setReferenciaTexto2(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_2)));
+                questao.setReferenciaTexto3(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_3)));
+                questao.setReferenciaTexto4(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REFERENCIA_TEXTO_4)));
+                questao.setAlternativaA(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_A)));
+                questao.setAlternativaB(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_B)));
+                questao.setAlternativaC(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_C)));
+                questao.setAlternativaD(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_D)));
+                questao.setAlternativaE(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_E)));
+
+                // Imagens alternativas
+                int idxA = cursor.getColumnIndex(COLUMN_ALTERNATIVA_A_IMAGEM);
+                if (idxA != -1) questao.setAlternativaAImagem(cursor.getString(idxA));
+                int idxB = cursor.getColumnIndex(COLUMN_ALTERNATIVA_B_IMAGEM);
+                if (idxB != -1) questao.setAlternativaBImagem(cursor.getString(idxB));
+                int idxC = cursor.getColumnIndex(COLUMN_ALTERNATIVA_C_IMAGEM);
+                if (idxC != -1) questao.setAlternativaCImagem(cursor.getString(idxC));
+                int idxD = cursor.getColumnIndex(COLUMN_ALTERNATIVA_D_IMAGEM);
+                if (idxD != -1) questao.setAlternativaDImagem(cursor.getString(idxD));
+                int idxE = cursor.getColumnIndex(COLUMN_ALTERNATIVA_E_IMAGEM);
+                if (idxE != -1) questao.setAlternativaEImagem(cursor.getString(idxE));
+
+                // Reconstruir ordem
+                preencherElementosOrdenadosSeExistir(questao, cursor);
+
+                questoes.add(questao);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return questoes;
+    }
+
+    /**
+     * Normaliza todas as respostas corretas persistidas no banco para letras A–E.
+     * Útil para corrigir dados legados ("Gabarito: D", "A)", "3", ou texto completo da alternativa).
+     *
+     * @return quantidade de linhas atualizadas
+     */
+    public int normalizarRespostasCorretas() {
+        int atualizadas = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(
+                    TABLE_QUESTOES,
+                    new String[]{
+                            COLUMN_ID,
+                            COLUMN_ALTERNATIVA_A,
+                            COLUMN_ALTERNATIVA_B,
+                            COLUMN_ALTERNATIVA_C,
+                            COLUMN_ALTERNATIVA_D,
+                            COLUMN_ALTERNATIVA_E,
+                            COLUMN_RESPOSTA_CORRETA
+                    },
+                    null, null, null, null, null
+            );
+            while (cursor.moveToNext()) {
+                long id = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID));
+                String a = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_A));
+                String b = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_B));
+                String c = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_C));
+                String d = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_D));
+                String e = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ALTERNATIVA_E));
+                String rc = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RESPOSTA_CORRETA));
+
+                Questao q = new Questao();
+                q.setAlternativaA(a);
+                q.setAlternativaB(b);
+                q.setAlternativaC(c);
+                q.setAlternativaD(d);
+                q.setAlternativaE(e);
+                q.setRespostaCorreta(rc);
+
+                String norm = q.getRespostaCorretaLetra();
+                if (!android.text.TextUtils.isEmpty(norm) && (rc == null || !rc.equalsIgnoreCase(norm))) {
+                    ContentValues values = new ContentValues();
+                    values.put(COLUMN_RESPOSTA_CORRETA, norm);
+                    db.update(TABLE_QUESTOES, values, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+                    atualizadas++;
+                }
+            }
+        } catch (Exception ignore) {
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+        return atualizadas;
     }
 }
