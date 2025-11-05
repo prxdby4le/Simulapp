@@ -14,6 +14,11 @@ public class CodigoProva {
     private CompetenciaInfo competenciaD;
     private String idioma; // "inglês" ou "espanhol"
 
+    // Novos campos: parâmetros globais do código
+    private int startIndex; // G5 (0-255)
+    private int step;       // G6 decimal (1-9, tratando 0 como 1)
+    private boolean crescente; // Direção definida pelo dia (par=crescente)
+
     public CodigoProva() {
         this.competenciaA = new CompetenciaInfo();
         this.competenciaB = new CompetenciaInfo();
@@ -61,6 +66,30 @@ public class CodigoProva {
         this.idioma = idioma;
     }
 
+    public int getStartIndex() {
+        return startIndex;
+    }
+
+    public void setStartIndex(int startIndex) {
+        this.startIndex = startIndex;
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
+    }
+
+    public boolean isCrescente() {
+        return crescente;
+    }
+
+    public void setCrescente(boolean crescente) {
+        this.crescente = crescente;
+    }
+
     /**
      * Classe interna que representa informações sobre uma competência.
      */
@@ -98,6 +127,9 @@ public class CodigoProva {
                 ", competenciaC=" + formatCompetencia(competenciaC) +
                 ", competenciaD=" + formatCompetencia(competenciaD) +
                 ", idioma='" + idioma + '\'' +
+                ", startIndex=" + startIndex +
+                ", step=" + step +
+                ", crescente=" + crescente +
                 '}';
     }
 
@@ -106,4 +138,3 @@ public class CodigoProva {
                ", indices=" + info.getIndicesSelecionados() + "}";
     }
 }
-

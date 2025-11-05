@@ -34,6 +34,20 @@ python download_questoes.py
 Build > Build Bundle(s) / APK(s) > Build APK(s)
 ```
 
+### Separar questões por ano (opcional)
+Caso você queira gerar arquivos JSON separados por ano a partir do arquivo combinado (`questoes_enem/questoes_enem.json`), use o script já incluído:
+
+- Saída: um arquivo por ano em `questoes_enem/anos/` (ex.: `2022.json`, `2023.json`) e um índice `years.json` com a lista de anos.
+- Modo compacto: adicione `--compact` para remover indentação.
+- Preencher todos os anos: use `--min-year 2009` (padrão) e opcionalmente `--max-year 2023` para forçar o intervalo; por padrão o script infere o ano máximo pelas questões e cria arquivos vazios para anos sem questões.
+
+Comando no Windows (cmd.exe):
+```bat
+py tools\split_questoes_por_ano.py -i questoes_enem\questoes_enem.json -o questoes_enem\anos --min-year 2009 --max-year 2023
+```
+
+> Observação: se o comando `py` não estiver disponível, tente `python` no lugar de `py`.
+
 ### Documentação Completa
 - `GUIA_OFFLINE.md` - Guia detalhado de preparação
 - `IMPORTACAO_ENEM.md` - Documentação técnica
@@ -57,4 +71,3 @@ Build > Build Bundle(s) / APK(s) > Build APK(s)
 ## 📄 Licença
 
 Este projeto usa dados públicos da API ENEM (https://enem.dev)
-

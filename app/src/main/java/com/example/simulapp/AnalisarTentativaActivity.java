@@ -23,6 +23,8 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -229,15 +231,42 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
         resetarAlternativa(tvAlternativaE);
 
         // Normalizar corretas e respostas do usuário para letras A-E via modelo
+        android.util.Log.d("AnalisarTentativa", "ANTES normalização - Correta: '" + questao.getRespostaCorreta() +
+                "' - Usuário: '" + questao.getRespostaUsuario() + "'");
+
         String respostaCorreta = questao.getRespostaCorretaLetra();
         String respostaUsuario = questao.getRespostaUsuarioLetra();
 
+        // Debug: verificar valores
+        android.util.Log.d("AnalisarTentativa", "APÓS normalização - Questão " + questao.getNumero() +
+                " - Correta: '" + respostaCorreta + "' - Usuário: '" + respostaUsuario + "'");
+
+        // CORREÇÃO: Sempre mostrar a resposta correta em verde
         if (!TextUtils.isEmpty(respostaCorreta)) {
-            marcarAlternativaCorreta(getTextViewPorLetra(respostaCorreta), respostaCorreta);
+            TextView tvCorreta = getTextViewPorLetra(respostaCorreta);
+            android.util.Log.d("AnalisarTentativa", "Marcando correta: " + respostaCorreta +
+                    " - TextView: " + (tvCorreta != null ? "OK" : "NULL"));
+            marcarAlternativaCorreta(tvCorreta, respostaCorreta);
         }
 
-        if (!TextUtils.isEmpty(respostaUsuario) && !respostaUsuario.equals(respostaCorreta)) {
-            marcarAlternativaErrada(getTextViewPorLetra(respostaUsuario), respostaUsuario);
+        // CORREÇÃO: Mostrar a resposta do usuário em vermelho apenas se estiver errada
+        if (!TextUtils.isEmpty(respostaUsuario)) {
+            if (!respostaUsuario.equals(respostaCorreta)) {
+                // Usuário errou: marcar sua resposta em vermelho (riscado)
+                TextView tvErrada = getTextViewPorLetra(respostaUsuario);
+                android.util.Log.d("AnalisarTentativa", "Marcando errada: " + respostaUsuario +
+                        " - TextView: " + (tvErrada != null ? "OK" : "NULL"));
+                marcarAlternativaErrada(tvErrada, respostaUsuario);
+                // E garantir que a resposta correta continue verde (pode ter sido sobrescrita)
+                if (!TextUtils.isEmpty(respostaCorreta)) {
+                    TextView tvCorreta = getTextViewPorLetra(respostaCorreta);
+                    marcarAlternativaCorreta(tvCorreta, respostaCorreta);
+                }
+            } else {
+                android.util.Log.d("AnalisarTentativa", "Usuário ACERTOU!");
+            }
+        } else {
+            android.util.Log.d("AnalisarTentativa", "Usuário NÃO respondeu");
         }
 
         btnAnterior.setEnabled(questaoAtualIndex > 0);
@@ -282,6 +311,19 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
             ImageView imageView = criarImageViewAlternativa();
             imageView.setImageResource(resIdMipmap);
             parent.addView(imageView, index + 1);
+            return;
+        }
+        // Fallback final: assets/images
+        String assetFile = encontrarImagemAssets(nomeImagemBase);
+        if (assetFile != null) {
+            try (InputStream is = getAssets().open("images/" + assetFile)) {
+                android.graphics.Bitmap bitmap = BitmapFactory.decodeStream(is);
+                if (bitmap != null) {
+                    ImageView imageView = criarImageViewAlternativa();
+                    imageView.setImageBitmap(bitmap);
+                    parent.addView(imageView, index + 1);
+                }
+            } catch (IOException ignore) {}
         }
     }
 
@@ -320,8 +362,13 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
     }
 
     private void adicionarImagem(String nomeImagemBase) {
+        if (nomeImagemBase == null || nomeImagemBase.trim().isEmpty()) {
+            return;
+        }
+
         layoutImagens.setVisibility(View.VISIBLE);
-        // Preferir imagem salva internamente
+
+        // 1) Preferir imagem salva internamente (filesDir/images)
         File imgFile = encontrarImagemInterna(nomeImagemBase);
         if (imgFile != null && imgFile.exists()) {
             android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -333,6 +380,8 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
                 return;
             }
         }
+
+        // 2) Fallback: tenta como recurso drawable
         int resourceIdDrawable = getResources().getIdentifier(nomeImagemBase, "drawable", getPackageName());
         if (resourceIdDrawable != 0) {
             Drawable d = ContextCompat.getDrawable(this, resourceIdDrawable);
@@ -342,6 +391,8 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
             layoutImagens.addView(photoView);
             return;
         }
+
+        // 3) Fallback: tenta como recurso mipmap (compatibilidade antiga)
         int resourceIdMipmap = getResources().getIdentifier(nomeImagemBase, "mipmap", getPackageName());
         if (resourceIdMipmap != 0) {
             Drawable d = ContextCompat.getDrawable(this, resourceIdMipmap);
@@ -349,7 +400,28 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
             photoView.setImageDrawable(d);
             if (d != null) configurarZoomSeGrande(photoView, Math.max(1, d.getIntrinsicWidth()), Math.max(1, d.getIntrinsicHeight()));
             layoutImagens.addView(photoView);
+            return;
         }
+
+        // 4) Fallback final: assets/images
+        String assetFile = encontrarImagemAssets(nomeImagemBase);
+        if (assetFile != null) {
+            try (InputStream is = getAssets().open("images/" + assetFile)) {
+                android.graphics.Bitmap bitmap = BitmapFactory.decodeStream(is);
+                if (bitmap != null) {
+                    PhotoView photoView = criarPhotoViewBase();
+                    photoView.setImageBitmap(bitmap);
+                    configurarZoomSeGrande(photoView, bitmap.getWidth(), bitmap.getHeight());
+                    layoutImagens.addView(photoView);
+                    return;
+                }
+            } catch (IOException e) {
+                android.util.Log.w("AnalisarTentativa", "Falha ao carregar imagem de assets: " + nomeImagemBase, e);
+            }
+        }
+
+        // Se nenhum fallback funcionou, log de aviso
+        android.util.Log.w("AnalisarTentativa", "Imagem não encontrada em nenhuma fonte: " + nomeImagemBase);
     }
 
     private PhotoView criarPhotoViewBase() {
@@ -401,6 +473,24 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
                 }
             }
         } catch (Exception ignore) {
+        }
+        return null;
+    }
+
+    private String encontrarImagemAssets(String nomeBase) {
+        try {
+            String[] files = getAssets().list("images");
+            if (files == null) return null;
+            String alvo = nomeBase.trim().toLowerCase();
+            for (String f : files) {
+                String nome = f;
+                int idx = nome.lastIndexOf('.');
+                String semExt = (idx > 0) ? nome.substring(0, idx) : nome;
+                if (semExt.equalsIgnoreCase(alvo)) {
+                    return f; // nome com extensão
+                }
+            }
+        } catch (IOException ignore) {
         }
         return null;
     }
@@ -467,21 +557,48 @@ public class AnalisarTentativaActivity extends AppCompatActivity {
     private void marcarAlternativaCorreta(TextView tv, String letra) {
         if (tv != null) {
             tv.setBackground(ContextCompat.getDrawable(this, R.drawable.border_correct));
-            tv.setTextColor(Color.parseColor("#2E7D32"));
-            // Garantir destaque visual forte: checkmark + sublinhado
+            tv.setTextColor(Color.parseColor("#1B5E20")); // Verde mais escuro para melhor contraste
+
+            // Obter texto atual e remover qualquer marcador anterior
             String textoOriginal = tv.getText().toString();
-            if (!textoOriginal.startsWith("✓ ")) {
-                tv.setText("✓ " + textoOriginal);
+            while (textoOriginal.startsWith("✓ ") || textoOriginal.startsWith("✗ ")) {
+                textoOriginal = textoOriginal.substring(2);
             }
-            tv.setPaintFlags((tv.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG)) | Paint.UNDERLINE_TEXT_FLAG);
+
+            // Adicionar checkmark verde
+            tv.setText("✓ " + textoOriginal);
+
+            // Remover strikethrough e adicionar negrito
+            int flags = tv.getPaintFlags();
+            flags = flags & (~Paint.STRIKE_THRU_TEXT_FLAG); // Remove strikethrough
+            flags = flags | Paint.FAKE_BOLD_TEXT_FLAG; // Adiciona negrito
+            tv.setPaintFlags(flags);
+
+            android.util.Log.d("AnalisarTentativa", "Marcou verde: " + letra + " - Texto: " + tv.getText());
         }
     }
 
     private void marcarAlternativaErrada(TextView tv, String letra) {
         if (tv != null) {
             tv.setBackground(ContextCompat.getDrawable(this, R.drawable.border_wrong));
-            tv.setTextColor(Color.parseColor("#C62828"));
-            tv.setPaintFlags(tv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            tv.setTextColor(Color.parseColor("#B71C1C")); // Vermelho mais escuro para melhor contraste
+
+            // Obter texto atual e remover qualquer marcador anterior
+            String textoOriginal = tv.getText().toString();
+            while (textoOriginal.startsWith("✓ ") || textoOriginal.startsWith("✗ ")) {
+                textoOriginal = textoOriginal.substring(2);
+            }
+
+            // Adicionar X vermelho
+            tv.setText("✗ " + textoOriginal);
+
+            // Adicionar strikethrough e remover negrito
+            int flags = tv.getPaintFlags();
+            flags = flags | Paint.STRIKE_THRU_TEXT_FLAG; // Adiciona strikethrough
+            flags = flags & (~Paint.FAKE_BOLD_TEXT_FLAG); // Remove negrito
+            tv.setPaintFlags(flags);
+
+            android.util.Log.d("AnalisarTentativa", "Marcou vermelho: " + letra + " - Texto: " + tv.getText());
         }
     }
 }

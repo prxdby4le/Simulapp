@@ -70,6 +70,9 @@ public class CodigoProvaDecoder {
         // Criar objeto de resultado
         CodigoProva resultado = new CodigoProva();
         resultado.setIdioma(idioma);
+        resultado.setStartIndex(g5);
+        resultado.setStep(step);
+        resultado.setCrescente(crescente);
 
         // Processar cada competência
         resultado.setCompetenciaA(processarCompetencia(g1, g5, step, crescente));
@@ -108,26 +111,26 @@ public class CodigoProvaDecoder {
         int start = indiceInicial % totalQuestoes;
 
         List<Integer> indices = new ArrayList<>();
-        Set<Integer> visitados = new HashSet<>();
+        Set<Integer> usados = new HashSet<>();
         int indiceAtual = start;
         int passoReal = crescente ? step : -step;
 
-        // Coletar exatamente totalQuestoes índices
-        // Usar um contador de segurança para evitar loops infinitos
-        int maxIteracoes = totalQuestoes * totalQuestoes; // Limite de segurança
-        int iteracoes = 0;
-
-        while (indices.size() < totalQuestoes && iteracoes < maxIteracoes) {
-            indices.add(indiceAtual);
-            visitados.add(indiceAtual);
-
-            // Calcular próximo índice com wrap-around
-            indiceAtual = (indiceAtual + passoReal) % totalQuestoes;
-            if (indiceAtual < 0) {
-                indiceAtual += totalQuestoes; // Ajuste para valores negativos
+        // Garantir unicidade: avançar até preencher totalQuestoes únicos
+        while (indices.size() < totalQuestoes && usados.size() < totalQuestoes) {
+            if (!usados.contains(indiceAtual)) {
+                indices.add(indiceAtual);
+                usados.add(indiceAtual);
             }
-
-            iteracoes++;
+            // próximo com wrap
+            indiceAtual = (indiceAtual + passoReal) % totalQuestoes;
+            if (indiceAtual < 0) indiceAtual += totalQuestoes;
+            // Se bater em já usado, desloque 1 para frente (ou trás) para destravar
+            if (usados.contains(indiceAtual)) {
+                int fallbackPasso = crescente ? 1 : -1;
+                int tentativa = (indiceAtual + fallbackPasso) % totalQuestoes;
+                if (tentativa < 0) tentativa += totalQuestoes;
+                indiceAtual = tentativa;
+            }
         }
 
         info.setIndicesSelecionados(indices);
@@ -212,4 +215,3 @@ public class CodigoProvaDecoder {
         );
     }
 }
-

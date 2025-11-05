@@ -586,6 +586,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int idxE = cursor.getColumnIndex(COLUMN_ALTERNATIVA_E_IMAGEM);
                 if (idxE != -1) questao.setAlternativaEImagem(cursor.getString(idxE));
 
+                // Preencher resposta correta (estava faltando)
+                int idxRC = cursor.getColumnIndex(COLUMN_RESPOSTA_CORRETA);
+                if (idxRC != -1) {
+                    questao.setRespostaCorreta(cursor.getString(idxRC));
+                }
+
+                // Reconstruir ordem
                 preencherElementosOrdenadosSeExistir(questao, cursor);
 
                 questoes.add(questao);
@@ -665,6 +672,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (idxD != -1) questao.setAlternativaDImagem(cursor.getString(idxD));
                 int idxE = cursor.getColumnIndex(COLUMN_ALTERNATIVA_E_IMAGEM);
                 if (idxE != -1) questao.setAlternativaEImagem(cursor.getString(idxE));
+
+                // Preencher resposta correta (estava faltando)
+                int idxRC = cursor.getColumnIndex(COLUMN_RESPOSTA_CORRETA);
+                if (idxRC != -1) {
+                    questao.setRespostaCorreta(cursor.getString(idxRC));
+                }
 
                 // Reconstruir ordem
                 preencherElementosOrdenadosSeExistir(questao, cursor);

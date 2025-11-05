@@ -179,30 +179,21 @@ public class EntrarComCodigoActivity extends AppCompatActivity {
 
             // Buscar questões do banco de dados baseado nos índices
             DatabaseHelper db = new DatabaseHelper(this);
-            List<Long> idsQuestoesSelecionadas = new ArrayList<>();
 
-            // Mapear idioma para o formato do banco
+            java.util.LinkedHashSet<Long> idsSelecionados = new java.util.LinkedHashSet<>();
             String idiomaDb = resultado.getIdioma().equals("inglês") ? "inglês" : "espanhol";
 
-            // Buscar questões para cada competência
-            idsQuestoesSelecionadas.addAll(
-                buscarQuestoesPorIndices(db, DatabaseHelper.AREA_LINGUAGENS,
-                    resultado.getCompetenciaA().getIndicesSelecionados(), idiomaDb)
-            );
-            idsQuestoesSelecionadas.addAll(
-                buscarQuestoesPorIndices(db, DatabaseHelper.AREA_HUMANAS,
-                    resultado.getCompetenciaB().getIndicesSelecionados(), idiomaDb)
-            );
-            idsQuestoesSelecionadas.addAll(
-                buscarQuestoesPorIndices(db, DatabaseHelper.AREA_NATUREZA,
-                    resultado.getCompetenciaC().getIndicesSelecionados(), idiomaDb)
-            );
-            idsQuestoesSelecionadas.addAll(
-                buscarQuestoesPorIndices(db, DatabaseHelper.AREA_MATEMATICA,
-                    resultado.getCompetenciaD().getIndicesSelecionados(), idiomaDb)
-            );
+            // Para cada área, busque a lista completa ordenada e aplique start/step/direção sem repetir
+            selecionarSemRepetir(idsSelecionados, db, DatabaseHelper.AREA_LINGUAGENS,
+                    resultado.getCompetenciaA().getTotalQuestoes(), resultado.getStartIndex(), resultado.getStep(), resultado.isCrescente(), idiomaDb);
+            selecionarSemRepetir(idsSelecionados, db, DatabaseHelper.AREA_HUMANAS,
+                    resultado.getCompetenciaB().getTotalQuestoes(), resultado.getStartIndex(), resultado.getStep(), resultado.isCrescente(), idiomaDb);
+            selecionarSemRepetir(idsSelecionados, db, DatabaseHelper.AREA_NATUREZA,
+                    resultado.getCompetenciaC().getTotalQuestoes(), resultado.getStartIndex(), resultado.getStep(), resultado.isCrescente(), idiomaDb);
+            selecionarSemRepetir(idsSelecionados, db, DatabaseHelper.AREA_MATEMATICA,
+                    resultado.getCompetenciaD().getTotalQuestoes(), resultado.getStartIndex(), resultado.getStep(), resultado.isCrescente(), idiomaDb);
 
-            if (idsQuestoesSelecionadas.isEmpty()) {
+            if (idsSelecionados.isEmpty()) {
                 Toast.makeText(this,
                     "❌ Nenhuma questão encontrada no banco de dados.\n" +
                     "Importe questões antes de usar o código.",
@@ -211,11 +202,9 @@ public class EntrarComCodigoActivity extends AppCompatActivity {
                 return;
             }
 
-            // Converter List<Long> para long[]
-            long[] idsArray = new long[idsQuestoesSelecionadas.size()];
-            for (int i = 0; i < idsQuestoesSelecionadas.size(); i++) {
-                idsArray[i] = idsQuestoesSelecionadas.get(i);
-            }
+            long[] idsArray = new long[idsSelecionados.size()];
+            int k = 0;
+            for (Long id : idsSelecionados) idsArray[k++] = id;
 
             // Navegar para SimuladoActivity
             Intent intent = new Intent(this, SimuladoActivity.class);
@@ -233,6 +222,54 @@ public class EntrarComCodigoActivity extends AppCompatActivity {
 
             Log.e(TAG, "Erro ao processar código: " + codigo, e);
         }
+    }
+
+    private void selecionarSemRepetir(java.util.LinkedHashSet<Long> acumulado,
+                                      DatabaseHelper db,
+                                      String area,
+                                      int totalDesejado,
+                                      int startIndex,
+                                      int step,
+                                      boolean crescente,
+                                      String idioma) {
+        if (totalDesejado <= 0) return;
+        List<Questao> lista = db.getTodasQuestoesPorArea(area, idioma);
+        int n = lista.size();
+        if (n == 0) return;
+
+        int start = startIndex % n;
+        int passo = Math.max(1, step % n); // step 0 tratado como 1
+        int dir = crescente ? 1 : -1;
+
+        int idx = start;
+        int tentativas = 0;
+        while (acumulado.size() < (acumulado.size() + totalDesejado) && tentativas < n * 3) {
+            Long id = lista.get(idx).getId();
+            acumulado.add(id); // LinkedHashSet evita duplicatas automaticamente
+            if (acumulado.size() >= (acumulado.size()) ) { /* no-op para legibilidade */ }
+            // avançar com wrap
+            idx = (idx + dir * passo) % n;
+            if (idx < 0) idx += n;
+            tentativas++;
+            // parar quando adicionamos totalDesejado desta área
+            if (contagemPorArea(acumulado, lista) >= totalDesejado) break;
+        }
+
+        // fallback: caso step cause ciclo curto e não bata totalDesejado, complete linearmente sem repetição
+        if (contagemPorArea(acumulado, lista) < totalDesejado) {
+            for (int i = 0; i < n && contagemPorArea(acumulado, lista) < totalDesejado; i++) {
+                Long id = lista.get(i).getId();
+                acumulado.add(id);
+            }
+        }
+    }
+
+    private int contagemPorArea(java.util.LinkedHashSet<Long> acumulado, List<Questao> areaLista) {
+        java.util.HashSet<Long> idsArea = new java.util.HashSet<>();
+        for (Questao q : areaLista) idsArea.add(q.getId());
+        int count = 0;
+        for (Long id : acumulado) if (idsArea.contains(id)) count++;
+        return count;
     }
 
     /**

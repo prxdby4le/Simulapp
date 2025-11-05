@@ -76,6 +76,10 @@ public class ImportarQuestoesActivity extends AppCompatActivity {
                     tvStatus.setText(String.format(Locale.getDefault(), "✅ Carregamento concluído!\n%d questões foram importadas dos assets.", totalImported));
                     Toast.makeText(ImportarQuestoesActivity.this,
                         String.format(Locale.getDefault(), "Sucesso! %d questões importadas (offline)", totalImported), Toast.LENGTH_LONG).show();
+
+                    // Normalizar respostas corretas para garantir marcação verde
+                    int fix = databaseHelper.normalizarRespostasCorretas();
+                    android.util.Log.d("ImportarQuestoes", "Respostas normalizadas: " + fix);
                 });
             }
 

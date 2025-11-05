@@ -157,12 +157,21 @@ public class EnemApiImporter {
             questao.addEnunciado("Leia o texto e responda à questão.");
         }
 
+        String letraCorreta = detalhes.correctAlternative;
+
         if (detalhes.alternatives != null && detalhes.alternatives.size() == 5) {
             for (EnemApiModels.Alternative alt : detalhes.alternatives) {
                 String textoAlt = alt.text;
                 if ((textoAlt == null || textoAlt.trim().isEmpty()) && alt.file != null && !alt.file.isEmpty()) {
                     textoAlt = "[Imagem]";
                 }
+
+                // CORREÇÃO: Detectar resposta correta pelo campo isCorrect quando correctAlternative for null
+                if (alt.isCorrect && (letraCorreta == null || letraCorreta.isEmpty())) {
+                    letraCorreta = alt.letter;
+                    Log.d(TAG, "Resposta correta detectada via isCorrect: " + letraCorreta);
+                }
+
                 switch (alt.letter) {
                     case "A":
                         questao.setAlternativaA(textoAlt);
@@ -183,7 +192,14 @@ public class EnemApiImporter {
             }
         }
 
-        questao.setRespostaCorreta(detalhes.correctAlternative);
+        // Garantir que sempre temos uma resposta correta
+        if (letraCorreta == null || letraCorreta.isEmpty()) {
+            Log.w(TAG, "AVISO: Questão " + detalhes.index + " do ano " + detalhes.year +
+                    " não tem resposta correta definida!");
+            letraCorreta = "A"; // Fallback para evitar null
+        }
+
+        questao.setRespostaCorreta(letraCorreta);
 
         return questao;
     }
@@ -244,8 +260,10 @@ public class EnemApiImporter {
     }
 
     private void processarImagensQuestao(Questao questao, EnemApiModels.QuestionDetails detalhes, int ano, String questaoId) {
-        List<String> nomesImagensSalvas = new ArrayList<>();
+        List<String> imagensContexto = new ArrayList<>();
+        List<String> imagensAlternativas = new ArrayList<>();
 
+        // Processar imagens do contexto (files)
         if (detalhes.files != null && !detalhes.files.isEmpty()) {
             for (int i = 0; i < detalhes.files.size(); i++) {
                 String urlImagem = detalhes.files.get(i);
@@ -255,7 +273,7 @@ public class EnemApiImporter {
                         detalhes.index, i + 1, detalhes.discipline, ano, extensao);
 
                     if (baixarESalvarImagem(urlImagem, nomeImagem)) {
-                        nomesImagensSalvas.add(removerExtensao(nomeImagem));
+                        imagensContexto.add(removerExtensao(nomeImagem));
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "Erro ao processar imagem: " + urlImagem, e);
@@ -263,6 +281,7 @@ public class EnemApiImporter {
             }
         }
 
+        // Processar imagens das alternativas
         if (detalhes.alternatives != null) {
             for (EnemApiModels.Alternative alt : detalhes.alternatives) {
                 if (alt.file != null && !alt.file.isEmpty()) {
@@ -272,7 +291,7 @@ public class EnemApiImporter {
                                 detalhes.index, alt.letter, detalhes.discipline, ano, extensao);
                         if (baixarESalvarImagem(alt.file, nomeImagem)) {
                             String base = removerExtensao(nomeImagem);
-                            nomesImagensSalvas.add(base);
+                            imagensAlternativas.add(base);
                             // vincular à alternativa correspondente
                             if ("A".equalsIgnoreCase(alt.letter)) questao.setAlternativaAImagem(base);
                             else if ("B".equalsIgnoreCase(alt.letter)) questao.setAlternativaBImagem(base);
@@ -287,8 +306,10 @@ public class EnemApiImporter {
             }
         }
 
-        if (!nomesImagensSalvas.isEmpty()) {
-            questao.addImagem(nomesImagensSalvas.toArray(new String[0]));
+        // Adicionar apenas as imagens de contexto ao array de imagens da questão
+        // As imagens das alternativas já foram vinculadas diretamente aos campos específicos
+        if (!imagensContexto.isEmpty()) {
+            questao.addImagem(imagensContexto.toArray(new String[0]));
         }
     }
 

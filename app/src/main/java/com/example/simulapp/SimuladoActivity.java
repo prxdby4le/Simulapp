@@ -59,74 +59,98 @@ public class SimuladoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simulado);
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-        toolbar.setNavigationOnClickListener(v -> finish());
+        try {
+            setContentView(R.layout.activity_simulado);
 
-        tvNumeroQuestao = findViewById(R.id.tvNumeroQuestao);
-        tvQuestaoOriginal = findViewById(R.id.tvQuestaoOriginal);
-        tvEnunciado = findViewById(R.id.tvEnunciado);
-        layoutTextosApoio = findViewById(R.id.layoutTextosApoio);
-        layoutImagens = findViewById(R.id.layoutImagens);
-        rgAlternativas = findViewById(R.id.rgAlternativas);
-        rbAlternativaA = findViewById(R.id.rbAlternativaA);
-        rbAlternativaB = findViewById(R.id.rbAlternativaB);
-        rbAlternativaC = findViewById(R.id.rbAlternativaC);
-        rbAlternativaD = findViewById(R.id.rbAlternativaD);
-        rbAlternativaE = findViewById(R.id.rbAlternativaE);
-        btnProxima = findViewById(R.id.btnProxima);
-        btnFinalizar = findViewById(R.id.btnFinalizar);
+            android.util.Log.d("SimuladoActivity", "onCreate iniciado");
 
-        // Preferir IDs para evitar TransactionTooLargeException
-        long[] ids = getIntent().getLongArrayExtra("questao_ids");
-        if (ids != null && ids.length > 0) {
-            DatabaseHelper db = new DatabaseHelper(this);
-            List<Questao> carregadas = db.getQuestoesPorIds(ids);
-            // Reordenar conforme a ordem dos IDs recebidos
-            Map<Long, Questao> porId = new HashMap<>();
-            for (Questao q : carregadas) porId.put(q.getId(), q);
-            questoes = new ArrayList<>(ids.length);
-            for (long id : ids) {
-                Questao q = porId.get(id);
-                if (q != null) questoes.add(q);
+            MaterialToolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
             }
-        } else {
-            // Compatibilidade: receber lista serializada quando pequena
-            @SuppressWarnings("unchecked")
-            List<Questao> temp = (List<Questao>) getIntent().getSerializableExtra("questoes");
-            questoes = temp;
-        }
+            toolbar.setNavigationOnClickListener(v -> finish());
 
-        if (questoes == null || questoes.isEmpty()) {
-            Toast.makeText(this, "Nenhuma questão disponível", Toast.LENGTH_SHORT).show();
+            tvNumeroQuestao = findViewById(R.id.tvNumeroQuestao);
+            tvQuestaoOriginal = findViewById(R.id.tvQuestaoOriginal);
+            tvEnunciado = findViewById(R.id.tvEnunciado);
+            layoutTextosApoio = findViewById(R.id.layoutTextosApoio);
+            layoutImagens = findViewById(R.id.layoutImagens);
+            rgAlternativas = findViewById(R.id.rgAlternativas);
+            rbAlternativaA = findViewById(R.id.rbAlternativaA);
+            rbAlternativaB = findViewById(R.id.rbAlternativaB);
+            rbAlternativaC = findViewById(R.id.rbAlternativaC);
+            rbAlternativaD = findViewById(R.id.rbAlternativaD);
+            rbAlternativaE = findViewById(R.id.rbAlternativaE);
+            btnProxima = findViewById(R.id.btnProxima);
+            btnFinalizar = findViewById(R.id.btnFinalizar);
+
+            // Preferir IDs para evitar TransactionTooLargeException
+            long[] ids = getIntent().getLongArrayExtra("questao_ids");
+            android.util.Log.d("SimuladoActivity", "IDs recebidos: " + (ids != null ? ids.length : "null"));
+
+            if (ids != null && ids.length > 0) {
+                DatabaseHelper db = new DatabaseHelper(this);
+                List<Questao> carregadas = db.getQuestoesPorIds(ids);
+                android.util.Log.d("SimuladoActivity", "Questões carregadas do banco: " + carregadas.size());
+
+                // Reordenar conforme a ordem dos IDs recebidos
+                Map<Long, Questao> porId = new HashMap<>();
+                for (Questao q : carregadas) porId.put(q.getId(), q);
+                questoes = new ArrayList<>(ids.length);
+                for (long id : ids) {
+                    Questao q = porId.get(id);
+                    if (q != null) questoes.add(q);
+                }
+            } else {
+                // Compatibilidade: receber lista serializada quando pequena
+                @SuppressWarnings("unchecked")
+                List<Questao> temp = (List<Questao>) getIntent().getSerializableExtra("questoes");
+                questoes = temp;
+                android.util.Log.d("SimuladoActivity", "Questões recebidas via serialização: " +
+                        (questoes != null ? questoes.size() : "null"));
+            }
+
+            if (questoes == null || questoes.isEmpty()) {
+                android.util.Log.w("SimuladoActivity", "Nenhuma questão disponível!");
+                Toast.makeText(this, "Nenhuma questão disponível", Toast.LENGTH_SHORT).show();
+                finish();
+                return;
+            }
+
+            android.util.Log.d("SimuladoActivity", "Exibindo primeira questão");
+            exibirQuestao();
+
+            rgAlternativas.setOnCheckedChangeListener((group, checkedId) -> salvarResposta());
+            btnProxima.setOnClickListener(v -> {
+                if (questaoAtualIndex < questoes.size() - 1) {
+                    questaoAtualIndex++;
+                    exibirQuestao();
+                }
+            });
+            btnFinalizar.setOnClickListener(v -> finalizarSimulado());
+
+            android.util.Log.d("SimuladoActivity", "onCreate concluído com sucesso");
+
+        } catch (Exception e) {
+            android.util.Log.e("SimuladoActivity", "ERRO CRÍTICO no onCreate", e);
+            Toast.makeText(this, "Erro ao iniciar simulado: " + e.getMessage(), Toast.LENGTH_LONG).show();
             finish();
-            return;
         }
-
-        exibirQuestao();
-
-        rgAlternativas.setOnCheckedChangeListener((group, checkedId) -> salvarResposta());
-        btnProxima.setOnClickListener(v -> {
-            if (questaoAtualIndex < questoes.size() - 1) {
-                questaoAtualIndex++;
-                exibirQuestao();
-            }
-        });
-        btnFinalizar.setOnClickListener(v -> finalizarSimulado());
     }
 
     private void exibirQuestao() {
-        Questao questao = questoes.get(questaoAtualIndex);
+        try {
+            Questao questao = questoes.get(questaoAtualIndex);
 
-        tvNumeroQuestao.setText("Questão " + (questaoAtualIndex + 1) + " de " + questoes.size() +
-                               " - " + questao.getArea());
-        tvQuestaoOriginal.setText("Questão " + questao.getNumero() + " - Caderno azul - ENEM " + questao.getAno());
+            android.util.Log.d("SimuladoActivity", "Exibindo questão " + (questaoAtualIndex + 1) +
+                    " - ID: " + questao.getId() + ", Número: " + questao.getNumero());
+
+            tvNumeroQuestao.setText("Questão " + (questaoAtualIndex + 1) + " de " + questoes.size() +
+                                   " - " + questao.getArea());
+            tvQuestaoOriginal.setText("Questão " + questao.getNumero() + " - Caderno azul - ENEM " + questao.getAno());
 
         layoutTextosApoio.removeAllViews();
         layoutImagens.removeAllViews();
@@ -235,6 +259,13 @@ public class SimuladoActivity extends AppCompatActivity {
             btnProxima.setVisibility(View.VISIBLE);
             btnFinalizar.setVisibility(View.GONE);
         }
+
+        android.util.Log.d("SimuladoActivity", "Questão exibida com sucesso");
+
+        } catch (Exception e) {
+            android.util.Log.e("SimuladoActivity", "ERRO ao exibir questão", e);
+            Toast.makeText(this, "Erro ao exibir questão: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void configurarImagemAlternativa(RadioButton radioButton, String nomeImagemBase) {
@@ -313,6 +344,10 @@ public class SimuladoActivity extends AppCompatActivity {
     }
 
     private void adicionarImagem(String nomeImagemBase) {
+        if (nomeImagemBase == null || nomeImagemBase.trim().isEmpty()) {
+            return;
+        }
+
         layoutImagens.setVisibility(View.VISIBLE);
 
         // 1) Tenta carregar a partir do armazenamento interno (filesDir/images)
@@ -360,10 +395,15 @@ public class SimuladoActivity extends AppCompatActivity {
                     photoView.setImageBitmap(bitmap);
                     configurarZoomSeGrande(photoView, bitmap.getWidth(), bitmap.getHeight());
                     layoutImagens.addView(photoView);
+                    return;
                 }
-            } catch (IOException ignore) {
+            } catch (IOException e) {
+                android.util.Log.w("SimuladoActivity", "Falha ao carregar imagem de assets: " + nomeImagemBase, e);
             }
         }
+
+        // Se nenhum fallback funcionou, log de aviso
+        android.util.Log.w("SimuladoActivity", "Imagem não encontrada em nenhuma fonte: " + nomeImagemBase);
     }
 
     private PhotoView criarPhotoViewBase() {
@@ -445,26 +485,43 @@ public class SimuladoActivity extends AppCompatActivity {
     }
 
     private void finalizarSimulado() {
-        int acertos = 0;
-        long[] ids = new long[questoes.size()];
-        String[] respostasUsuario = new String[questoes.size()];
-        for (int i = 0; i < questoes.size(); i++) {
-            Questao q = questoes.get(i);
-            ids[i] = q.getId();
-            String r = q.getRespostaUsuario();
-            respostasUsuario[i] = r == null ? "" : r;
-            if (q.isCorreta()) {
-                acertos++;
-            }
-        }
+        try {
+            // CORREÇÃO: Salvar a resposta da questão atual antes de finalizar
+            salvarResposta();
 
-        Intent intent = new Intent(this, ResultadoSimuladoActivity.class);
-        intent.putExtra("questao_ids", ids);
-        intent.putExtra("respostas_usuario", respostasUsuario);
-        intent.putExtra("acertos", acertos);
-        intent.putExtra("total", questoes.size());
-        startActivity(intent);
-        finish();
+            android.util.Log.d("SimuladoActivity", "Finalizando simulado com " + questoes.size() + " questões");
+
+            int acertos = 0;
+            long[] ids = new long[questoes.size()];
+            String[] respostasUsuario = new String[questoes.size()];
+
+            for (int i = 0; i < questoes.size(); i++) {
+                Questao q = questoes.get(i);
+                ids[i] = q.getId();
+                String r = q.getRespostaUsuario();
+                respostasUsuario[i] = r == null ? "" : r;
+                if (q.isCorreta()) {
+                    acertos++;
+                }
+            }
+
+            android.util.Log.d("SimuladoActivity", "Acertos: " + acertos + " de " + questoes.size());
+
+            Intent intent = new Intent(this, ResultadoSimuladoActivity.class);
+            intent.putExtra("questao_ids", ids);
+            intent.putExtra("respostas_usuario", respostasUsuario);
+            intent.putExtra("acertos", acertos);
+            intent.putExtra("total", questoes.size());
+
+            android.util.Log.d("SimuladoActivity", "Iniciando ResultadoSimuladoActivity");
+            startActivity(intent);
+            finish();
+
+        } catch (Exception e) {
+            android.util.Log.e("SimuladoActivity", "ERRO ao finalizar simulado", e);
+            Toast.makeText(this, "Erro ao finalizar simulado: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            // Não fazer finish() para não fechar a activity em caso de erro
+        }
     }
 
     private String formatAlternativa(String letra, String texto) {
