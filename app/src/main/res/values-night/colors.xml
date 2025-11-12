@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Paleta Dark (azul ligeiramente mais claro para destacar) -->
+    <color name="primary">#3C4D78</color>
+    <color name="primaryVariant">#2E3A59</color>
+    <color name="secondary">#81C784</color>
+    <color name="secondaryVariant">#66BB6A</color>
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onSecondary">#0B0B0B</color>
+    <color name="onBackground">#EAEAEA</color>
+    <color name="onSurface">#E0E6F0</color>
+
+    <!-- Cores semânticas para contraste no fundo escuro -->
+    <color name="brandPrimaryText">#C7D4EE</color> <!-- Clareado de #2E3A59 para contraste no bg escuro -->
+    <color name="neutralGray">#A8ADB5</color> <!-- Cinza claro para texto secundário no bg escuro -->
+    <color name="successGreen">#5FD27A</color> <!-- Verde ligeiramente mais brilhante para o modo escuro -->
+    <color name="dangerRed">#FF6655</color> <!-- Vermelho ligeiramente mais brilhante para o modo escuro -->
+
+    <!-- Novas cores para elementos específicos -->
+    <color name="competencyTitleColor">#FFFFFF</color>
+    <color name="shapeFill">#242A36</color>
+    <color name="shapeStroke">#66FFFFFF</color>
+
+    <!-- Estados pressionado/desabilitado e trilha do interruptor -->
+    <color name="primaryPressed">#2E3A59</color>
+    <color name="primaryDisabled">#663C4D78</color>
+    <color name="successGreenPressed">#56E18A</color>
+    <color name="successGreenDisabled">#665FD27A</color>
+    <color name="dangerRedPressed">#FF7766</color>
+    <color name="dangerRedDisabled">#66FF6655</color>
+    <color name="switchTrack">#444A55</color>
+    <color name="switchTrackDisabled">#33444A55</color>
+
+    <!-- Cores para texto de apoio e enunciado em modo escuro -->
+    <color name="colorTextoApoio">#FFFFFF</color>
+    <color name="enunciadoTextColor">#FFFFFF</color>
+    <color name="resultAcertosTextColor">#FFFFFF</color>
+</resources>

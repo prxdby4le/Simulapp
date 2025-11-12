@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.simulapp"
+    namespace = "com.info42022simulapp.simulapp"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.simulapp"
+        applicationId = "com.info42022simulapp.simulapp"
         minSdk = 29
         targetSdk = 36
         versionCode = 1

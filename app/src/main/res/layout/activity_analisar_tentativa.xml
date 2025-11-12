@@ -5,18 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="@android:color/white">
+    android:background="@color/background">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#2E3A59"
+        android:background="@color/primary"
         android:elevation="4dp"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:navigationIconTint="@android:color/white"
-        app:title="Análise da Tentativa"
-        app:titleTextColor="@android:color/white" />
+        app:title="@string/btn_analisar_tentativa"
+        app:titleTextColor="@color/onPrimary" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -34,9 +34,9 @@
                 android:id="@+id/tvNumeroQuestao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Questão 1 de 10"
+                android:text="@string/questao_progress_placeholder"
                 android:textSize="14sp"
-                android:textColor="#666666"
+                android:textColor="@color/onSurface"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
@@ -44,9 +44,9 @@
                 android:id="@+id/tvQuestaoOriginal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Questão 91 - Caderno azul - ENEM 2024"
+                android:text="@string/questao_original_caderno_azul"
                 android:textSize="16sp"
-                android:textColor="#2E3A59"
+                android:textColor="@color/onSurface"
                 android:textStyle="bold"
                 android:layout_marginBottom="16dp"
                 android:gravity="center" />
@@ -72,9 +72,9 @@
                 android:id="@+id/tvEnunciado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enunciado da questão"
+                android:text="@string/enunciado_placeholder"
                 android:textSize="16sp"
-                android:textColor="@android:color/black"
+                android:textColor="@color/onSurface"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="20dp" />
 
@@ -88,7 +88,7 @@
                     android:id="@+id/tvAlternativaA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="A) Alternativa A"
+                    android:text="@string/alternativa_a"
                     android:textSize="15sp"
                     android:padding="12dp"
                     android:layout_marginBottom="8dp"
@@ -98,7 +98,7 @@
                     android:id="@+id/tvAlternativaB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="B) Alternativa B"
+                    android:text="@string/alternativa_b"
                     android:textSize="15sp"
                     android:padding="12dp"
                     android:layout_marginBottom="8dp"
@@ -108,7 +108,7 @@
                     android:id="@+id/tvAlternativaC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="C) Alternativa C"
+                    android:text="@string/alternativa_c"
                     android:textSize="15sp"
                     android:padding="12dp"
                     android:layout_marginBottom="8dp"
@@ -118,7 +118,7 @@
                     android:id="@+id/tvAlternativaD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="D) Alternativa D"
+                    android:text="@string/alternativa_d"
                     android:textSize="15sp"
                     android:padding="12dp"
                     android:layout_marginBottom="8dp"
@@ -128,7 +128,7 @@
                     android:id="@+id/tvAlternativaE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="E) Alternativa E"
+                    android:text="@string/alternativa_e"
                     android:textSize="15sp"
                     android:padding="12dp"
                     android:background="@drawable/border_text" />
@@ -144,7 +144,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:background="@android:color/white"
+        android:background="@color/surface"
         android:elevation="8dp">
 
         <com.google.android.material.button.MaterialButton
@@ -152,28 +152,29 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
-            android:text="Anterior"
+            android:text="@string/btn_voltar_menu"
             android:textAllCaps="false"
             android:textSize="16sp"
-            android:textColor="@android:color/white"
-            app:backgroundTint="#2E3A59"
+            android:textColor="@color/onPrimary"
+            app:backgroundTint="@color/primary"
             app:cornerRadius="12dp"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginEnd="8dp"
+            style="@style/TextAppearance.Simulapp.Button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnProxima"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_weight="1"
-            android:text="Próxima"
+            android:text="@string/btn_proxima"
             android:textAllCaps="false"
             android:textSize="16sp"
-            android:textColor="@android:color/white"
-            app:backgroundTint="#2E3A59"
+            android:textColor="@color/onPrimary"
+            app:backgroundTint="@color/primary"
             app:cornerRadius="12dp"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            style="@style/TextAppearance.Simulapp.Button" />
 
     </LinearLayout>
 
 </LinearLayout>
-

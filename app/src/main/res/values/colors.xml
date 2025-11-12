@@ -1,7 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Existentes -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorTextoApoio">#333333</color>
     <color name="colorTextoFonte">#888888</color>
+
+    <!-- Paleta Light (seguida por versão night em values-night/colors.xml) -->
+    <color name="primary">#2E3A59</color>
+    <color name="primaryVariant">#1A2332</color>
+    <color name="secondary">#388E3C</color>
+    <color name="secondaryVariant">#2E7D32</color>
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#F5F7FA</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="onBackground">#1A1A1A</color>
+    <color name="onSurface">#2E3A59</color>
+
+    <!-- Novas cores semânticas -->
+    <color name="brandPrimaryText">#2E3A59</color>
+    <color name="neutralGray">#666666</color>
+    <color name="successGreen">#4CAF50</color>
+    <color name="dangerRed">#F44336</color>
+
+    <!-- Novas cores para título de competência e formas -->
+    <color name="competencyTitleColor">#2E3A59</color>
+    <color name="shapeFill">#EDEDED</color>
+    <color name="shapeStroke">#33000000</color>
+
+    <!-- Novas cores para estados pressionado e desabilitado -->
+    <color name="primaryPressed">#243049</color>
+    <color name="primaryDisabled">#992E3A59</color>
+    <color name="successGreenPressed">#43A047</color>
+    <color name="successGreenDisabled">#994CAF50</color>
+    <color name="dangerRedPressed">#D32F2F</color>
+    <color name="dangerRedDisabled">#99F44336</color>
+    <color name="switchTrack">#CCCCCC</color>
+    <color name="switchTrackDisabled">#99CCCCCC</color>
+
+    <!-- Nova cor para texto de enunciado -->
+    <color name="enunciadoTextColor">#1A1A1A</color>
+    <color name="resultAcertosTextColor">#000000</color>
 </resources>

@@ -5,77 +5,81 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="@android:color/white">
+    android:background="@color/background">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#2E3A59"
+        android:background="@color/primary"
         android:elevation="4dp"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:navigationIconTint="@android:color/white"
-        app:title="Resultado"
-        app:titleTextColor="@android:color/white" />
+        app:navigationIconTint="@color/onPrimary"
+        app:title="@string/resultado_finalizado"
+        app:titleTextColor="@color/onPrimary" />
 
     <LinearLayout
+        android:id="@+id/layoutResumo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="24dp">
+        android:padding="24dp"
+        android:background="@color/surface">
 
         <TextView
             android:id="@+id/tvResultado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Simulado Finalizado!"
+            android:text="@string/resultado_finalizado"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#2E3A59"
+            android:textColor="@color/brandPrimaryText"
             android:layout_marginBottom="32dp" />
 
         <TextView
             android:id="@+id/tvAcertos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Você acertou 8 de 10 questões"
+            android:text="@string/resultado_acertos_placeholder"
             android:textSize="20sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/resultAcertosTextColor"
             android:layout_marginBottom="16dp" />
 
         <TextView
             android:id="@+id/tvPercentual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="80% de aproveitamento"
+            android:text="@string/resultado_percentual_placeholder"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#4CAF50"
+            android:textColor="@color/successGreen"
             android:layout_marginBottom="48dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAnalisarTentativa"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="Analisar Tentativa"
+            android:text="@string/btn_analisar_tentativa"
             android:textAllCaps="false"
             android:textSize="18sp"
-            android:textColor="@android:color/white"
-            app:backgroundTint="#4CAF50"
+            android:textColor="@color/onPrimary"
+            app:backgroundTint="@color/successGreen"
             app:cornerRadius="12dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            style="@style/TextAppearance.Simulapp.Button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnVoltar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="Voltar ao Menu"
+            android:text="@string/btn_voltar_menu"
             android:textAllCaps="false"
             android:textSize="18sp"
-            android:textColor="@android:color/white"
-            app:backgroundTint="#2E3A59"
-            app:cornerRadius="12dp" />
+            android:textColor="@color/onPrimary"
+            app:backgroundTint="@color/primary"
+            app:cornerRadius="12dp"
+            style="@style/TextAppearance.Simulapp.Button" />
 
     </LinearLayout>
 

@@ -1,0 +1,80 @@
+package com.info42022simulapp.simulapp;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.appbar.MaterialToolbar;
+
+public class ResultadoSimuladoActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        try {
+            setContentView(R.layout.activity_resultado_simulado);
+
+            android.util.Log.d("ResultadoSimulado", "onCreate iniciado");
+
+            MaterialToolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+                getSupportActionBar().setTitle(R.string.titulo_resultado);
+            }
+            toolbar.setTitleTextAppearance(this, R.style.TextAppearance_Simulapp_Title);
+            toolbar.setNavigationOnClickListener(v -> finish());
+
+            int acertos = getIntent().getIntExtra("acertos", 0);
+            int total = getIntent().getIntExtra("total", 0);
+            long[] ids = getIntent().getLongArrayExtra("questao_ids");
+            String[] respostasUsuario = getIntent().getStringArrayExtra("respostas_usuario");
+
+            android.util.Log.d("ResultadoSimulado", "Dados recebidos - Acertos: " + acertos +
+                    ", Total: " + total + ", IDs: " + (ids != null ? ids.length : "null") +
+                    ", Respostas: " + (respostasUsuario != null ? respostasUsuario.length : "null"));
+
+            TextView tvResultado = findViewById(R.id.tvResultado);
+            TextView tvAcertos = findViewById(R.id.tvAcertos);
+            TextView tvPercentual = findViewById(R.id.tvPercentual);
+            Button btnAnalisarTentativa = findViewById(R.id.btnAnalisarTentativa);
+            Button btnVoltar = findViewById(R.id.btnVoltar);
+
+            double percentual = total > 0 ? (acertos * 100.0 / total) : 0;
+            int percentualInt = (int) Math.round(percentual);
+
+            tvResultado.setText(getString(R.string.resultado_finalizado));
+            tvAcertos.setText(getString(R.string.resultado_acertos_placeholder, acertos, total));
+            tvPercentual.setText(getString(R.string.resultado_percentual_placeholder, percentualInt));
+
+            btnAnalisarTentativa.setOnClickListener(v -> {
+                try {
+                    android.util.Log.d("ResultadoSimulado", "Abrindo AnalisarTentativaActivity");
+                    Intent intent = new Intent(this, AnalisarTentativaActivity.class);
+                    intent.putExtra("questao_ids", ids);
+                    intent.putExtra("respostas_usuario", respostasUsuario);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    android.util.Log.e("ResultadoSimulado", "Erro ao abrir análise", e);
+                    Toast.makeText(this, "Erro ao abrir análise: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+            btnVoltar.setOnClickListener(v -> finish());
+
+            android.util.Log.d("ResultadoSimulado", "onCreate concluído com sucesso");
+
+        } catch (Exception e) {
+            android.util.Log.e("ResultadoSimulado", "ERRO CRÍTICO no onCreate", e);
+            Toast.makeText(this, "Erro ao exibir resultado: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+}

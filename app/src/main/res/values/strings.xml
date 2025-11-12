@@ -9,4 +9,67 @@
     <string name="cd_decrementar">Diminuir quantidade</string>
     <string name="cd_incrementar">Aumentar quantidade</string>
     <string name="hint_zero">0</string>
+
+    <!-- Novos textos -->
+    <string name="menu_sobre">Sobre</string>
+    <string name="menu_resetar_banco">Resetar banco de dados</string>
+    <string name="label_total_questoes">Total de questões: %1$d</string>
+    <string name="carregando_preparando">Preparando questões do ENEM (offline)...</string>
+    <string name="carregando_offline">Carregando questões offline...</string>
+    <string name="msg_banco_resetado">Banco resetado. Reimportando...</string>
+    <string name="msg_banco_falhou_resetar">Falha ao resetar banco: %1$s</string>
+    <string name="msg_questoes_carregadas">%1$d questões carregadas com sucesso!</string>
+    <string name="titulo_sobre">Sobre o aplicativo</string>
+    <string name="descricao_sobre"> Somos alunos da turma de informática do IFRS Campus Rolante iniciada em 2022. Nesse projeto fomos propostos a ajudar de alguma forma o pessoal que vai prestar o ENEM. Temos bastante carinho pelo projeto e espero que curtam nosso trabalho! Quaisquer erros e bugs podem ser reportados à nossa equipe e dentro do possível vamos atender às chaamdas e atualizar futuramente pra sempre ter todas as questões atualizadas bonitinho!! Abaixo a equipe de desenvolvimento :D </string>
+    <string name="titulo_equipe">Equipe Simullap</string>
+    <string name="cd_foto_membro_1">Foto Membro 1</string>
+    <string name="cd_foto_membro_2">Foto Membro 2</string>
+    <string name="cd_foto_membro_3">Foto Membro 3</string>
+    <string name="membro1_nome">Kléber Henrique C. da Silva</string>
+    <string name="membro1_email">4contatokleberhenrique@gmail.com</string>
+    <string name="membro1_funcao">Função: Desenvolvedor</string>
+    <string name="membro2_nome">Gustavo Schenkel de Oliveria</string>
+    <string name="membro2_email">gu.schenkeloliveira@gmail.com</string>
+    <string name="membro2_funcao">Função: Designer e Analista de Sistemas</string>
+    <string name="membro3_nome">Maria Gabriela de Borba Feltrin</string>
+    <string name="membro3_email">mariagabibf@gmail.com</string>
+    <string name="membro3_funcao">Função: Designer e Analista de Sistemas</string>
+    <string name="app_title">SimuLapp</string>
+    <string name="desc_configuracoes">Configurações</string>
+    <string name="loading_generico">Carregando questões...</string>
+    <string name="subtitle_menu">Se prepare para o ENEM!</string>
+    <string name="btn_gerar_prova">Gerar Prova</string>
+    <string name="btn_redacao">Redação</string>
+    <string name="link_entrar_codigo">Entrar com código</string>
+    <string name="resultado_finalizado">Simulado Finalizado!</string>
+    <string name="resultado_acertos_placeholder">Você acertou %1$d de %2$d questões</string>
+    <string name="resultado_percentual_placeholder">%1$d%% de aproveitamento</string>
+    <string name="btn_analisar_tentativa">Analisar Tentativa</string>
+    <string name="btn_voltar_menu">Voltar ao Menu</string>
+    <string name="questao_progress_placeholder">Questão %1$d de %2$d</string>
+    <string name="questao_original_placeholder">Questão %1$d - ENEM %2$d</string>
+    <string name="enunciado_placeholder">Enunciado da questão</string>
+    <string name="alternativa_a">A) Alternativa A</string>
+    <string name="alternativa_b">B) Alternativa B</string>
+    <string name="alternativa_c">C) Alternativa C</string>
+    <string name="alternativa_d">D) Alternativa D</string>
+    <string name="alternativa_e">E) Alternativa E</string>
+    <string name="btn_proxima">Próxima</string>
+    <string name="btn_finalizar_simulado">Finalizar Simulado</string>
+
+    <!-- Títulos para telas -->
+    <string name="titulo_simulado">Simulado</string>
+    <string name="titulo_redacao">Redação</string>
+    <string name="titulo_resultado">Resultado</string>
+    <string name="titulo_gerar_prova">Gerar Prova</string>
+    <string name="idioma_espanhol">Espanhol</string>
+    <string name="idioma_ingles">Inglês</string>
+    <string name="questao_area_placeholder">Questão %1$d de %2$d - %3$s</string>
+    <string name="questao_original_caderno_azul">Questão %1$d - Caderno azul - ENEM %2$d</string>
+    <string name="titulo_importar_questoes">Importar Questões do ENEM</string>
+    <string name="descricao_importar_questoes">Esta ação irá baixar TODAS as questões do ENEM (2009-2023) diretamente da internet.\n\n📊 ~2.700 questões\n⏱️ 10-30 minutos\n📶 WiFi recomendado\n\nApós a importação, o app funcionará offline.</string>
+    <string name="btn_importar_todas">Importar Todas as Questões</string>
+    <string name="label_lingua_estrangeira">Língua Estrangeira:</string>
+    <string name="progresso_padrao">0 / 0</string>
+    <string name="redacao_wip">Esta seção de Redação ainda está em desenvolvimento.</string>
 </resources>

@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/background">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Importar Questões do ENEM"
+        android:text="@string/titulo_importar_questoes"
+        android:textColor="@color/onSurface"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
@@ -17,16 +19,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Esta ação irá baixar TODAS as questões do ENEM (2009-2023) diretamente da internet.\n\n📊 ~2.700 questões\n⏱️ 10-30 minutos\n📶 WiFi recomendado\n\nApós a importação, o app funcionará offline."
+        android:text="@string/descricao_importar_questoes"
         android:textAlignment="center"
+        android:textColor="@color/onSurface"
         android:layout_marginBottom="24dp"/>
 
     <Button
         android:id="@+id/btnImportar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Importar Todas as Questões"
-        android:layout_marginBottom="24dp"/>
+        android:text="@string/btn_importar_todas"
+        android:textColor="@color/onPrimary"
+        android:backgroundTint="@color/primary"
+        android:layout_marginBottom="24dp"
+        style="@style/TextAppearance.Simulapp.Button"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -40,8 +46,9 @@
         android:id="@+id/tvProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0 / 0"
+        android:text="@string/progresso_padrao"
         android:textSize="16sp"
+        android:textColor="@color/onSurface"
         android:layout_marginBottom="8dp"
         android:visibility="gone"/>
 
@@ -51,8 +58,8 @@
         android:layout_height="wrap_content"
         android:text=""
         android:textAlignment="center"
+        android:textColor="@color/onSurface"
         android:textSize="14sp"
         android:visibility="gone"/>
 
 </LinearLayout>
-

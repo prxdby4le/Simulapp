@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.Simulapp.Title" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textColor">@color/onSurface</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="TextAppearance.Simulapp.Subtitle" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/onSurface</item>
+    </style>
+    <style name="TextAppearance.Simulapp.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textColor">@color/onPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="SimulappCircleImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>

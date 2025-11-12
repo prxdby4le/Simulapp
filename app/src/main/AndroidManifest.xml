@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".SobreActivity"
+            android:exported="false" />
+        <activity
             android:name=".EntrarComCodigoActivity"
             android:exported="false" />
         <activity
